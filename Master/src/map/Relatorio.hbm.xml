@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+	<class name="Relatorio">
+		<id name="codigo">
+  			<generator class="native">
+  				<param name="sequence">sq_relatorio</param>
+  			</generator>			
+		</id>		
+		
+		<property name="comando"/>
+		<property name="descricao"/>
+		<property name="dinamico"/>
+		<property name="nome"/>
+		<property name="path"/>
+		<property name="tela"/>		
+		<property name="tipo"/>
+		<property name="ordem"/>
+		<property name="widthFiltro">
+			<column name="width_filtro"/>
+		</property>
+		<property name="heightFiltro">
+			<column name="height_filtro"/>
+		</property>
+		
+	</class>
+</hibernate-mapping>

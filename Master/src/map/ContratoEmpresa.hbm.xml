@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ContratoEmpresa" table="contrato_empresa">
+  <composite-id class="ContratoEmpresaId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="Usuario" column="cod_usuario" name="usuario"/>
+   <key-many-to-one class="Empresa" column="cod_empresa" name="empresa"/>
+  </composite-id>
+ </class>
+ <query name="empresaContrato">select c.id.empresa from ContratoEmpresa as c where c.id.usuario = :usuario</query>
+ <query name="usuarioContrato"> select c.id.usuario from ContratoEmpresa as c where c.id.empresa = :empresa</query>
+ <query name="EmpresaBordero">select m.lancamento from Mensalidade as m&#xd;
+where m.usuario in(select c.id.usuario from ContratoEmpresa as c &#xd;
+		where c.id.empresa = :empresa)&#xd;
+union&#xd;
+select p.id.lancamento from ParcelaOrcamento as p&#xd;
+where p.id.orcamento.usuario in(select c.id.usuario from &#xd;
+	ContratoEmpresa as c &#xd;
+	where c.id.empresa = :empresa)</query>
+ <sql-query name="ctrsEmpresa">SELECT COUNT(*) FROM contrato_empresa AS c WHERE c.cod_empresa = :empresa</sql-query>
+</hibernate-mapping>

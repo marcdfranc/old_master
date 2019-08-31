@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tabela_master" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITLE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["LISTA DE PROCEDIMENTOS PADRÃO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_UNIDADE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[78]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT s.referencia, s.descricao, e.codigo AS cod_especialidade,
+	CASE
+		WHEN e.setor = 'o' THEN 'Odontológica'
+		WHEN e.setor = 'l' THEN 'Laboratorial'
+		WHEN e.setor = 'm' THEN 'Médica'
+		WHEN e.setor = 'h' THEN 'Hospitalar'
+	END AS setor, e.descricao AS especialidade
+FROM servico AS s
+INNER JOIN especialidade AS e ON(s.cod_especialidade = e.codigo)
+ORDER BY e.descricao, s.descricao]]>
+	</queryString>
+	<field name="referencia" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="cod_especialidade" class="java.lang.Integer"/>
+	<field name="especialidade" class="java.lang.String"/>
+	<field name="setor" class="java.lang.String"/>
+	<variable name="isPrint" class="java.lang.Boolean">
+		<variableExpression><![CDATA[!$V{isPrint}]]></variableExpression>
+	</variable>
+	<group name="GRP_ESPECIALIDADE" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{cod_especialidade}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<textField>
+					<reportElement x="49" y="11" width="506" height="20"/>
+					<textElement>
+						<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{especialidade})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="49" y="28" width="47" height="13"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Código]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="96" y="28" width="405" height="13"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Procedimento]]></text>
+				</staticText>
+				<line>
+					<reportElement x="49" y="28" width="452" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="1">
+				<line>
+					<reportElement x="49" y="0" width="452" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="49"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$P{COD_UNIDADE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="204" y="49" width="351" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true" isItalic="true" isUnderline="false" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Atividade " + $F{setor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="49" y="0" width="452" height="14" forecolor="#FFFFFF" backcolor="#DBDADA">
+					<printWhenExpression><![CDATA[$V{isPrint}]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="96" y="0" width="405" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="0" width="47" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="48" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="47"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$P{COD_UNIDADE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+</jasperReport>

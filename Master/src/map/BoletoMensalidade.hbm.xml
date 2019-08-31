@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="BoletoMensalidade" table="boleto_mensalidade">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_boleto_mensalidade</param>
+   </generator>
+  </id>
+  <property name="data"/>
+  <many-to-one class="com.marcsoftware.database.Usuario"
+   column="cod_usuario" name="usuario"/>
+ </class>
+</hibernate-mapping>

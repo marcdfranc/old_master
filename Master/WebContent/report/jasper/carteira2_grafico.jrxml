@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cadastro_grafico" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="3.1384283767210404"/>
+	<property name="ireport.x" value="1472"/>
+	<property name="ireport.y" value="84"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\marcelo\\Meus documentos\\sistemas\\master\\master.com\\WebContent\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["GRÁFICO DA CARTEIRA ADM POR PERIODO - ANO BASE "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="INICIO" class="java.util.Date"/>
+	<parameter name="FIM" class="java.util.Date"/>
+	<parameter name="ANO_BASE" class="java.lang.String"/>
+	<parameter name="COD_UNIDADE" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[78]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT v.ano_quitacao, mes_quitacao, l.cod_unidade, SUM(l.valor_pago) AS valor_cliente,
+
+	(SELECT SUM(a.valor_pago) FROM itens_bordero AS t
+	INNER JOIN lancamento AS a ON(t.cod_lancamento_operacional = a.codigo)
+	INNER JOIN lancamento AS n ON(t.cod_lancamento_cliente = n.codigo)
+	INNER JOIN vw_lancamento_datas AS w ON(w.cod_lancamento = n.codigo)
+	WHERE w.ano_quitacao = v.ano_quitacao
+	AND w.mes_quitacao = v.mes_quitacao
+	AND a.cod_unidade = l.cod_unidade
+	AND a.status IN('q', 'f')) AS valor_operacional
+
+
+FROM parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(l.codigo = p.cod_lancamento)
+INNER JOIN vw_lancamento_datas AS v ON(v.cod_lancamento = p.cod_lancamento)
+WHERE l.status IN('f', 'q')
+AND l.cod_unidade = $P{COD_UNIDADE}
+AND l.tipo = 'c'
+AND l.data_quitacao BETWEEN $P{INICIO} AND $P{FIM}
+GROUP BY v.ano_quitacao, v.mes_quitacao, l.cod_unidade
+ORDER BY v.ano_quitacao, v.mes_quitacao]]>
+	</queryString>
+	<field name="ano_quitacao" class="java.lang.Integer"/>
+	<field name="mes_quitacao" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor_cliente" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor_operacional" class="java.lang.Integer"/>
+	<variable name="isPrint" class="java.lang.Boolean">
+		<variableExpression><![CDATA[!$V{isPrint}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_cliente}]]></variableExpression>
+	</variable>
+	<variable name="totalOperacional" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_operacional}]]></variableExpression>
+	</variable>
+	<variable name="lucroAcumulado" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_cliente} - $F{valor_operacional}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="43" y="54" width="95" height="13"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Planilha]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="802" height="52"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITULO} + $P{ANO_BASE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/header_landscape.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="13">
+			<rectangle>
+				<reportElement x="35" y="0" width="729" height="12"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="43" y="0" width="95" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mês]]></text>
+			</staticText>
+			<line>
+				<reportElement x="144" y="0" width="1" height="13"/>
+			</line>
+			<staticText>
+				<reportElement x="455" y="0" width="103" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Acumulado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="0" width="103" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="0" width="103" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Acumulado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="661" y="0" width="103" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Acumulado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="351" y="0" width="1" height="13"/>
+			</line>
+			<line>
+				<reportElement x="556" y="0" width="1" height="13"/>
+			</line>
+			<staticText>
+				<reportElement x="352" y="0" width="103" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor Profissional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="558" y="0" width="103" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Vlr. Cart. ADM]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<line>
+				<reportElement x="764" y="0" width="1" height="11"/>
+			</line>
+			<rectangle>
+				<reportElement x="35" y="0" width="729" height="11" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[$V{isPrint}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="">
+				<reportElement x="43" y="0" width="101" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.MES_LITERAL[$F{mes_quitacao} - 1]]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="352" y="0" width="103" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[($F{valor_operacional} == null)? 0 : $F{valor_operacional}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="455" y="0" width="101" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{totalOperacional}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="144" y="0" width="1" height="11"/>
+			</line>
+			<line>
+				<reportElement x="35" y="0" width="1" height="11"/>
+			</line>
+			<line>
+				<reportElement x="35" y="10" width="729" height="1">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT} == 12]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="145" y="0" width="103" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{valor_cliente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="248" y="0" width="103" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="661" y="0" width="103" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{lucroAcumulado}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="351" y="0" width="1" height="11"/>
+			</line>
+			<line>
+				<reportElement x="556" y="0" width="1" height="11"/>
+			</line>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="558" y="0" width="103" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{valor_cliente} - (($F{valor_operacional} == null)?
+    $F{valor_cliente} : $F{valor_operacional})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="802" height="44"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer_landscape.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="341">
+			<subreport>
+				<reportElement x="0" y="297" width="802" height="44"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer_landscape.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement x="35" y="19" width="732" height="268"/>
+			</rectangle>
+			<lineChart>
+				<chart isShowLegend="true">
+					<reportElement mode="Transparent" x="53" y="27" width="696" height="253" backcolor="#CCCCCC"/>
+					<chartTitle/>
+					<chartSubtitle color="#000000"/>
+					<chartLegend backgroundColor="#FFFFFF" position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Valor Cliente"]]></seriesExpression>
+						<categoryExpression><![CDATA[com.marcsoftware.Util.MES_LITERAL[$F{mes_quitacao} - 1]]]></categoryExpression>
+						<valueExpression><![CDATA[$F{valor_cliente}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Valor Operacional"]]></seriesExpression>
+						<categoryExpression><![CDATA[com.marcsoftware.Util.MES_LITERAL[$F{mes_quitacao} - 1]]]></categoryExpression>
+						<valueExpression><![CDATA[$F{valor_operacional}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Carteirta ADM"]]></seriesExpression>
+						<categoryExpression><![CDATA[com.marcsoftware.Util.MES_LITERAL[$F{mes_quitacao} -1]]]></categoryExpression>
+						<valueExpression><![CDATA[$F{valor_cliente} - $F{valor_operacional}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true" isShowShapes="true">
+					<plot>
+						<seriesColor seriesOrder="0" color="#0099FF"/>
+						<seriesColor seriesOrder="1" color="#FF0000"/>
+						<seriesColor seriesOrder="2" color="#009966"/>
+					</plot>
+					<categoryAxisLabelExpression><![CDATA["Meses"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" tickLabelMask="MMM" verticalTickLabels="true" axisLineColor="#000000">
+							<labelFont>
+								<font isBold="true" pdfFontName="Helvetica-Bold"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="7"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Contratos Vendidos"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font isBold="true" pdfFontName="Helvetica-Bold"/>
+							</labelFont>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<staticText>
+				<reportElement x="43" y="6" width="759" height="13"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Análise de Desempenho]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

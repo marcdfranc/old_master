@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page errorPage="/exception.jsp" %>
+
+<%@page import="org.hibernate.Query"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="java.util.List"%>
+<%@page import="com.marcsoftware.database.Unidade"%>
+<%@page import="com.marcsoftware.utilities.HibernateUtil"%>
+<%@page import="com.marcsoftware.utilities.DataGrid"%>
+<%@page import="com.marcsoftware.database.Profissional"%>
+<%@page import="com.marcsoftware.database.Informacao"%>
+<%@page import="com.marcsoftware.utilities.Util"%>
+<%@page import="com.marcsoftware.database.Especialidade"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="shortcut icon" href="../icone.ico">
+	<link rel="StyleSheet" href="../css/estilo.css" type="text/css" />	
+	<link type="text/css" href="../js/jquery/theme/ui.all.css" rel="Stylesheet" />
+	<link rel="StyleSheet" href="../css/component.css" type="text/css" />
+	<!--[if IE]><link rel="StyleSheet" href="../css/ieStyle.css" type="text/css" /><![endif]-->	
+	
+	<script type="text/javascript" src="../js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../js/jquery/interface.js"></script>
+	<script type="text/javascript" src="../js/lib/new_datagrid.js"></script>
+	<script type="text/javascript" src="../js/lib/mask.js" ></script>
+	<script type="text/javascript" src="../js/comum/profissional.js" ></script>
+	<script type="text/javascript" src="../js/lib/componentes/msf_windows.js"></script>
+	<script type="text/javascript" src="../js/lib/util.js"></script>
+	
+	<jsp:useBean id="informacao" class="com.marcsoftware.database.Informacao"></jsp:useBean>
+	
+	<%!Query query;%>
+	<%!Session sess; %>
+	<%!List<Unidade> unidadeList;%>
+	<%!List<Especialidade> especialidade; %>
+	<%sess = (Session) session.getAttribute("hb");	
+	if (!sess.isOpen()) {
+		sess = HibernateUtil.getSession();
+	}
+	Util.historico(sess, Long.valueOf(session.getAttribute("acessoId").toString()), request);
+	if (session.getAttribute("perfil").equals("a")) {
+		query= sess.createQuery("from Unidade as u where u.deleted =\'n\'");		
+	} else if (session.getAttribute("perfil").equals("f")) {
+		query= sess.getNamedQuery("unidadeByUser");
+		query.setString("username", (String) session.getAttribute("username"));
+	} else {
+		query = sess.createQuery("select p.unidade from Pessoa as p where p.login = :username");
+		query.setString("username", (String) session.getAttribute("username"));
+	}
+	unidadeList= (List<Unidade>) query.list();
+	query= sess.createQuery("from Especialidade");
+	especialidade= (List<Especialidade>) query.list();
+	%>
+		
+	<title>Master Profissionais</title>
+</head>
+<body onload="load()">
+	<div id="preWindow" class="removeBorda" title="Selecione a Unidade" style="display: none;">			
+		<form id="formCarteirinha" onsubmit="return false;">
+			<fieldset>
+				<label for="unidadeIds"></label>
+				<select id="unidadeIds" name="unidadeIds">
+					<%for(Unidade unidade: unidadeList) {%>
+						<option value="<%= unidade.getCodigo() %>"><%= unidade.getReferencia() %></option>
+					<%}%>
+				</select>
+			</fieldset>
+		</form>
+	</div>	
+	<div id="cartaoWindow" class="removeBorda" title="Selecione os Logins para Operação" style="display: none;">			
+		<form id="formCarteirinha" onsubmit="return false;">
+			<fieldset>
+				<label for="userIds">Seleção de Logins</label>
+				<div class="itContent ui-corner-all" id="selectorLogins" style="width: 639px">
+					<div style="width: 300px; height: 100px; float:left; margin-bottom: 0 !important">
+						<label class="ui-corner-all titleBar">Itens</label>
+						<ul id="sortableLeft" class="connectedSortable ui-corner-all leftList" style="width: 300px; height: 250px;">
+							
+						</ul>
+					</div>
+					<div class="btContent" ></div>
+					<div style="width: 300px; height: 80px; float:left; margin-bottom: 0 !important">
+						<label class="ui-corner-all titleBar">Selecinados</label>
+						<ul id="sortableRight" class="connectedSortable ui-corner-all leftList" style="width: 300px; height: 250px;">							
+							
+						</ul>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<%@ include file="../inc/header.jsp" %>	
+	<jsp:include page="../inc/menu.jsp">
+		<jsp:param name="currentPage" value="profissional"/>
+	</jsp:include>	
+	<div id="centerAll">
+		<jsp:include page="../inc/submenu.jsp">
+			<jsp:param name="currentPage" value="profissional"/>			
+		</jsp:include>
+		<div id="formStyle">
+			<form id="unit" method="get" onsubmit="return search()">
+				<div id="geralDate" class="alignHeader" >
+					<jsp:include page="../inc/feedback.jsp">
+						<jsp:param name="currPage" value="Profissionais"/>			
+					</jsp:include>
+					<div id="abaMenu">
+						<div class="aba2">
+							<a href="empresa_saude.jsp">Empresa de Saúde</a>
+						</div>
+						<div class="sectedAba2">
+							<label>></label>	
+						</div>
+						<div class="sectedAba2">
+							<label>Profissionais Liberais</label>
+						</div>
+					</div>
+					<div class="topContent">
+						<div id="referencia" class="textBox" style="width: 70px;">
+							<label>Referencia</label><br/>
+							<input id="referenciaIn" name="referenciaIn" type="text" style="width: 70px;"/>												
+						</div>
+						<div id="nome" class="textBox" style="width: 280px;">
+							<label>Nome</label><br/>
+							<input id="nomeIn" name="nomeIn" type="text" style="width: 280px;"/>
+						</div>
+						<div id="cpf" class="textBox" style="width: 100px">
+							<label>Cpf</label><br/>
+							<input id="cpfIn" name="cpfIn" type="text" style="width: 100px" onkeydown="mask(this, cpf);"/>
+						</div>
+						<div id="conselho" class="textBox" style="width: 135px;">
+							<label>Nro. Conselho</label><br/>
+							<input id="conselhoIn" name="conselhoIn" type="text" style="width: 128px;" class="required"/>
+						</div>
+						<div id="setor" class="textBox">
+							<label>Atividade</label><br/>
+							<select type="select-multiple" id="setorIn" name="setorIn">
+								<option value="">Selecione</option>							
+								<option value="o">Odontológica</option>								
+								<option value="l">Laboratorial</option>
+								<option value="m">Médica</option>
+								<option value="h">Hospitalar</option>								
+							</select>
+						</div>
+						<div id="setor" class="textBox">
+							<label>Setor</label><br/>
+							<select type="select-multiple" style="width: 205px" id="especialidadeIn" name="especialidadeIn">
+								<option value="">Selecione</option>
+								<%for(Especialidade esp: especialidade) {
+									out.print("<option value=\"" + esp.getCodigo() + 
+										"\">" + esp.getDescricao() + "</option>");
+								}								
+								%>								
+							</select>
+						</div>												
+						<div id="status" class="textBox" style="width: 285px">
+							<label >Status</label><br />
+							<div class="checkRadio">
+								<label class="labelCheck" >Ativo</label>
+								<input id="ativoChecked" name="ativoChecked" type="radio" checked="checked" value="a" />
+								<label class="labelCheck" >Bloqueado</label>
+								<input id="ativoChecked" name="ativoChecked" type="radio" value="b" />
+								<label class="labelCheck" >Cancelado</label>
+								<input id="ativoChecked" name="ativoChecked" type="radio" value="c" />
+							</div>
+						</div>
+						<div id="tel" class="textBox" style="width: 80px">
+							<label>Telefone</label><br/>					
+							<input id="telIn" name="telIn" type="text" style="width: 80px"/>
+						</div>
+						<div id="unidadeIn" class="textBox">
+							<label>Cod. Unid.</label><br/>
+							<select id="unidadeId" name="unidadeId">
+								<% if (session.getAttribute("perfil").equals("a")) {%>
+									<option value="">Selecione</option>
+								<% } else { %>
+									<option value="0@0">Selecione</option>									
+								<%}
+								if (unidadeList.size() == 1) {
+									out.print("<option value=\"" + unidadeList.get(0).getRazaoSocial() + "@" + 
+											unidadeList.get(0).getCodigo() + 
+											"\" selected=\"selected\">" + unidadeList.get(0).getReferencia() + "</option>");
+								} else {
+									for(Unidade un: unidadeList) {
+										out.print("<option value=\"" + un.getRazaoSocial() + "@" +
+												un.getCodigo() + "\">" + un.getReferencia() + "</option>");
+									}
+								}
+								%>
+							</select>
+						</div>
+					</div>				
+				</div>
+				<div class="topButtonContent">
+					<%if (session.getAttribute("perfil").equals("a")
+							|| session.getAttribute("perfil").equals("f")) {%>
+						<div class="formGreenButton">
+							<input class="greenButtonStyle" type="button" value="Cartão" onclick="operacaoCartao()"/>								
+						</div>
+					<%}%>
+					<div class="formGreenButton">
+						<input class="greenButtonStyle" type="submit" value="Buscar"/>
+					</div>
+				</div>		
+				<div id="mainContent">
+					<div id="counter" class="counter"></div>
+					<div id="dataGrid">
+						<%
+						DataGrid dataGrid = new DataGrid(null);
+						if (session.getAttribute("perfil").toString().equals("a")
+								|| session.getAttribute("perfil").toString().equals("d")) {
+							query= sess.createQuery("from Profissional as p order by p.nome");
+						} else {
+							query= sess.createQuery("from Profissional as p where p.unidade.codigo = :unidade order by p.nome");
+							query.setLong("unidade", Long.valueOf(session.getAttribute("unidade").toString()));
+						}
+						int gridLines= query.list().size();
+						query.setFirstResult(0);
+						query.setMaxResults(30);
+						List<Profissional> profissional= (List<Profissional>) query.list();
+						dataGrid.addColum("5", "Ref.");
+						dataGrid.addColum("40", "Nome");
+						dataGrid.addColum("20", "CPF");
+						dataGrid.addColum("17", "Conselho");
+						dataGrid.addColum("18", "Fone");
+						dataGrid.addColum("2", "St.");
+						for(Profissional prof: profissional) {
+							query = sess.getNamedQuery("informacaoPrincipal");
+							query.setEntity("pessoa", prof);
+							query.setFirstResult(0);
+							query.setMaxResults(1);
+							informacao= (Informacao) query.uniqueResult();
+							dataGrid.setId(String.valueOf(prof.getCodigo()));
+							dataGrid.addData(String.valueOf(prof.getCodigo()));
+							dataGrid.addData(Util.initCap(prof.getNome()));
+							dataGrid.addData(Util.mountCpf(prof.getCpf()));
+							dataGrid.addData(prof.getConselho());
+							dataGrid.addData((informacao== null)? "" : informacao.getDescricao());
+							dataGrid.addImg(Util.getIcon(prof.getAtivo()));
+							dataGrid.addRow();
+						}
+						out.print(dataGrid.getTable(gridLines));
+						%>		
+						<div id="pagerGrid" class="pagerGrid"></div>										
+					</div>
+				</div>
+			</form>			
+		</div>
+		<%@ include file="../inc/footer.html" %>
+		<%sess.close(); %>
+	</div>	
+</body>
+</html>

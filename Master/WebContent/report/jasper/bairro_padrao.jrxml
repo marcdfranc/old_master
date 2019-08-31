@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8662f3ff-364d-43b3-9d39-4b204ed92b5a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/marcelo/Documents/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT cidade, UPPER(uf) AS uf, bairro, u.report_logo
+FROM cep2005 c
+INNER JOIN unidade u on (u.codigo = c.codigo)
+WHERE (1=1)
+GROUP BY cidade, uf, bairro, u.report_logo]]>
+	</queryString>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="report_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="Cidade_Uf" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{cidade}]]></groupExpression>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="74">
+			<staticText>
+				<reportElement uuid="76088a41-46f4-43cb-b057-150601e6db38" x="146" y="4" width="290" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[RELATORIO DE BAIRROS]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="a8dd2208-cde6-48ce-9c4e-5e97d768ce21" x="2" y="1" width="144" height="42"/>
+				<imageExpression><![CDATA[($F{report_logo} == null)?  $P{CONTEXT_PATH} + "logo_report/logo78.png":
+$P{CONTEXT_PATH} + $F{report_logo}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="9682d8ed-9e2f-4d90-8594-55d7557fbbc6" x="0" y="47" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="da2f3894-d091-4283-83e0-3c01daf7296d" x="146" y="27" width="290" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cidade}.toUpperCase() + "-" + $F{uf}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement uuid="73eb84dd-3982-4fd2-9694-2412f38c99c5" x="26" y="0" width="242" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec3f6700-cbe4-4f7a-b7f3-b4239346c50c" x="268" y="0" width="261" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Bairro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement uuid="6757ac1b-8435-4876-9017-9239fcafe9cf" x="26" y="0" width="242" height="13"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.marcsoftware.Util.initCap($F{cidade}) + " - " + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="68d0e133-4f96-4a92-8da9-3799b8cd885d" x="268" y="0" width="261" height="13"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.marcsoftware.Util.initCap($F{bairro})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="d46705a0-49dc-4a7e-a866-9855f1215a11" x="26" y="14" width="503" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="5177c9bc-9935-4535-88a4-09540a89a9af" x="26" y="-1" width="503" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="43">
+			<textField>
+				<reportElement uuid="aaec960a-587a-4d84-b053-15a78328d161" stretchType="RelativeToTallestObject" x="438" y="25" width="115" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d&apos; de &apos;MMMM&apos; de &apos;yyyy">
+				<reportElement uuid="41ab2cf1-2ddf-4a96-a56b-c8a7305ad32d" x="449" y="9" width="104" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f4e6fa5f-7bfe-4ffd-a853-9507119cd5d6" x="1" y="9" width="115" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[SAC (11) 3013-2230]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

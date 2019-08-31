@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="envelope_unidade" language="groovy" pageWidth="652" pageHeight="321" columnWidth="612" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="REF_UNIDADE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT INITCAP(j.fantasia) AS nome, INITCAP(e.rua_av) AS rua_av, e.numero, INITCAP(e.bairro) AS bairro, 
+	INITCAP(e.cidade ) AS cidade, UPPER(e.uf) AS uf, e.complemento, e.cep
+FROM unidade AS u
+	INNER JOIN endereco AS e ON(e.cod_pessoa = u.codigo)
+	INNER JOIN juridica AS j ON(u.codigo = j.codigo)
+	INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+WHERE p.referencia = $P{REF_UNIDADE}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="281" splitType="Stretch">
+			<textField>
+				<reportElement x="32" y="211" width="344" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="32" y="243" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="227" width="344" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="195" width="344" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Master Odontologia & Saúde]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

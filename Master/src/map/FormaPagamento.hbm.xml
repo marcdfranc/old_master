@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="FormaPagamento" table="forma_pagamento">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_forma_pagamento</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="descricao" not-null="true"/>
+  <property lazy="false" name="concilia" not-null="true"/>
+ </class>
+</hibernate-mapping>

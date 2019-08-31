@@ -1,0 +1,800 @@
+mapeamento: Conta
+	contaOf
+		retorno: contas de determinada pessoa;
+		parametros:
+			pessoa: Entity;
+	end;	
+	contaOfByCode
+		retorno: contas de determinada pessoa;
+		parametros:
+			codigo: Long; -> codigo da pessoa
+	end;
+end map;
+
+mapeamento: ContratoEmpresa
+	empresaContrato
+		retorno: Empresas vinculadas a determinado usuário;
+		parametros:
+			usuario: Entity;
+	end;	
+	
+	usuarioContrato
+		retorno: Usuarios vinculados a determinada Empresa;
+		parametros:
+			empresa: Entity;
+	end;
+	
+	EmpresaBordero
+		retorno: Lançamentos de usuarios vinculados a determinada empresa
+		paramentros
+			empresa : entity
+	end;
+	
+	ctrsEmpresa
+		retorno: numero de contratos vinculados a uma determinada empresa
+		parametros
+			empresa: Long
+	end;
+end Map
+
+mapeamento: Dependente
+	dependenteOf
+		retorno: Dependentes de determinado usuário;
+		parametros:
+			usuario: Entity;
+	end;	
+end Map
+
+mapeamento: Endereco
+	enderecoOf
+		retorno: Endereço de determinada pessoa;
+		parametros:
+			pessoa: Entity;
+	end;	
+end Map
+
+mapeamento: Posicao
+	oneInfo
+		retorno: determinada posição por seu código ;
+		parametros:
+			codigo: Long;
+	end;	
+end Map
+
+mapeamento: Sevico
+	precoUnidade
+		retorno: valor de determinado serviço para determinada unidade;
+		parametros:
+			servico: Long;
+			unidade: Long;
+	end;
+end Map
+
+mapeamento: Unidade
+	unidadesAtivas
+		retorno: quantdidade total de unidades ativas;		
+	end;
+	unidadeCount
+		retorno: Numero total de unidades;		
+	end;
+	administrador
+		retorno: lista de franqueados;	
+	end;
+	unidadeByUser
+		retorno: lista de unidades pertinentes a um username;
+		parametros:
+			username: String;
+	end;
+	totalProfissional
+		retorno: valor total do pagamento a profissionais para determinada unidade
+		parametros
+			unidade: Long
+	end;
+end Map
+
+mapeamento: Tabela
+	tabelaUnidade
+		retorno: Tabela de serviços pertinentes a uma unidade
+		parametros
+			unidade: Entity;
+	end;
+	
+	tabelaUnidadeByCode
+		retorno: Tabela de serviços pertinentes a uma unidade
+		parametros
+			codigo: Long;
+	end;
+			
+	tabelaOdontoByCode
+		retorno: Tabela de serviços do setor odontológico pertinentes a uma unidade
+		parametros
+			codigo: long;
+	end;
+			
+	tabelaBySetorUnCode
+		retorno: Tabela de serviços pertinentes a um setor e uma unidade
+		parametros
+			unidade: long;
+			setor: String;
+	end;
+			
+	tabelaOrcamento
+		retorno: valor de um ou vários serviços para determinada unidade mediante o setor
+		parametros:
+			unidade: Long
+			setor: String
+			referencia: String
+	end;
+end map
+
+mapeamento: Profissional
+	profissionalOf
+		retorno: Profissionais pertinentes a determinada unidade
+		parametros
+			codigo: Long;
+	end;
+			
+	pagProfissionalAll
+		retorno: parcelas de orçamento referente a um profissional
+		parametros
+			profissional: long;
+	end;
+	
+	pagProfissionalAllByDate
+		retorno: parcelas de orçamentp referentes a um profissional quitadas 
+			em determinado periodo;
+		paramentros
+			profissional: Long;
+			inicio: Date;
+			fim: date;
+	end;
+	
+	pagProfissionalUnd
+		retorno: parcelas de orçamento referentes aos borderos profissionais 
+			de uma unidade por data base.
+		parametros:
+			profissional: Long
+			unidade: Long
+			inicio: Date
+			fim: Date
+	end;
+	
+	pagProfissionalBase
+		retorno: parcelas de orçamento referentes aos borderos por data base.			
+		parametros:
+			profissional: Long			
+			inicio: Date
+			fim: Date
+	end;
+	pagProfissional
+		retorno: parcela de orçamento referente a um profissional por lançamento
+		parametros
+			lancamento: Long
+			profissional: Long
+	end;
+end map;
+
+mapeamento: itensOrcamento			
+	itensOrcamentoOf
+		retorno: itens de orçamentos pertinentes a determinada
+		parametros
+			codigo:Long
+	end;
+	
+	operacionalOrcamento
+		retorno: total do orçamento pela tabela operacional de determinada unidade
+		parametros
+			orcamento: Long
+			unidade: Long
+	end;
+	
+	clienteOrcamento
+		retorno: total do orçamento pela tabela cliente de determinada unidade
+		parametros
+			orcamento: Long
+			unidade: Long
+	end;
+end map;
+
+mapeamento: Orcamento
+	orcamentoProfOf
+		retorno: Orçamentos de profissionais pertinentes a determinada unidade
+		parametros
+			codigo: Long
+	end;
+	
+	orcamentoEmpresaOf
+		retorno: Orçamentos de empresas de saude pertinentes a determinada unidade
+		parametros
+			codigo: Long
+	end;
+
+	totalOrcamento
+		retorno: valor total de um orçamento
+		parametros
+			unidade: Long
+			orcamento: Long
+	end;
+	
+	totalDentista
+		retorno: valor total a ser pago de um orçamento a um dentista
+		parametros
+			unidade: Long
+			orcamento: Long
+	end;
+			
+	orcamentoByUser
+		retorno: orçamentos de profissionais pertinentes a determinado usuário
+		parametros
+			codigo: Long
+	end;
+	
+	orcamentoEmpByUser
+		retorno: orçamentos de empresas de saude pertinentes a determinado usuário
+		parametros
+			codigo: Long
+	end;	
+end map;
+
+mapeamento: ParcelaOrcamento
+	countParcela
+		retorno: quantidade de parcelas de um orçamento;
+		parametros			
+			orcamento: Entity;
+	end;
+	
+	countParcelaAtrasoOf
+		retorno: quantidade de parcelas devidas por um determinado usuario;
+		parametros			
+			codigo: Long;
+	end;
+	
+	parcelamentoByCode
+		retorno: parcelas pertinentes a um lançamento pelo código do lançamento
+		parametros
+			codigo: long;
+	end;
+			
+	parcelamentoByCodeOrcamento
+		retorno: parcelas pertinentes a um orçamento pelo código do orçamento
+		parametros
+			codigo: long;
+	end;
+			
+	parcelamento
+		retorno: parcelas pertinentes a um orçamento
+		parametros
+			orcamento: entity
+	end;
+	
+	parcelaCreditoOrc
+		retorno: Parcelas de crédito de orcamento referentes a um usuario
+		parametros
+			usuario: Long
+	end;
+			
+	parcelaOrcAnterior
+		retorno: Parcelas de crédito de orçamentos referentes a um usuario anteriores a certa data
+		parametros
+			usuario: Long
+			dataBase: Date
+	end;
+			
+	parcelaByUsuario
+		retorno: parcelas de orçamentos pertinentes a um usuário
+		parametros:
+			usuario: Long
+	end;
+			
+	parcelaByDependente
+		retorno: Parcelas referentes aos orçamentos de dependentes
+		parametros:
+			usuario: Entity
+			dependente: Entity
+	end;  
+			
+	lancamentoOrc
+		retorno: Lançamentos pertinentes aos orçamentos de um usuário no período
+		parametros:
+			usuario: entity
+			dataInicio: Date
+			dataFim: Date
+	end;
+	
+	totalParcelaFisicoHold
+		retorno: soma dos valores a receber referentes as 
+			parcelas de orçamento de um cliente físico em todas as unidades.
+		parametros
+			inicio: Date;
+			fim: Date;
+	end;
+	
+	totalParcelaFisico
+		retorno: soma dos valores a receber referentes as 
+			parcelas de orçamento de um cliente fisico em uma unidade.
+		parametros
+			inicio: Date;
+			fim: Date;
+			unidade: Long;
+	end;
+	
+	totalParcelaHold
+		retorno: soma dos valores a receber referentes as 
+			parcelas de orçamento de um cliente de plano empresarial
+			em todas as unidades.
+		parametros
+			inicio: Date;
+			fim: Date;
+	end;
+	
+	totalparcela
+		retorno: soma dos valores a receber referentes as 
+			parcelas de orçamento de um cliente de plano empresarial em uma unidade.
+		parametros
+			inicio: Date;
+			fim: Date;
+			unidade: Long;
+	end;
+end map;
+
+mapeamento: Mensalidade	
+	countMensalAtrasoOf
+		retorno: quantidade de mensalidades devidas por um determinado usuario;
+		parametros			
+			codigo: Long;
+	end;
+			
+	mensalidadeAnterior
+		retorno: mensalidades referentes a um usuario anteriores a data base
+		prametros:
+			dataBase: Date
+			usuario: Long
+	end;
+			
+	lancamentoMensalidade
+		retorno: lançamentos referentes a mensalidades de usuário no peíodo
+		parametros:
+			usuario: entity
+			dataInicio: Date
+			dataFim: Date
+	end;
+			
+	mensalidadeByUsuario
+		retorno: mensalidades referentes a determinado usuario
+		parametros:
+			usuario: Long
+	end;
+	
+	mensalidadeFisicaHold
+		retorno: soma do valor de todas mensalidades devidas por contratos
+			familiares para todas as unidades.			
+		parametros:
+			inicio: Date
+			fim: Date;
+	end;
+	
+	mensalidadeFisica
+		retorno: soma do valor de todas mensalidades por contratos
+			familiares devidas para uma unidade
+		parametros:
+			inicio: Date;
+			fim: Date;
+			unidade: Long;
+	end;
+	
+	mensalidadeJuridicaHold
+		retorno: soma do valor de todas mensalidades devidas por contratos
+			empresariais para todas as unidades.			
+		parametros:
+			inicio: Date
+			fim: Date;
+	end;
+	
+	mensalidadeJuridica
+		retorno: soma do valor de todas mensalidades por contratos
+			empresariais devidas para uma unidade
+		parametros:
+			inicio: Date;
+			fim: Date;
+			unidade: Long;
+	end;
+	
+end map;
+
+mapeamento: Informacao
+	informacaoPrincipal
+		retorno: telefone principal de determinada pessoa
+		parametros
+			pessoa: Entity
+	end;
+			
+	informacaoOf
+		retorno: inoformação de determinada pessoa
+		parametros
+			pessoa: Entity
+	end;
+			
+	infoPrincipalByCode
+		retorno: inoformação principal de determinada pessoa mediante seu codigo
+		parametros
+			codigo: Long
+	end;
+end map;
+
+
+mapeamento: Lancamento
+	lancamentoDebito
+		retorno: lançamentos de débito referentes a uma parcela de orçamento
+		parametros
+			parcela: String;
+	end;
+			
+	lancamentoByUsuario
+		retorno: lançamentos de crédito referentes a determinado usuário
+		parametros
+			usuario: long
+	end;
+			
+	parcelaQuitada
+		retorno: Quantidade de parcelas de orçamentos  pagas
+		parametros:
+			orcamento: long
+	end;
+			
+	lancamentoCaixaOpen
+		retorno: Lançamento pertinetes a um devido caixa aberto
+		parametros:
+			username: String
+			quitacao: timestamp
+	end;
+			
+	lancamentoCaixaClose
+		retorno: Lançamento pertinetes a um devido caixa fechado
+		parametros:
+			username: String
+			inicio: timestamp
+			fim: timestamp
+	end;
+end map;
+
+mapeamento: FaturaEmpresa
+	faturaEmpOpen
+		retorno: faturas abertas de determinada empresa
+		parametros
+			empresa: entity
+	end;	
+			
+	totalFatura
+		retorno: valor total da soma dos valores de lançamento de uma fatura empresa
+		parametros:
+			fatura: Long
+	end;
+			
+	totalFaturaAcrescimo
+		retorno: valor total da soma dos valores de lançamento em atraso de uma fatura empresa
+		parametros
+			fatura: long
+	end;
+end map;
+
+LancamentoFaturaEmp
+	lancamentoEmpresa
+		retorno: lançamentos referentes a faturas de empresa
+		parametros:
+			fatura: entity
+	end;		
+		
+	parcelaBorderoEmp
+		retorno: lançamentos de parcelas de orçamento referentes a uma empresa para o borderô.
+		parametros:
+			vencimento: Date
+			empresa: entity
+	end;
+	
+	parcelaBorderoHold
+		retorno: lançamentos de parcelas de orçamento para borderô de empresas
+			de todas as unidades.
+	parametros;
+		vencimento: date;
+	end;
+	
+	parcelaBordero
+		retorno: lançamentos de parcelas de orçamento para borderô de empresas
+			para uma unidade.
+	parametros;
+		vencimento: date;
+		unidade: Long;
+	end;
+	
+	mensalidadeBorderoEmp	
+		retorno: Lançamentos de mensalidade referentes a uma empresa para o borderô.
+		parametros;
+			vencimento: Date
+			empresa: entity
+	end;
+	
+	mensalidadeBorderoHold
+		retorno: Lançamentos de mensalidade para o borderô de todas as unidades.
+		parametros;
+			vencimento: Date
+			empresa: entity
+	end;
+	
+	mensalidadeBordero
+		retorno: Lançamentos de mensalidade para o borderô de uma unidade.
+		parametros;
+			vencimento: Date;
+			empresa: entity;
+			unidade: Long;
+	end;
+	
+	mensalidadeEmpresa
+		retorno: mensalidades para o borderô de determinada empresa.
+		parametros:
+			vencimento: Date
+			empresa: entity
+	end;
+	
+	mensalidadeEmp
+		retorno: mensalidades para o borderô de determinada empresa.
+		parametros:
+			vencimento: Date
+	end;
+	
+	parcelaEmpresa
+		retorno: lançamentos de parcelas de orçamento referentes a uma empresa para o borderô.
+		parametros:
+			vencimento: Date
+			empresa: entity
+	end;
+	
+	parcelaEmp
+		retorno: lançamentos de parcelas de orçamento referentes a uma empresa para o borderô.
+		parametros:
+			vencimento: Date
+			empresa: entity
+	end;
+end map;
+
+Cc
+	contaDebito
+		retorno: valor da soma dos lançamentos de débito referentyes a uma cc
+		parametros:
+			unidade: long;
+			dataInicio: Date
+			dataFim: date;
+	end;
+	
+	contaDebitoHold
+		retorno: valor da soma dos lançamentos de débito de todas as unidades
+		parametros:
+			dataInicio: Date
+			dataFim: date;
+	end;	
+			
+	contaCredito
+		retorno: valor da soma dos lançamentos de crédito referents a uma cc
+		parametros
+			unidade: long;
+			dataInicio: Date;
+			dataFim: Date;
+	end;
+	
+	contaCreditoHold
+		retorno: valor da soma dos lançamentos de crédito de todas as unidades
+		parametros
+			dataInicio: Date;
+			dataFim: Date;
+	end;
+			
+	ccLancamento
+		retorno: lançamentos referentes a uma unidade no periodo da cc
+		prametros
+			unidade: long;
+			dataInicio: timestamp;
+			dataFim: timestamp;
+	end;
+
+	ccLancamentoHold
+		retorno: lançamentos referentes a todas as unidades no periodo da cc
+		prametros
+			dataInicio: timestamp;
+			dataFim: timestamp;
+	end;
+end map;
+
+caixa
+	caixaFechamento
+		retorno: soma dos valores de lançamentos em determinado periodo para determinado usuario 
+			que não são fecamento de caixa;
+		prametros
+			usuario: String;
+			inicio: timestamp
+			fim: timestamp
+		Observação: utilizado para fechamento de caixa;
+	end;		
+end map;
+
+usuario
+	usuarioOf
+		retorno: usuarios pertinentes a uma unidade
+	parametros
+		codigo: Long; //codigo da unidade
+	end;
+		
+	usuarioByUser
+		retorno: usuarios pertinentes a um odevido username;
+		paramaetros
+			username: String;
+	end;
+			
+	adesaoByCtr
+		retorno: lançamento de adesão para determinado ctr
+		parametros
+			codigo: Long;
+	end;	
+end map;
+
+itensBordero
+	totalRepasse
+		retorno: valor total de um repasse de valor a profissional na tabela profissional;
+	parametros
+		bordero: Long;
+	end;
+		
+	totalBordero
+		retorno: valor total de um repasse de valor a profissional na tabela cliente;
+	parametros
+		bordero: Long;
+	end;
+		
+	operacionalQuit
+		retorno: quantidade de lançamentos para profissionais quitados em um determinado bordero
+	parametros
+		bordero: long
+	end;
+	
+	clienteQuit
+		retorno: quantidade de lançamentos para clientes quitados em um determinado bordero
+	parametros
+		bordero: long
+	end;
+		
+	operacionalOpen
+		retorno: quantidade de lançamentos para profissionais abertos em um determinado bordero
+	parametros
+		bordero: long
+	end;
+end map;
+
+contrato
+	contratoLivre
+		retorno: contratos livres de estarem cadastrados para algum usuário por unidade.
+	parametros
+		unidade: Long
+	end;
+end map;
+
+FalturaVendedor
+	totalVenda
+		retorno: soma dos lançamentos de uma determinada fatura de pagamento de funcionarios
+	parametros
+		fatura: Long
+	end;
+end map;
+
+Conciliacao
+	totalConcilio
+		retorno: soma dos valores de lançamento de determinada conciliacao.
+	parametros
+		conciliacao: Long;
+	end;
+	
+	conciliacaoByUnidade
+		retorno: conciliações de determinada unidade
+	paramentros
+		unidade: Entity
+	end;
+	
+	debitoAConciliar
+		retorno: valor dos débitos conciliados por unidade
+		parametros:
+			unidade: Long;
+	end
+	
+	creditoAConciliar
+		retorno: valor dos créditos conciliados por unidade
+		parametros:
+			unidade: Long;
+	end
+	
+	debitoAConciliarHold
+		 retorno: valor dos débitos conciliados
+	end;
+	
+	creditoAConciliarHold
+		retorno: valor dos créditos conciliados
+	end;
+end map;
+	
+funcionario
+	totalComissao
+		retorno: soma do bordero a pagar de todos os funcionarios de determinada unidade.
+		parametros
+			unidade: Long
+	end;
+	
+	totalComissaoHold
+		retorno: soma do bordero a pagar de todos os funcionarios.
+	end;
+end map;
+
+EmpresaSaude
+	empresaSaudeOf
+		retorno: Empresas de saúde pertinentes a determinada unidade
+		parametros
+			unidade: Long;
+	end;
+	
+	pagEmpSaudeAll
+		retorno: parcelas de orçamento referente a uma empresa de saude
+		parametros
+			empresa: long;
+	end;
+	
+end map;
+
+configuração de componetes de filtro
+
+radio
+	dados: texto@textoPx@textoPy@px@py@value|texto@textoPx@textoPy@px@py@value 1..n
+	
+ItemSelector
+	dados: select dos dados da direita
+	
+Combo
+	utilizar mascara para formatação
+		mascara: texto@textoPx@textoPy@px@py
+	dados: select de preenchimetno
+
+textField
+	dados : @px@py@width
+	
+check box
+	indefinido
+	
+***********html para itenSelector***********
+
+<div class="itContent ui-corner-all" id="testeIt" >
+	<div style="width: 225px; height: 80px; float:left; margin-bottom: 0 !important">
+		<label class="ui-corner-all titleBar">Itens</label>
+		<ul id="sortable1" class="connectedSortable ui-corner-all leftList" style="width: 225px; height: 80px;">
+			<li style="height: 20px" title="numero 1" >Marcilio</li>
+			<li style="height: 20px" title="numero 2" >Luciana</li>
+			<li style="height: 20px" title="numero 3" >Nice</li>
+			<li style="height: 20px" title="numero 4" >Toninho</li>
+			<li style="height: 20px" title="numero 5" >Leonilda</li>
+		</ul>
+	</div>
+	<div class="btContent" ></div>
+	<div style="width: 225px; height: 80px; float:left; margin-bottom: 0 !important">
+		<label class="ui-corner-all titleBar">Selecinados</label>
+		<ul id="sortable2" class="connectedSortable ui-corner-all leftList" style="width: 225px; height: 80px;">							
+			<li title="marc" style="height: 20px">Marcelo</li>
+			<li title="jo" style="height: 20px">Josias</li>
+			<li title="lu" style="height: 20px">Luciane</li>
+			<li title="dai" style="height: 20px">Greice</li>
+			<li title="di" style="height: 20px">Diego</li>
+		</ul>
+	</div>
+</div>
+
+************javascript itSelector***************
+
+var admIteSel = new  MsfItemsSelectorAdm({
+	id:"testeIt", 
+	leftId: "sortable1", 
+	rightId: "sortable2", 
+	valueId:"valorConteiner",
+	height: 200
+});

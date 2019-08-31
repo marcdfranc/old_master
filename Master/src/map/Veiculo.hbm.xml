@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+	
+	<class name="Veiculo">
+		<id name="codigo">
+			<generator class="native">
+  				<param name="sequence">sq_veiculo</param>
+  			</generator>
+		</id>
+		
+		<property name="modelo"/>
+		<property name="ano"/>
+		<property name="placa"/>
+		<property name="estado"/>
+		<property name="cidade"/>
+		<property name="renavan"/>
+		<property name="chassis"/>
+		<property name="combustivel"/>
+		
+		<many-to-one name="unidade"	class="Unidade"	column="cod_unidade"/>	
+	</class>
+</hibernate-mapping>

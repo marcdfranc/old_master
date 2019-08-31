@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="88" pageHeight="20" columnWidth="88" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="com.jasperassistant.designer.Grid" value="false"/>
+	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
+	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
+	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
+	<property name="com.jasperassistant.designer.DataSource" value="master.com"/>
+	<parameter name="ORCAMENTO" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(p.cod_orcamento) AS pagas, o.parcelas FROM parcela_orcamento AS p 
+	INNER JOIN lancamento AS l ON(p.cod_lancamento = l.codigo)
+	INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+WHERE p.cod_orcamento = $P{ORCAMENTO}
+	AND l.status IN('q', 'f')
+GROUP BY o.parcelas]]>
+	</queryString>
+	<field name="pagas" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parcelas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="2" width="45" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parcela:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="2" width="37" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pagas}.toString() + "/" +  $F{parcelas}.toString()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Caixa">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_caixa</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="inicio"/>
+  <property generated="never" lazy="false" name="fim"/>
+  <property generated="never" lazy="false" name="status"/>
+  <property generated="never" lazy="false" name="valorInicial">
+   <column name="valor_inicial"/>
+  </property>
+  <property generated="never" lazy="false" name="valorFinal">
+   <column name="valor_final"/>
+  </property>
+  <many-to-one class="Login" column="usuario" name="login"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" name="unidade"/>
+ </class>
+ <sql-query name="caixaFechamento">select sum(l.valor_pago) from Lancamento as l 
+where l.recebimento = :usuario
+	and l.data_quitacao between :inicio and :fim
+	and descricao not in('fechamento de caixa')</sql-query>
+</hibernate-mapping>

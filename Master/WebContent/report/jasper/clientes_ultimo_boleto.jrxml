@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes_ultimo_boleto" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["RELATÓRIO DE CLIENTES POR ULTIMO BOLETO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select MAX(b.vencimento) AS ultimo_boleto, i.descricao AS fone,
+	e.referencia AS ref_unidade, p.cod_unidade,
+	CASE
+		WHEN f.nome ISNULL THEN j.razao_social
+		ELSE f.nome
+	END AS nome,
+	CASE
+		WHEN f.cpf ISNULL THEN j.cnpj
+		ELSE f.cpf
+	END AS cpf_cnpf,
+	CASE
+		WHEN u.ctr ISNULL THEN j.codigo
+		ELSE u.ctr
+	END AS ctr,
+	CASE
+		WHEN f.cpf ISNULL THEN 'n'
+		ELSE 's'
+	END AS fisica
+from boleto AS b
+LEFT JOIN fisica AS f ON(b.cod_pessoa = f.codigo)
+LEFT JOIN usuario AS u ON(b.cod_pessoa = u.codigo)
+LEFT JOIN juridica AS j ON(b.cod_pessoa = j.codigo)
+INNER JOIN informacao AS i ON(b.cod_pessoa = i.cod_pessoa)
+INNER JOIN pessoa AS p ON(b.cod_pessoa = p.codigo)
+INNER JOIN pessoa AS e ON(p.cod_unidade = e.codigo)
+WHERE i.principal = 's'
+GROUP BY b.cod_pessoa, f.nome, j.razao_social, f.cpf, j.cnpj, j.codigo, u.ctr,
+	i.descricao, e.referencia, p.cod_unidade]]>
+	</queryString>
+	<field name="ultimo_boleto" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf_cnpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fisica" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="isPrint" class="java.lang.Boolean">
+		<variableExpression><![CDATA[!$V{isPrint}]]></variableExpression>
+	</variable>
+	<variable name="isFisica" class="java.lang.Boolean">
+		<variableExpression><![CDATA[$F{fisica}.equals("s")]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="96" y="69" width="184" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="69" width="47" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Unidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="69" width="112" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="531" y="69" width="24" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[St.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="392" y="69" width="61" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Data/Boleto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="453" y="69" width="78" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fone]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="69" width="555" height="13"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="47" y="69" width="49" height="13" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CTR]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="61"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH}+ "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#E3E2E2">
+					<printWhenExpression><![CDATA[$V{isPrint}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="47" y="3" width="49" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="3" width="184" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="3" width="112" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($V{isFisica})? com.marcsoftware.Util.mountCpf($F{cpf_cnpf}) :
+    com.marcsoftware.Util.mountCnpj($F{cpf_cnpf})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="392" y="3" width="61" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{ultimo_boleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="3" width="76" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="3" width="47" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="532" y="3" width="19" height="13"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="20">
+					<printWhenExpression><![CDATA[!$V{isPrint}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="42"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+</jasperReport>

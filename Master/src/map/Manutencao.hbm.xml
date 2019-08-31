@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+
+	<class name="Manutencao">
+		<id name="codigo">
+			<generator class="native">
+  				<param name="sequence">sq_manutencao</param>
+  			</generator>
+		</id>
+		
+		<property name="data"/>
+		<property name="valor"/>
+		<property name="descricao"/>			
+	
+		<many-to-one name="lancamento" class="Lancamento"/>
+		<many-to-one name="fornecedor" class="Fornecedor"/>
+		<many-to-one name="veiculo" class="Veiculo"/>		
+	</class>
+</hibernate-mapping>

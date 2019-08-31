@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinha_pvc" language="groovy" pageWidth="242" pageHeight="156" columnWidth="242" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT v.unidade, v.codigo, v.ctr, v.nome, v.cod_unidade, v.ref_pessoa, v.referencia, v.cod_dependente,
+v.cod_unidade
+FROM vw_usuario_dependente AS v
+INNER JOIN unidade AS u ON(v.cod_unidade = u.codigo)
+WHERE cod_unidade = 78
+ORDER BY ctr, referencia]]>
+	</queryString>
+	<field name="unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_pessoa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_dependente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="156" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="242" height="156"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/carteirinha_pvc.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="16" y="12" width="191" height="40"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "logo_carteirinha/logo" + $F{cod_unidade} + ".png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="28" y="105" width="88" height="14" forecolor="#000000" backcolor="#000000"/>
+				<textElement markup="none">
+					<font size="11" isBold="true" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ref_pessoa}, 6) + "/" +
+$F{unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="123" width="200" height="14" forecolor="#000000" backcolor="#000000"/>
+				<textElement markup="none">
+					<font size="11" isBold="true" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

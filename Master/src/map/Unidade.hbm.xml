@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Juridica" name="Unidade">
+  <key column="codigo"/>
+  <property generated="never" lazy="false" name="descricao" not-null="true"/>
+  <property generated="never" lazy="false" name="tipo" not-null="true"/>
+  <property generated="never" lazy="false" name="taxa" not-null="true"/>
+  <property generated="never" lazy="false" name="tabela2" not-null="true"/>
+  <property generated="never" lazy="false" name="adesao"/>
+  <property generated="never" lazy="false" name="logo"/>
+  <property column="report_logo" generated="never" lazy="false" name="reportLogo"/>
+  <property generated="never" lazy="false" name="thumb"/>
+  <property column="thumb_report" generated="never" lazy="false" name="thumbReport"/>
+  <property column="percentagem_tratamento" generated="never"
+   lazy="false" name="percentagemTratamento"/>
+  <many-to-one class="Fisica" column="administrador"
+   name="administrador" unique="true"/>
+  <many-to-one class="com.marcsoftware.database.TabelaFranchising"
+   column="cod_tabela_franchising" name="tabelaFranchising"/>
+  <property column="percentagem_mensalidade" generated="never"
+   lazy="false" name="percentagemMensalidade"/>
+  <property generated="never" lazy="false" name="site"/>
+  <property column="ccob_id" name="ccobId"/>
+  <property column="ccob_verssao" name="ccobVerssao"/>
+  <property column="ccob_sequencial" name="ccobSequencial"/>
+ </joined-subclass>
+ <query name="administrador">from Fisica as f where f.login.perfil = 'f'</query>
+ <query name="unidadeByUser">from Unidade as u where u.administrador.login.username = :username and u.deleted = 'n'</query>
+ <sql-query name="unidadesAtivas">SELECT COUNT(codigo) from unidade INNER JOIN pessoa USING(codigo)
+			WHERE deleted= 'n'  AND ativo = 'a'</sql-query>
+ <sql-query name="unidadeCount">SELECT COUNT(codigo) from unidade INNER JOIN pessoa USING(codigo)
+			WHERE deleted= 'n'</sql-query>
+ <sql-query name="totalProfissional">SELECT SUM(l.valor) FROM parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(l.codigo = p.cod_lancamento)
+WHERE l.status = 'f'
+AND l.tipo = 'c'
+AND l.cod_unidade = :unidade</sql-query>
+</hibernate-mapping>

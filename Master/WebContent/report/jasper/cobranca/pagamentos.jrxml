@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pagamentos" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="com.jasperassistant.designer.Grid" value="false"/>
+	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
+	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
+	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
+	<property name="com.jasperassistant.designer.DataSource" value="master.com"/>
+	<parameter name="USUARIO" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(l.codigo) AS pagas, MAX(l.vencimento) AS ultima
+FROM 
+mensalidade as m INNER JOIN lancamento AS l ON(l.codigo = m.cod_lancamento)
+WHERE l.vencimento < CURRENT_DATE
+  AND l.status = 'q'
+  AND m.cod_usuario = $P{USUARIO}]]>
+	</queryString>
+	<field name="pagas" class="java.lang.Long"/>
+	<field name="ultima" class="java.util.Date"/>
+	<detail>
+		<band height="12">
+			<textField>
+				<reportElement positionType="Float" x="61" y="0" width="12" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{pagas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="1" y="0" width="60" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Última Paga:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="73" y="0" width="14" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[em]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" x="87" y="0" width="52" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{ultima}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

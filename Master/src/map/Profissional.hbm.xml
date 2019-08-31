@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Fisica" name="Profissional">
+  <key column="codigo"/>
+  <property generated="never" lazy="false" name="conselho"/>
+  <many-to-one class="Especialidade" column="cod_especialidade"
+   name="especialidade" not-null="true"/>
+ </joined-subclass>
+ <query name="profissionalOf">from Profissional as p where p.deleted = 'n' and p.unidade in ( &#xd;
+		 from Unidade as u where u.codigo = :codigo)</query>
+ <query name="pagProfissionalAll">from ParcelaOrcamento as p &#xd;
+	where p.id.orcamento.pessoa.codigo = :profissional&#xd;
+		and p.id.lancamento.status = 'f'&#xd;
+order by p.id.lancamento.dataQuitacao</query>
+ <query name="pagProfissional">from ParcelaOrcamento as p &#xd;
+	where p.id.lancamento.codigo = :lancamento&#xd;
+		and p.id.orcamento.pessoa = :profissional&#xd;
+		and p.id.lancamento.status = 'f'&#xd;
+order by p.id.lancamento.dataQuitacao</query>
+ <query name="pagProfissionalUnd">from ParcelaOrcamento as p	&#xd;
+	where p.id.orcamento.pessoa.codigo = :profissional&#xd;
+		and p.id.lancamento.unidade.codigo = :unidade&#xd;
+		and p.id.lancamento in(&#xd;
+			select i.id.cliente from ItensBordero as i&#xd;
+				where i.operacional.vencimento between :inicio and :fim&#xd;
+		)&#xd;
+order by p.id.lancamento.dataQuitacao</query>
+ <query name="pagProfissionalBase">from ParcelaOrcamento as p	&#xd;
+	where p.id.orcamento.pessoa.codigo = :profissional&#xd;
+		and p.id.lancamento in(&#xd;
+			select i.id.cliente from ItensBordero as i&#xd;
+				where i.operacional.vencimento between :inicio and :fim&#xd;
+		)&#xd;
+order by p.id.lancamento.dataQuitacao</query>
+</hibernate-mapping>

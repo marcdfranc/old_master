@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database.views">
+ <class name="ViewTotalOrcamento" table="vw_total_orcamento">
+  <id column="valor_cliente" name="vlrCliente">
+   <generator class="native">
+    <param name="sequence">sq_conta</param>
+   </generator>
+  </id>
+  <property column="valor_operacional" generated="never" insert="false"
+   lazy="false" name="vlrOperacional" update="false"/>
+  <property column="parcelamento" generated="never" insert="false"
+   lazy="false" name="qtdeParcelas" update="false"/>
+  <property column="total_parcela_quitada" generated="never"
+   insert="false" lazy="false" name="qtdeQuitadas" update="false"/>
+  <property name="status"/>
+ </class>
+</hibernate-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Login">
+  <id column="username" name="username"/>
+  <property generated="never" lazy="false" name="senha"/>
+  <property generated="never" lazy="false" name="perfil"/>
+  <property generated="never" lazy="false" name="foto"/>
+  <property generated="never" lazy="false" name="porta"/>
+  <property generated="never" lazy="false" name="tries"/>
+  <property column="header_cupom" generated="never" lazy="false" name="headerCupom"/>
+  <property generated="never" lazy="false" name="colunas"/>
+  <property column="sub_header" generated="never" lazy="false" name="subHeader"/>
+  <property column="footer_cupom" generated="never" lazy="false" name="footerCupom"/>
+  <property column="sub_footer" generated="never" lazy="false" name="subFooter"/>
+  <property column="bloco_nota" generated="never" lazy="false" name="blocoNotas"/>
+ </class>
+</hibernate-mapping>

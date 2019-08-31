@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Juridica" name="Fornecedor">
+  <key column="codigo"/>
+  <property name="contato"/>
+  <property column="cargo_contato" name="cargoContato"/>
+  <many-to-one class="Ramo" column="cod_ramo" name="ramo"/>
+ </joined-subclass>
+</hibernate-mapping>

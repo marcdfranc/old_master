@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="LancamentoFaturaEmp" table="lancamento_fatura_empresa">
+  <composite-id class="FaturaEmpresaId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="Lancamento" column="cod_lancamento" name="lancamento"/>
+   <key-many-to-one class="FaturaEmpresa" column="cod_fatura" name="faturaEmpresa"/>
+  </composite-id>
+ </class>
+ <query name="lancamentoEmpresa">select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+				where l.id.faturaEmpresa = :fatura</query>
+ <query name="parcelaBorderoEmp">select p.id.lancamento from ParcelaOrcamento as p&#xd;
+	where p.id.lancamento.status in('a', 'n')&#xd;
+		and p.id.lancamento.vencimento &lt; :vencimento&#xd;
+		and p.id.orcamento.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+				where c.id.empresa = :empresa&#xd;
+		)&#xd;
+		and p.id.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)</query>
+ <query name="parcelaBorderoHold">select p.id.lancamento from ParcelaOrcamento as p&#xd;
+	where p.id.lancamento.status in('a', 'n')&#xd;
+		and p.id.lancamento.vencimento &lt; :vencimento&#xd;
+		and p.id.orcamento.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+		)&#xd;
+		and p.id.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)</query>
+ <query name="mensalidadeBorderoEmp">select m.lancamento from Mensalidade as m &#xd;
+	where m.lancamento.status in('a', 'n')&#xd;
+		and m.lancamento.vencimento &lt; :vencimento&#xd;
+		and m.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and m.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+			where c.id.empresa = :empresa&#xd;
+		) order by m.lancamento.conta.descricao</query>
+ <query name="mensalidadeBorderoHold">select m.lancamento from Mensalidade as m &#xd;
+	where m.lancamento.status in('a', 'n')&#xd;
+		and m.lancamento.vencimento &lt; :vencimento&#xd;
+		and m.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and m.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+		) order by m.lancamento.conta.descricao</query>
+ <query name="mensalidadeEmpresa">from Mensalidade as m &#xd;
+	where m.lancamento.status in('a', 'n') &#xd;
+		and m.lancamento.vencimento &lt; :vencimento &#xd;
+		and m.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and m.usuario	in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+				where c.id.empresa.codigo = :empresa&#xd;
+		)</query>
+ <query name="mensalidadeEmp">from Mensalidade as m &#xd;
+	where m.lancamento.status in('a', 'n') &#xd;
+		and m.lancamento.vencimento &lt; :vencimento &#xd;
+		and m.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and m.usuario&#xd;
+			in(select c.id.usuario from ContratoEmpresa as c )</query>
+ <query name="parcelaEmpresa">from ParcelaOrcamento as p  &#xd;
+	where p.id.lancamento.status in('a', 'n') &#xd;
+		and p.id.lancamento.vencimento &lt; :vencimento&#xd;
+		and p.id.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and p.id.orcamento.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+				where c.id.empresa = :empresa&#xd;
+		)</query>
+ <query name="parcelaEmp">from ParcelaOrcamento as p  &#xd;
+	where p.id.lancamento.status in('a', 'n') &#xd;
+		and p.id.lancamento.vencimento &lt; :vencimento&#xd;
+		and p.id.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and p.id.orcamento.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c	&#xd;
+		)</query>
+ <query name="mensalidadeBordero">select m.lancamento from Mensalidade as m &#xd;
+	where m.lancamento.status in('a', 'n')&#xd;
+		and m.lancamento.vencimento &lt; :vencimento&#xd;
+		and m.lancamento.unidade.codigo = :unidade&#xd;
+		and m.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)&#xd;
+		and m.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+		) order by m.lancamento.conta.descricao</query>
+ <query name="parcelaBordero">select p.id.lancamento from ParcelaOrcamento as p&#xd;
+	where p.id.lancamento.status in('a', 'n')&#xd;
+		and p.id.lancamento.unidade.codigo = :unidade&#xd;
+		and p.id.lancamento.vencimento &lt; :vencimento&#xd;
+		and p.id.orcamento.usuario in(&#xd;
+			select c.id.usuario from ContratoEmpresa as c &#xd;
+		)&#xd;
+		and p.id.lancamento not in(&#xd;
+			select l.id.lancamento from LancamentoFaturaEmp as l&#xd;
+		)</query>
+</hibernate-mapping>

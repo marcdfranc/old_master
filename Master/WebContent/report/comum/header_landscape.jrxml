@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="header" language="groovy" pageWidth="802" pageHeight="48" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="92"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITLE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Titulo do Relatório"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_UNIDADE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[78]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT u.descricao AS unidade, i.descricao AS fone, report_logo
+FROM unidade AS u
+INNER JOIN informacao AS i ON(i.cod_pessoa = u.codigo)
+WHERE i.principal = 's'
+AND i.cod_pessoa = $P{COD_UNIDADE}]]>
+	</queryString>
+	<field name="unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="report_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="44" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="688" y="0" width="114" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{unidade})]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + $F{report_logo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="688" y="22" width="114" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="5" width="517" height="37"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TITLE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

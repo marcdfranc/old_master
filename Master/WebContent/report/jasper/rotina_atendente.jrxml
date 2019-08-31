@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rotina_atendente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT current_date]]>
+	</queryString>
+	<field name="date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="766" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="70" width="476" height="113"/>
+				<textElement/>
+				<text><![CDATA[•	Aguar as plantas
+•	Tirar todo lixo, abastecer sabonetes, toalhas e papel higiênico
+•	Encerar todo chão, tirar o pó dos móveis, balcões, portas, vidraças e gessos
+•	Fazer chá, café, abastecer água e biscoitos
+•	Conferir cargas de aparelhos telefônicos, celulares, leptop’s, maquinetas, pilhas e baterias
+•	Conferir layout de todo escritório
+•	Ligar os PC’s, ligar e abastecer as impressoras
+•	 Abrir o caixa e conferir o troco
+]]></text>
+			</staticText>
+			<image>
+				<reportElement x="2" y="2" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/logo.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="-1" y="37" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="50" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DE MANHÃ, até as 09:00h]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="191" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DURANTE TODO O DIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="211" width="476" height="362"/>
+				<textElement/>
+				<text><![CDATA[•	Abertura de caixa, conferencia de troco, fechamento de caixa e entrega do malote no mesmo dia
+•	Sempre imprimir o contrato quando iniciar tratamentos...  ao parcelar um tratamento de dependentes inserir o CPF no cadastro da família e “IMPRIMIR O CONTRATO DO TRATAMENTO”
+•	Conferir todos os dados antes de imprimir qualquer tipo de relatório, lançar todos os cupons no mesmo dia e analisar rigorosamente todos os lançamentos e posições ao fechar o caixa
+•	Conferir suprimentos de: folha A4, envelopes novos e impressos, folhas de guias  e boletos, elásticos, grampeadores e grampos, tinta de carimbos e carimbeiras,  tinta dos carimbos automáticos, canetas, grafites, borrachas, corretivos, mídias, extratores, pranchetas, pastas, plastificações, bobinas, tooners  e cartuchos, capas de carne, funcionamento corretos dos equipamentos, insumos de chá e café, copos descartáveis, sabonetes e itens dos wc’s
+•	Conferir estoque de CTR’s:  dos cliente, das empresas, dos profissionais, dos vendedores e texto padrão de vendas.
+•	Conferir aniversariantes e imprimir cartas (Clientes, Profissionais e RH) com antecedência de 15 dias
+•	Conferir diariamente a tela de conciliação e a caixa de e-mail
+•	Fazer carteirinhas, cartas de boas vindas, boletos e envelopes ao receber o ctr do vendedor
+•	Dar baixa nos boletos do banco, conferir últimos boletos de clientes e emitir novos carnes
+•	Conferir contas a pagar: água, luz, aluguel, condomínio, telefonia fixa, telefonia voip, telefonia móvel (vivo, claro e TIM), internet 3G, aluguel dos servidores, cheques emitidos, cartões de créditos, operadora visa, carnes de impostos, financiamentos, sindicatos e associações, escritório de contabilidade, assinaturas de revistas e jornais, funcionários e vendedores, fornecedores, profissionais e clínicas
+•	Contatar vendedores e fazer Check- list toda semana
+•	Manter atualizado o bloco de recados (anotações, solicitações e notificações)
+•	Conferir entregas de correspondências; cartas, carteirinhas, carnes, etc... de todo cliente novo.
+•	Conferir nível de satisfação de atendimento na clínica ao cadastrar o orçamentos e durante todo tratamento... fazer isso em cada emissão de guia... e conferir atualização do cadastro de endereço
+•	Decorar o texto padrão de vendas, cobrança, negociação de débitos e credenciamento de clínicas
+•	Conferir operadora de telefonia e ligar para os clientes negociando débitos das carteiras de atrasos
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="576" width="88" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observações:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="591" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="611" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="631" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="651" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="671" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="691" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="711" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="21" y="17" width="533" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[ROTINA DOS ATENDENTES]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="731" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="765" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="36">
+			<staticText>
+				<reportElement x="0" y="0" width="192" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font isBold="false" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<text><![CDATA[/// MASTER Odontologia & Saúde]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="192" y="0" width="362" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

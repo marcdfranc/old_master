@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_usuario" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_CONTRATO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[637]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REF_UNIDADE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1601"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIDADE_UNIDADE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Araraquara - SP"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.ctr, c.cod_funcionario, c.cod_unidade
+FROM contrato AS c
+INNER JOIN unidade AS u ON(c.cod_unidade = u.codigo)
+WHERE c.codigo = $P{COD_CONTRATO}]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_funcionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="373" y="53" width="182" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[CUSTO OPERACIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="60" width="54" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="1" width="555" height="51"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA["Contrato Particular de Intermediação de Serviços"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH}+ "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="62" y="60" width="100" height="16" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $P{REF_UNIDADE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="337" y="658" width="108" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="8" y="109" width="547" height="46"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Denominada FRANQUIA INDEPENDENTE, Representada por sua proprietária a Sra. Claudinéia Barbosa Silva, portadora do CPF: 098.913.226-96 e do RG: 16.519.113, e por seus representantes legais.                                                                                                                                                                                                          As partes, acima nomeadas, celebram o presente CONTRATO PARTICULAR DE INTERMEDIAÇÃO DE SERVIÇOS, que se regerá pelas cláusulas e condições seguintes.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="713" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATANTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="80" y="84" width="268" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="381" y="84" width="166" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="359" y="770" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="771" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="154" width="539" height="522"/>
+				<textElement textAlignment="Justified">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[CLÁUSULA PRIMEIRA - DO OBJETO: 1.1 - A CONTRATADA prestará intermediação de serviços médicos, odontológicos, de diagnose, de terapia e de outros serviços, relacionados pela CONTRATADA ao CONTRATANTE e aos seus dependentes relacionados no Anexo 1.
+
+CLÁUSULA SEGUNDA - DO OBJETO: 2.1 – São considerados beneficiários o CONTRATANTE e a sua família (cônjuge e filhos solteiros) identificados no Anexo-1; 2.1.1 – Quando o CONTRATANTE for solteiro, poderá inscrever seus pais e irmãos solteiros, como beneficiários.
+
+CLÁUSULA TERCEIRA - DA UTILIZAÇÃO: 3.1 – A CONTRATADA fornecerá uma CARTEIRA DE IDENTIFICAÇÃO para cada família beneficiária deste contrato; 3.2 – Para a atualização de serviços médicos, odontológicos, de diagnose e de terapia o beneficiário deverá apresentar uma GUIA DE ENCAMINHAMENTO, a ser emitida pela CONTRATADA; 3.2.1 – Nesta guia constará o valor a ser pago pelo beneficiário, diretamente aos prestadores de serviço; 3.3 – Para a utilização dos demais benefícios, relacionados pela CONTRATADA, o beneficiário deverá apresentar a CARTEIRA DE IDENTIFICAÇÃO; 3.4 – Em virtude do disposto na clausula 3.2, os atendimentos, caracterizados como; URGÊNCIAS E EMÊRGENCIAS, atendimentos fora do horário comercial, aos finais de semana e em feriados não são passíveis de atendimento através deste Plano de Benefícios.
+
+CLÁUSULA QUARTA - DOS SERVIÇOS INTERMEDIADOS: 4.1 - O presente contrato propiciará a intermediação dos seguintes serviços: a) consultas médicas, em ambulatório ou consultório; b) exames complementares de diagnóstico; c) procedimentos médicos ambulatoriais; d) consultas e tratamentos odontológicos; e) consultas e tratamentos nas áreas de: psicologia, fonoaudiologia, terapia ocupacional e nutrição; 4.2 - A intermediação dos serviços, aqui previstos, será feita apenas e exclusivamente, junto aos prestadores de serviços disponíveis e relacionados pela CONTRATADA, arcando o CONTRATANTE com os custos das suas despesas com viagens, estadias e alimentação caso necessário seja para a realização do tratamento; 4.3 - O CONTRATANTE se declara ciente e de acordo que os serviços oferecidos pela CONTRATADA não se caracterizam como plano de saúde.
+
+CLÁUSULA QUINTA - DO PREÇO DOS SERVIÇOS: 5.1 - Os serviços previstos na clausula 4.1 serão pagos pelo beneficiário, no momento de sua utilização e diretamente aos prestadores de serviços relacionados, com os seguintes valores: Consultas Médicas= até R$ 50,00 (cinquenta reais); Exames complementares de diagnóstico = tabela AMB/92 com CH de R$ 0,30; Tratamentos ambulatoriais = tabela AMB/92 com CH de R$ 0,30; Procedimentos médicos = tabela AMB/92 com CH de R$ 0,30; Tratamentos e procedimentos odontológicos = tabela diferenciada e previamente negociada pela CONTRATADA com os prestadores de serviços de odontologia: 5.1 - A tabela de procedimentos e os demais valores poderão ser reajustados a cada período de 1 (um) ano, de acordo com a variação dos custos dos procedimentos médicos, laboratoriais e odontológicos.
+
+CLÁUSULA SEXTA - DO PAGAMENTO: 6.1 - Além dos valores previstos na cláusula 5.1, o CONTRATANTE pagará a CONTRATADA a titulo contratual, no mínimo dezoito parcelas mensais no valor  especificado no anexo-1; 6.2 - O atraso no pagamento de qualquer parcela implicará no vencimento automático das parcelas vincendas, multa de 2% (dois por cento) sobre o débito aberto, acrescido de juros de 1% (um por cento) ao mês; 6.3 - O atraso no pagamento de qualquer parcela, por período superior a 60 dias, motivará, a critério da CONTRATADA, o cancelamento deste contrato, por falta de pagamento, mediante notificação da CONTRATADA, Correção Monetária  “dia a dia” do vencimento ao efetivo pagamento na forma da lei,  Mais custas advocatícias e de cobrança se for necessário a utilização dos meios judiciais, encaminhamento ao Cartório de Protestos e/ou SPC e SERASA após 45 dias de atraso, Suspensão da liberação de guias, até o efetivo pagamento, após o primeiro dia de atraso  6.4 - No caso de atraso no pagamento de qualquer parcela, PODERÁ A CONTRATANTE emitir DUPLICATA MERCANTIL DE PRESTAÇÃO DE SERVIÇOS sem aceite, NO VALOR TOTAL DO DÉBITO ABERTO, conforme o pactuado na cláusula 6.2 podendo esta, ser protestada na forma da lei comercial em vigor; 6.4.1 - No caso de cancelamento do contrato, nos termos da cláusula 6.3, serão abatidas do valor da duplicata as parcelas vincendas, posteriores ao cancelamento; 6.5 - O pagamento das parcelas mensais deverá ser efetuado na rede bancária ou na sede da CONTRATADA independente de terem ou não o CONTRATANTE e/ou os beneficiários solicitado algum atendimento, tratamento ou consulta na rede credenciada: 6.6 - O não recebimento do boleto bancário ou outro instrumento de cobrança não desobriga o CONTRATANTE de efetuar o seu pagamento no prazo de vencimento mensal;  6.7 - O pagamento da mensalidade referente a um determinado mês não significa estarem pagos ou quitados débitos anteriores: O não atendimento por falta de pagamento, ou suspensão de direitos dele decorrentes, não libera o CONTRATANTE da divida contratualmente assumida, que poderá ser cobrada em ação de execução: 6.8 - O recebimento pela CONTRATADA de parcelas em atraso constituirá mera tolerância, não implicando em novação contratual ou transação; 6.9 - No caso de inadimplência por parte dos serviços prestados, o titular CONTRATANTE é avalista solidário de todos os dependentes relacionados no anexo-1.
+
+CLÁUSULA SÉTIMA - DA VIGÊNCIA, RESCISÃO E REAJUSTE: 7.1 - O presente contrato é assinado por 18 (dezoito) meses, com vigência a partir da data de pagamento da taxa de adesão, e/ou da taxa de renovação, sendo renovado, automaticamente, por igual período e assim sucessivamente, caso não haja manifestação contraria, por escrito, por qualquer das partes, com antecedência de trinta dias de seu término ou do término das renovações; 7.2 - A rescisão contratual, pelo motivo da cláusula 6.3, poderá, a critério da CONTRATADA, gerar medidas judiciais e comerciais; 7.3 - A rescisão contratual, antes do prazo da cláusula 7.1, implicará no pagamento de multa contratual no valor equivalente á: 03 (três) parcelas precisando para isso estar rigorosamente em dia com as parcelas anteriores; 7.5 - O reajuste dos valores previstos neste contrato será feito, anualmente, tendo como base o índice IGPM ou outro que venha a substituí-lo.
+
+CLÁUSULA OITAVA - DAS DISPOSIÇÕES GERAIS: 8.1 - Fica avençado entre as partes que não haverá ressarcimento de parcelas pagas a qualquer título para a CONTRATADA sob qualquer pretexto; 8.2 - O presente contrato esta registrado e arquivado no competente cartório da comarca da cidade da CONTRATADA.
+
+CLÁUSULA NONA - DO FORO: 9.1 - As partes elegem o foro da comarca da CONTRATADA, para dirimir quaisquer dúvidas originárias do presente contrato, renunciado expressamente qualquer outro por mais privilegiado que seja; 9.2 - Este contrato obriga as partes e seus sucessores, a qualquer título que o sejam; E por estarem assim justos e contratados, assinam o presente instrumento em duas vias, perante 02 (duas) testemunhas, para que produza seus efeitos legais.
+]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="211" y="774" width="135" height="16"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{cod_funcionario}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<line>
+				<reportElement x="359" y="770" width="181" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="32" y="644" width="242" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CIDADE_UNIDADE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="454" y="644" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="712" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="76" width="72" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CONTRATANTE:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="476" y="658" width="59" height="1"/>
+			</line>
+			<line>
+				<reportElement x="286" y="658" width="25" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="317" y="644" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="86" width="416" height="13"/>
+				<textElement>
+					<font size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[devidamente qualificado no anexo 1 , que faz parte integrante do presente contrato.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="96" width="497" height="13"/>
+				<textElement>
+					<font size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[NEWMED COMPANY, Com endereço na Rua Marechal Bitencourt, 1171 – Vila Nova, CEP. 17202-160, Jaú estado de São Paulo.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="770" width="181" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="-3" y="787" width="558" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_funcionario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="15" y="712" width="181" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="359" y="76" width="37" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="96" width="72" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CONTRATADA:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="359" y="712" width="181" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+	<class name="Endereco">
+		<id name="codigo">
+  			<generator class="native">
+  				<param name="sequence">sq_endereco</param>
+  			</generator>			
+		</id>
+		
+		<property name="ruaAv" not-null="true">
+			<column name="rua_av"/>
+		</property>
+		
+		<property name="numero"/>
+		<property name="bairro"/>
+		<property name="complemento"/>
+		<property name="cidade" not-null="true"/>
+		<property name="uf" not-null="true"/>
+		<property name="cep" />
+					
+		<many-to-one name="pessoa" 
+			class="Pessoa" 
+			column="cod_pessoa" 
+			not-null="true"/>
+	</class>
+	
+	<query name="enderecoOf">
+		<![CDATA[ from Endereco e where e.pessoa= :pessoa]]>
+	</query>
+</hibernate-mapping>

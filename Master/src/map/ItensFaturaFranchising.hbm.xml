@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2010 13:51:39 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensFaturaFranchising" table="itens_fatura_franchising">
+  <composite-id class="ItensFaturaFranchisingId" mapped="false"
+   name="id" unsaved-value="undefined">
+   <key-many-to-one class="com.marcsoftware.database.FaturaFranchising"
+    column="cod_fatura" name="fatura"/>
+   <key-many-to-one class="com.marcsoftware.database.Lancamento"
+    column="cod_lancamento" name="lancamento"/>
+  </composite-id>
+ </class>
+</hibernate-mapping>

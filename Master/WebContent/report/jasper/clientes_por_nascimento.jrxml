@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes_por_cadastro" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistema/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["LISTAGEM GERAL DE CLIENTES DETALHADA E POR IDADE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.codigo, c.nome, c.cpf, c.nascimento, c.idade, o.ctr, d.nome AS dependente, 
+  d.cpf AS cpf_dependente, d.nascimento AS nascimento_dependente, d.idade AS idade_dependente,
+  p.cod_unidade, p.ativo, 
+  case p.ativo
+    when 'a' then 'Ativo'
+    when 'c' then 'Cancelado'
+    else 'Bloqueado'
+  end AS status,
+  case 
+    when d.nome is null then 0    
+    else 1
+  end AS somador
+FROM usuario u
+INNER JOIN vw_cliente_idade c ON(u.codigo = c.codigo)
+INNER JOIN pessoa p ON(u.codigo = p.codigo)
+INNER JOIN contrato o ON(u.cod_contrato = o.codigo)
+LEFT JOIN vw_dependente_idade d ON(d.cod_usuario = u.codigo)
+ORDER BY p.ativo, c.idade, u.codigo
+limit 100]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nascimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nascimento_dependente" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf_dependente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idade_dependente" class="java.lang.Integer"/>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="ativo" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="somador" class="java.lang.Integer"/>
+	<variable name="isPrint" class="java.lang.Boolean" resetType="Group" resetGroup="usuario">
+		<variableExpression><![CDATA[!$V{isPrint}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL" class="java.lang.Integer" incrementType="Group" incrementGroup="usuario" calculation="Count">
+		<variableExpression><![CDATA[$F{codigo}]]></variableExpression>
+	</variable>
+	<variable name="total_geral" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{somador}]]></variableExpression>
+	</variable>
+	<variable name="dependente" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{somador}]]></variableExpression>
+	</variable>
+	<group name="usuario">
+		<groupExpression><![CDATA[$F{codigo}]]></groupExpression>
+		<groupHeader>
+			<band height="53">
+				<rectangle>
+					<reportElement x="58" y="24" width="440" height="12" backcolor="#CCCCCC"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement mode="Transparent" x="58" y="40" width="276" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Dependentes]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="334" y="40" width="92" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Nascimento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="426" y="40" width="72" height="13" backcolor="#CCCCCC"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Idade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="58" y="11" width="35" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[CTR:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="93" y="11" width="38" height="13"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ctr}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="93" y="23" width="137" height="13"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="58" y="23" width="35" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Titular:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="334" y="23" width="61" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Nascimento:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="395" y="23" width="59" height="13"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{nascimento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="230" y="23" width="27" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[CPF:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="257" y="23" width="77" height="13"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.mountCpf($F{cpf})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="454" y="23" width="31" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Idade:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="485" y="23" width="13" height="13"/>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{idade}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="58" y="2" width="440" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="230" y="11" width="38" height="13" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Status:]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="268" y="11" width="122" height="13"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="5"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="61" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="51"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH}+ "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<printWhenExpression><![CDATA[!$F{dependente}.equals( null )]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="58" y="0" width="440" height="13" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[$V{isPrint}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="71" y="0" width="263" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["-   " + com.marcsoftware.Util.initCap($F{dependente})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="334" y="0" width="92" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{nascimento_dependente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="424" y="0" width="74" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{idade_dependente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="0" width="13" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{dependente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="42"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="81">
+			<line>
+				<reportElement x="58" y="0" width="438" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="58" y="29" width="130" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Titulares:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="188" y="29" width="97" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="46" width="97" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{dependente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="46" width="130" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Dependentes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="63" width="130" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Clientes:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="188" y="63" width="97" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{dependente} + $V{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

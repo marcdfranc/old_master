@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2010 16:41:52 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.Notificacao" table="notificacao">
+  <id name="codigo" type="java.lang.Long">
+   <generator class="native">
+    <param name="sequence">sq_notificacao</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="assunto"/>
+  <property generated="never" lazy="false" name="prioridade" type="string"/>
+  <property generated="never" lazy="false" name="descricao" type="java.lang.String"/>
+  <property generated="never" lazy="false" name="status" type="java.lang.String"/>
+  <property generated="never" lazy="false" name="data" type="java.util.Date"/>
+  <many-to-one class="com.marcsoftware.database.Login"
+   column="remetente" name="remetente"/>
+ </class>
+</hibernate-mapping>

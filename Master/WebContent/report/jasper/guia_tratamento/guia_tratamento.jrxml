@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guia tratamento" pageWidth="595" pageHeight="280" columnWidth="565" leftMargin="10" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" isDefault="false"/>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LANCAMENTO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer("125722")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT l.codigo AS guia, l.recebimento, p.cod_orcamento, f.nome AS profissional, r.conselho,
+	i.descricao AS fone, l.valor, j.fantasia, a.referencia AS ref_unidade,
+	u.descricao AS unidade, u.report_logo,
+	(SELECT DISTINCT k.nome FROM fisica AS k
+		INNER JOIN pessoa AS g ON(k.codigo = g.codigo)
+	WHERE g.username = l.recebimento) AS login_name, k.descricao AS atendimento,
+	CASE
+		WHEN o.cod_dependente ISNULL THEN s.nome
+		ELSE d.nome
+	END AS cliente, o.parcelas AS parcelamento, p.sequencial AS pagas,
+	CASE
+		WHEN o.cod_dependente ISNULL THEN e.referencia || '-0'
+		ELSE e.referencia || '-' || d.referencia
+	END AS ctr, n.rua_av AS rua, n.numero, n.bairro AS bairro
+FROM lancamento AS l
+	INNER JOIN parcela_orcamento  AS p ON(p.cod_lancamento = l.codigo)
+	INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+	INNER JOIN profissional AS r ON(o.cod_pessoa = r.codigo)
+	INNER JOIN fisica AS f ON(r.codigo = f.codigo)
+	INNER JOIN endereco AS n ON(r.codigo = n.cod_pessoa)
+	LEFT JOIN informacao AS i ON(i.cod_pessoa = r.codigo)
+	INNER JOIN fisica AS s ON(o.cod_usuario = s.codigo)
+	LEFT JOIN dependente AS d ON(o.cod_dependente = d.codigo)
+	INNER JOIN pessoa AS e ON(s.codigo = e.codigo)
+	INNER JOIN juridica AS j ON(l.cod_unidade = j.codigo)
+	INNER JOIN unidade AS u ON(l.cod_unidade = u.codigo)
+	INNER JOIN pessoa AS a ON(j.codigo = a.codigo)
+	right JOIN informacao AS k ON(j.codigo = k.cod_pessoa)
+WHERE i.principal = 's'
+	AND k.principal = 's'
+	AND l.codigo = $P{LANCAMENTO}]]>
+	</queryString>
+	<field name="guia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_orcamento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="profissional" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="conselho" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fantasia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parcelamento" class="java.lang.Integer"/>
+	<field name="pagas" class="java.lang.Integer"/>
+	<field name="login_name" class="java.lang.String"/>
+	<field name="atendimento" class="java.lang.String"/>
+	<field name="ref_unidade" class="java.lang.String"/>
+	<field name="report_logo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="177" y="18" width="250" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[GUIA DE TRATAMENTO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="20" y="44" width="519" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="433" y="2" width="43" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Guia N°:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="2" width="85" height="16" forecolor="#CC0000"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{guia}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="19" y="2" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + $F{report_logo}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Immediate">
+			<staticText>
+				<reportElement x="19" y="1" width="52" height="16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Unidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="84" y="0" width="293" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ref_unidade} + " " + $F{unidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="377" y="0" width="79" height="17"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Atendimento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="456" y="0" width="79" height="16" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{atendimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="114" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="3" width="42" height="16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="24" width="64" height="16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Profissional:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="24" width="55" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Conselho:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="46" width="51" height="16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="84" y="3" width="316" height="16" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ref_unidade} + " " + com.marcsoftware.Util.initCap($F{cliente})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="3" width="55" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="455" y="3" width="80" height="16" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ctr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="84" y="24" width="316" height="16" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{profissional})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="455" y="24" width="80" height="16" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{conselho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="84" y="46" width="316" height="16" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{rua}) + "," + $F{numero} +
+" - " + com.marcsoftware.Util.initCap($F{bairro})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="46" width="55" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fone:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="455" y="46" width="80" height="16" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="70" width="65" height="16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Orçamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="84" y="70" width="68" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_orcamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="64" y="97" width="199" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="97" width="45" height="15"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Emissão:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="253" y="70" width="72" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pagas} + "/" + $F{parcelamento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="214" y="70" width="39" height="16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Parcela:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="61" splitType="Prevent">
+			<staticText>
+				<reportElement x="203" y="40" width="174" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Ass. Profissional]]></text>
+			</staticText>
+			<line>
+				<reportElement x="215" y="38" width="150" height="1"/>
+			</line>
+			<line>
+				<reportElement x="391" y="38" width="150" height="1"/>
+			</line>
+			<componentElement>
+				<reportElement x="3" y="4" width="200" height="50"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{guia}.toString()]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="377" y="40" width="178" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{login_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

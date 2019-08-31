@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mala_direta_unidade" language="groovy" pageWidth="595" pageHeight="842" columnWidth="587" leftMargin="4" rightMargin="4" topMargin="36" bottomMargin="36">
+	<parameter name="REF_UNIDADE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["78"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT INITCAP(j.razao_social) AS nome, INITCAP(e.rua_av) AS rua_av, e.numero, INITCAP(e.bairro) AS bairro, 
+	INITCAP(e.cidade ) AS cidade, UPPER(e.uf) AS uf, e.complemento, e.cep
+FROM unidade AS u
+	INNER JOIN endereco AS e ON(e.cod_pessoa = u.codigo)
+	INNER JOIN juridica AS j ON(u.codigo = j.codigo)
+	INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+WHERE p.referencia = $P{REF_UNIDADE}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="770" splitType="Stretch">
+			<textField pattern="">
+				<reportElement x="15" y="79" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="31" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="63" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="47" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="63" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="79" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="31" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="135" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="151" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="119" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="119" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="135" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="151" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="103" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="103" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="295" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="263" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="279" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="247" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="247" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="175" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="175" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="279" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="263" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="223" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="191" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="295" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="223" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="207" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="191" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="207" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="550" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="496" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="464" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="320" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="568" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="496" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="480" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="536" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="424" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="512" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="582" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="368" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="512" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="568" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="464" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="352" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="336" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="440" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="352" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="408" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="584" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="392" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="336" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="408" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="440" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="536" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="552" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="480" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="320" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="392" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="368" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="424" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="47" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="712" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="680" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="712" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="696" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="640" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="728" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="728" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="680" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="15" y="656" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="624" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="608" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="624" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="313" y="656" width="175" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="696" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rua_av} + ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="608" width="274" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="640" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

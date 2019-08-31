@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2010 16:42:46 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="AcessoNotificacao" table="acesso_notificacao">
+  <composite-id class="AcessoNotificacaoId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="com.marcsoftware.database.Login"
+    column="username" name="login"/>
+   <key-many-to-one class="com.marcsoftware.database.Notificacao"
+    column="cod_notificacao" name="notificacao"/>
+  </composite-id>
+  <property name="visualizada"/>
+ </class>
+</hibernate-mapping>

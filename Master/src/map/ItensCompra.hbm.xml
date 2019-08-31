@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensCompra" table="itens_compra">
+  <composite-id class="ItensCompraId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="Compra" column="cod_compra" name="compra"/>
+   <key-many-to-one class="Insumo" column="cod_insumo" name="insumo"/>
+  </composite-id>
+  <property column="unidade_medida" generated="never" lazy="false" name="unidadeMedida"/>
+  <property generated="never" lazy="false" name="quantidade"/>
+  <property generated="never" lazy="false" name="custo"/>
+ </class>
+</hibernate-mapping>

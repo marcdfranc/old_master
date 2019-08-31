@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+
+	<class name="ParcelaPedido" table="parcela_pedido">
+  		<composite-id name="id" mapped="false" class="ParcelaPedidoId">
+	        <key-many-to-one 
+				name="lancamento" 
+				column="cod_lancamento"
+				class="Lancamento"/>
+	        
+			<key-many-to-one 
+				name="pedido" 
+				column="cod_pedido"
+				class="Pedido"/>
+	    </composite-id>
+	</class>
+</hibernate-mapping>

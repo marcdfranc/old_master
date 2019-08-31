@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guia_orcamento" language="groovy" pageWidth="595" pageHeight="280" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="5">
+	<parameter name="NUM_GUIA" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.Random().nextInt()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_PROFISSIONAL" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Arquivos de programas\\Apache Software Foundation\\Tomcat 6.0\\webapps\\master\\master.com\\WebContent\\report\\jasper\\guia_orcamento\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_CONSULTA" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HORA_CONSULTA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CTR_CLIENTE" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[new java.lang.Long(329)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_DEPENDENTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONTEXT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Arquivos de programas\\Apache Software Foundation\\Tomcat 6.0\\webapps\\master\\master.com\\WebContent\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT INITCAP(f.nome) AS paciente, u.ctr, INITCAP(n.descricao) AS unidade, o.descricao AS atendimento, 
+	e.uf, s.referencia AS cod_unidade, 
+	(SELECT INITCAP(d.nome) FROM dependente AS d
+		WHERE d.cod_usuario = u.codigo
+			AND d.referencia = $P{COD_DEPENDENTE}) AS dependente
+FROM usuario AS u
+	INNER JOIN fisica AS f ON(f.codigo = u.codigo)
+	INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+	INNER JOIN unidade AS n ON(p.cod_unidade = n.codigo)
+	INNER JOIN informacao AS o ON(o.cod_pessoa = n.codigo)
+	INNER JOIN endereco AS e ON(e.cod_pessoa = n.codigo)
+	INNER JOIN pessoa AS s ON(n.codigo = s.codigo)	
+WHERE o.principal = 's'	
+	AND u.ctr = $P{CTR_CLIENTE}]]>
+	</queryString>
+	<field name="paciente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="atendimento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="516" y="3" width="39" height="16" forecolor="#CC0000"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$P{NUM_GUIA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="473" y="3" width="43" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Guia N°:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="-1" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="144" y="7" width="329" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GUIA DE ORÇAMENTO E AVALIAÇÃO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="33" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16">
+			<staticText>
+				<reportElement x="0" y="0" width="71" height="14"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Unidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="71" y="0" width="337" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cod_unidade} + ", " + $F{unidade} + " - " + $F{uf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="410" y="0" width="66" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Atendimento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="474" y="0" width="81" height="14" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{atendimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="157" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="71" height="14"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="2" width="66" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="476" y="2" width="79" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ctr} + " - " + $P{COD_DEPENDENTE}]]></textFieldExpression>
+			</textField>
+			<elementGroup/>
+			<elementGroup/>
+			<subreport>
+				<reportElement x="0" y="19" width="555" height="33"/>
+				<subreportParameter name="COD_PROFISSIONAL">
+					<subreportParameterExpression><![CDATA[$P{COD_PROFISSIONAL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "profissional.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Opaque" x="71" y="2" width="337" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($P{COD_DEPENDENTE}.equals( "0" ))? $F{paciente} : $F{dependente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="90" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="71" y="90" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="58" y="80" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="71" y="106" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="58" y="96" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="106" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="71" y="122" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="58" y="112" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="122" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="71" y="138" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="58" y="128" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="138" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="71" y="153" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="58" y="143" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="153" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="146" y="153" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="202" y="80" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="215" y="90" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="215" y="122" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="215" y="106" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="215" y="153" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="202" y="96" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="215" y="138" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="146" y="122" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="202" y="128" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="143" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="112" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="146" y="90" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="146" y="106" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="146" y="138" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="291" y="153" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="347" y="80" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="90" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="360" y="122" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="360" y="106" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="360" y="153" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="347" y="96" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="138" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="291" y="122" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="347" y="128" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="143" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="112" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="291" y="90" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="291" y="106" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="291" y="138" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="435" y="153" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="491" y="80" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="504" y="90" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="504" y="122" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="504" y="106" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="504" y="153" width="51" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="491" y="96" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="504" y="138" width="51" height="1"/>
+			</line>
+			<line>
+				<reportElement x="435" y="122" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="491" y="128" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="143" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="112" width="20" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="435" y="90" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="435" y="106" width="52" height="1"/>
+			</line>
+			<line>
+				<reportElement x="435" y="138" width="52" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="387" y="38" width="31" height="14"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="418" y="38" width="65" height="14" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATA_CONSULTA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="483" y="38" width="35" height="14"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField pattern="HH.mm" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="518" y="38" width="37" height="14" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{HORA_CONSULTA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="55" width="55" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Valor Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="59" y="68" width="56" height="1"/>
+			</line>
+			<line>
+				<reportElement x="518" y="51" width="37" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="123" y="55" width="28" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Parc.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="55" width="184" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[1( ) 2( ) 3( ) 4( ) 5( ) 6( ) 7( ) 8( ) 9( ) 10( ) ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="419" y="50" width="65" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="34" width="136" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ass. Paciente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="34" width="136" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ass. Profissional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="34" width="136" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ass. Master]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="35" width="136" height="1"/>
+			</line>
+			<line>
+				<reportElement x="419" y="34" width="136" height="1"/>
+			</line>
+			<line>
+				<reportElement x="212" y="35" width="136" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

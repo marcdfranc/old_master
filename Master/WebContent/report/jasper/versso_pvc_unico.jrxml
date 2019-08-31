@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="verso_pvc_unico" language="groovy" pageWidth="242" pageHeight="156" columnWidth="242" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT u.codigo as cod_unidade, INITCAP(j.razao_social) AS nome, INITCAP(e.rua_av) AS rua_av,
+	e.numero, INITCAP(e.bairro) AS bairro, INITCAP(e.cidade ) AS cidade_unidade, UPPER(e.uf) AS uf,
+	e.complemento, e.cep, u.site, i.descricao AS fone_unidade
+FROM unidade AS u
+	INNER JOIN endereco AS e ON(e.cod_pessoa = u.codigo)
+	INNER JOIN juridica AS j ON(u.codigo = j.codigo)
+	INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+	INNER JOIN informacao AS i ON(i.cod_pessoa = u.codigo)
+WHERE i.principal = 's']]>
+	</queryString>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="site" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="156" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="5" width="100" height="12"/>
+				<textElement>
+					<font size="8" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<text><![CDATA[GRUPO MASTER]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="62" width="233" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="17"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{site}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="30" width="231" height="14"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade_unidade}) + "-" +
+$F{uf} + " " + $F{fone_unidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="106" width="231" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Demais Localidades (11) 3013-2230]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="120" width="242" height="24" backcolor="#000000"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

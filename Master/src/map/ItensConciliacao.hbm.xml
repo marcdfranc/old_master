@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensConciliacao" table="itens_conciliacao">
+  <composite-id class="ItensConciliacaoId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="com.marcsoftware.database.Conciliacao"
+    column="cod_conciliacao" name="conciliacao"/>
+   <key-many-to-one class="com.marcsoftware.database.Lancamento"
+    column="cod_lancamento" name="lancamento"/>
+  </composite-id>
+  <property column="doc_digital" name="docDigital"/>
+ </class>
+</hibernate-mapping>

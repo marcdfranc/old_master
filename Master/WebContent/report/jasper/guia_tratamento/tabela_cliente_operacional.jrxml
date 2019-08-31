@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tabela_cliente_operacional" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="CONTEXT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:/Users/marcdfranc/Documents/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT t.valor_operacional, t.valor_cliente, t.vigencia, t.aprovacao, s.referencia AS ref_servico,
+	s.descricao AS servico, e.descricao AS especialidade,
+	CASE
+		WHEN e.setor = 'o' THEN 'Odontológica'
+		WHEN e.setor = 'l' THEN 'Laboratorial'
+		WHEN e.setor = 'm' THEN 'Médica'
+		WHEN e.setor = 'h' THEN 'Hospitalar'
+	END AS setor,
+	u.descricao AS uidade, n.cidade AS cidade_unidade, UPPER(n.uf) AS uf_unidade,
+	i.descricao AS fone_unidade, p.referencia AS ref_unidade, f.nome AS administrador
+FROM tabela AS t
+INNER JOIN unidade AS u ON(t.cod_unidade = u.codigo)
+INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+INNER JOIN endereco AS n ON(n.cod_pessoa = u.codigo)
+INNER JOIN informacao AS i ON(i.cod_pessoa = u.codigo)
+INNER JOIN fisica AS f ON(u.administrador = f.codigo)
+INNER JOIN servico AS s ON(t.cod_servico = s.codigo)
+INNER JOIN especialidade AS e ON(s.cod_especialidade = e.codigo)
+WHERE i.principal = 's'
+ORDER BY u.codigo, t.vigencia, s.ref]]>
+	</queryString>
+	<field name="valor_operacional" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor_cliente" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vigencia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="aprovacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_servico" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="servico" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="especialidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="setor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="administrador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="isPrintable" class="java.lang.Boolean">
+		<variableExpression><![CDATA[!$V{isPrintable}]]></variableExpression>
+	</variable>
+	<group name="GRP_VIGENCIA" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{vigencia}]]></groupExpression>
+		<groupHeader>
+			<band height="67">
+				<rectangle>
+					<reportElement x="0" y="55" width="555" height="11" backcolor="#B7B7B7"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="147" y="22" width="49" height="16"/>
+					<textElement>
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Vigência:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="22" width="38" height="16"/>
+					<textElement>
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Status:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="38" y="22" width="109" height="16"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{aprovacao}.equals("s"))? "Aprovada" : "Em espera"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="196" y="22" width="280" height="16"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{vigencia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="125" y="0" width="207" height="16"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ref_unidade} + " " + $F{uidade}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="-1" y="55" width="44" height="12" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Código]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="43" y="55" width="65" height="12" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Atividade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="108" y="55" width="93" height="12" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Setor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="201" y="55" width="218" height="12" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Left">
+						<font size="8" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Procedimento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="419" y="55" width="68" height="12" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Vlr. Operacional]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="487" y="55" width="68" height="12" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Vlr. Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="332" y="0" width="71" height="16"/>
+					<textElement>
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Responsável:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="125" height="16"/>
+					<textElement>
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Unidade administradora:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="403" y="0" width="152" height="16"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{administrador})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="46" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="147" y="2" width="284" height="19"/>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[TABELA DE REFERÊNCIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="431" y="1" width="119" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade_unidade}) + "-" +
+$F{uf_unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="21" width="119" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fone_unidade}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="3" y="2" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="12" backcolor="#EAEAEA">
+					<printWhenExpression><![CDATA[$V{isPrintable}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="43" y="0" width="65" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{setor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="0" width="93" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{especialidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="0" width="218" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{servico}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="419" y="0" width="68" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{valor_operacional}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="487" y="0" width="68" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{valor_cliente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="-1" y="0" width="44" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ref_servico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="439" y="25" width="115" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="26" width="179" height="16" forecolor="#000066"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[atendimento@sacmaster.com.br]]></text>
+			</staticText>
+			<textField pattern="d&apos; de &apos;MMMM&apos; de &apos;yyyy">
+				<reportElement x="450" y="9" width="104" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="9" width="115" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[SAC (11) 3013-2230]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

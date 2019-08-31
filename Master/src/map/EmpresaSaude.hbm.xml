@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Juridica" name="EmpresaSaude" table="empresa_saude">
+  <key column="codigo"/>
+  <property column="cargo_contato" generated="never" lazy="false" name="cargoContato"/>
+  <property column="conselho_responsavel" generated="never" lazy="false" name="conselhoResponsavel"/>
+  <property generated="never" lazy="false" name="contato"/>
+  <property generated="never" lazy="false" name="responsavel"/>
+  <many-to-one class="com.marcsoftware.database.Especialidade"
+   column="cod_especialidade" name="especialidade"/>
+  <many-to-one class="com.marcsoftware.database.Ramo" column="cod_ramo" name="ramo"/>
+ </joined-subclass>
+ <query name="empresaSaudeOf">from EmpresaSaude as e where e.unidade in ( &#xd;
+		 from Unidade as u where u.codigo = :unidade)</query>
+ <query name="pagEmpSaudeAll">from ParcelaOrcamento as p &#xd;
+	where p.id.orcamento.pessoa.codigo = :empresa&#xd;
+		and p.id.lancamento.status = 'f'&#xd;
+order by p.id.lancamento.dataQuitacao</query>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 27/10/2010 11:07:01 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.InformacaoCatalogo" table="informacao_catalogo">
+  <id name="codigo" type="java.lang.Long">
+   <generator class="native">
+    <param name="sequence">sq_informacao_catalogo</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="tipo" type="java.lang.String"/>
+  <property generated="never" lazy="false" name="descricao" type="java.lang.String"/>
+  <property generated="never" lazy="false" name="principal" type="java.lang.String"/>
+  <many-to-one class="com.marcsoftware.database.Catalogo"
+   column="cod_catalogo" fetch="join" name="catalogo"/>
+ </class>
+</hibernate-mapping>

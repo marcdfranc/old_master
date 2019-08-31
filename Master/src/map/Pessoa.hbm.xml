@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Pessoa">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_pessoa</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="ativo" not-null="true"/>
+  <property generated="never" lazy="false" name="deleted" not-null="true"/>
+  <property generated="never" lazy="false" name="referencia" />
+  <property column="vencimento" generated="never" lazy="false"
+   name="vencimento" type="string"/>
+  <property generated="never" lazy="false" name="cadastro"/>
+  <property column="doc_digital" generated="never" lazy="false" name="docDigital"/>
+  <property generated="never" lazy="false" name="observacao"/>
+  <many-to-one class="Login" column="username" name="login"/>
+  <many-to-one class="Unidade" column="cod_unidade" name="unidade"/>
+  <many-to-one class="com.marcsoftware.database.Login"
+   column="cadastrador" name="cadastrador"/>
+ </class>
+</hibernate-mapping>

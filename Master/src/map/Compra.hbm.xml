@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Compra">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_compra</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="cadastro"/>
+  <property name="observacao"/>
+  <many-to-one class="com.marcsoftware.database.Pessoa"
+   column="cod_fornecedor" name="fornecedor"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" name="unidade"/>
+ </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database.views">
+ <class name="ViewClienteCompleto" table="vw_cliente_completo">
+  <id name="ctr"/>
+  <property column="atraso_mensalidade" generated="never" insert="false"
+   lazy="false" name="atrasoMensalidade" update="false"/>
+  <property column="atraso_tratamento" generated="never" insert="false"
+   lazy="false" name="atrasoTratamento" update="false"/>
+  <property column="dias_atraso_mensalidade" generated="never"
+   insert="false" lazy="false" name="diasMensalidade" update="false"/>
+  <property column="dias_atraso_tratamento" generated="never"
+   insert="false" lazy="false" name="diasTratamento" not-null="true" update="false"/>
+  <many-to-one class="com.marcsoftware.database.Usuario"
+   column="usuario" name="usuario" not-null="false"/>
+  <many-to-one class="com.marcsoftware.database.Empresa"
+   column="cod_empresa" insert="false" name="empresa" not-found="ignore"
+   not-null="false" update="false"/>
+  <many-to-one column="cod_unidade" name="unidade"/>
+ </class>
+</hibernate-mapping>

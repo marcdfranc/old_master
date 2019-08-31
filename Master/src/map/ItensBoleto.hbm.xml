@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensBoleto" table="itens_boleto">
+  <composite-id class="ItensBoletoId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one column="cod_boleto" name="boleto"/>
+   <key-many-to-one column="cod_lancamento" name="lancamento"/>
+  </composite-id>
+  <property column="valor_residente" name="valorResidente"/>
+ </class>
+</hibernate-mapping>

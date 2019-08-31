@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Cc">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_cc</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="agencia"/>
+  <property generated="never" lazy="false" name="numero"/>
+  <property generated="never" lazy="false" name="cadastro"/>
+  <property generated="never" lazy="false" name="valor"/>
+  <many-to-one class="Banco" column="cod_banco" name="banco"/>
+  <many-to-one class="Unidade" column="cod_unidade" name="unidade"/>
+ </class>
+ <query name="ccLancamento">from Lancamento as l&#xd;
+where l.status in('q', 'f')&#xd;
+	and l.dataQuitacao between :dataInicio and :dataFim&#xd;
+	and l.unidade.codigo = :unidade&#xd;
+	and l not in(select i.id.lancamento from ItensConciliacao as i&#xd;
+				where i.id.conciliacao.status = 'a')&#xd;
+order by l.dataQuitacao, l.emissao, l.codigo</query>
+ <query name="ccLancamentoHold">from Lancamento as l&#xd;
+where l.status in('q', 'f')&#xd;
+	and l.dataQuitacao between :dataInicio and :dataFim&#xd;
+	and l not in(select i.id.lancamento from ItensConciliacao as i&#xd;
+				where i.id.conciliacao.status = 'a')&#xd;
+order by l.dataQuitacao, l.emissao, l.codigo</query>
+ <sql-query name="contaDebito">SELECT SUM(valor_pago) FROM lancamento
+WHERE status IN('q', 'f')
+	AND tipo = 'd'
+	AND cod_unidade= :unidade
+	AND data_quitacao BETWEEN :dataInicio and :dataFim
+	AND codigo NOT IN(SELECT i.cod_lancamento FROM itens_conciliacao AS i
+			INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+			WHERE c.status = 'a')</sql-query>
+ <sql-query name="contaCredito">SELECT SUM(valor_pago) FROM lancamento AS l
+WHERE l.status IN('q', 'f')
+	AND l.tipo = 'c'
+	AND l.cod_unidade= :unidade
+	AND l.data_quitacao BETWEEN :dataInicio and :dataFim
+	AND l.codigo NOT IN(SELECT i.cod_lancamento FROM itens_conciliacao AS i
+			INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+			WHERE c.status = 'a')</sql-query>
+ <sql-query name="contaCreditoHold">SELECT SUM(valor_pago) FROM lancamento AS l
+WHERE l.status IN('q', 'f')
+	AND l.tipo = 'c'	
+	AND l.data_quitacao BETWEEN :dataInicio and :dataFim
+	AND l.codigo NOT IN(SELECT i.cod_lancamento FROM itens_conciliacao AS i
+			INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+			WHERE c.status = 'a')</sql-query>
+ <sql-query name="contaDebitoHold">SELECT SUM(valor_pago) FROM lancamento
+WHERE status IN('q', 'f')
+	AND tipo = 'd'
+	AND data_quitacao BETWEEN :dataInicio and :dataFim
+	AND codigo NOT IN(SELECT i.cod_lancamento FROM itens_conciliacao AS i
+			INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+			WHERE c.status = 'a')</sql-query>
+</hibernate-mapping>

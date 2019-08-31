@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_usuario" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_CONTRATO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[631]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_DOCUMENTO" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.ctr, c.cod_funcionario, f.nome, p.referencia AS ref_unidade, e.cidade, u.codigo AS cod_unidade,
+UPPER(e.uf) AS uf
+FROM contrato AS c
+INNER JOIN usuario AS s ON(c.codigo = s.cod_contrato)
+INNER JOIN fisica AS f ON(s.codigo = f.codigo)
+INNER JOIN unidade AS u ON(c.cod_unidade = u.codigo)
+INNER JOIN pessoa AS p ON(c.cod_unidade = p.codigo)
+INNER JOIN endereco AS e ON(c.cod_unidade = e.cod_pessoa)
+WHERE c.codigo = $P{COD_CONTRATO}]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_funcionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="61" width="54" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="61" width="100" height="16" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="86" width="525" height="556"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Pelo presente instrumento particular, de um lado Sr(a) _________________________________________________________________________,  qualificado no anexo I – doravante denominado simplesmente CONTRATANTE, e de outro lado  MASTER ODONTOLOGIA & SAÚDE  LTDA.,                    Com sede na Av. Duque de Caxias Nº. 364 - Sala 51, 5º andar,  Centro, Cep. 14801-120, Araraquara, estado de São Paulo, inscrita no                             CNPJ  sob  nº. 00.959.348/0001-00 doravante denominada simplesmente CONTRATADA, tem entre si justa e contratada, a intermediação de serviços que se regerá pelas condições que seguem.
+DOS ASSISTIDOS: A CONTRATADA obriga-se a intermediar os serviços descritos na cláusula abaixo ao CONTRATANTE e aos seus dependentes relacionados no Anexo I. DOS SERVIÇOS ABRANGIDOS: O presente Contrato oferece para o CONTRATANTE uma tabela diferenciada e previamente negociada pela CONTRATADA com  profissionais na área de ODONTOLOGIA e a ser entregue resumidamente ao CONTRATANTE no ato do pagamento da taxa de adesão. Os valores dos preços dos procedimentos odontológicos irão variar de acordo com a margem de lucro de cada um deles e conforme uma cotação feita pela CONTRATADA na cidade onde reside o CONTRATANTE e poderão sofrer reajustes ou depreciações sem aviso prévio de acordo com os preços de mercado. Os procedimentos Odontológicos poderão, a critério de a CONTRATADA ser realizado fora da cidade do CONTRATANTE caso na mesma, não haja especialista credenciado pela CONTRATADA ficando a cargo do CONTRATANTE as despesas com viagens, estadias e alimentação caso necessário seja para a realização do tratamento; DOS SERVIÇOS NÃO ABRANGIDOS: Ficam excluídos do contrato e não serão realizados em nenhuma hipótese os seguintes serviços: a) Quaisquer serviços, procedimentos e tratamentos não constantes da Listagem de Profissionais e especialidades de cada um deles; b) Atendimento a Portadores de doenças infecto-contagiosas, pela necessidade de ambiente ambulatorial para tratamento adequado; c) Atendimento a portadores de deficiência mental grave que necessitem atendimento especifico ou em ambiente hospitalar adequado; d) Exames complementares a ser realizado pôr outras entidades, quando necessários e Cirurgias ósseas; DA UTILIZAÇÃO DOS SERVIÇOS: a) Para qualquer atendimento o CONTRATANTE ou qualquer um de seus dependentes deverá retirar a GUIA de ORÇAMENTOS/ATENDIMENTOS no local determinado pela CONTRATADA, guia esta valida apenas para o dia e hora nela marcados; b) O CONTRATANTE em hipótese alguma poderá pagar qualquer valor ou taxa para qualquer profissional credenciado, tendo que todos os pagamentos relativos a tratamentos e afins devem ser feito no escritório local da contratada ou em rede Bancaria; c) Pelos serviços ajustados no presente instrumento, o CONTRATANTE pagará à CONTRATADA a taxa de adesão ( R$30,00 trinta reais ), e as mensalidades descritas no Anexo I ( R$19,90 dezenove reais e noventa centavos ). E ainda os valores correspondentes a todos os procedimentos realizados em sua pessoa ou na pessoa de qualquer dependente relacionado no Anexo I estes com 48 horas antes da consulta. O titular contratante é avalista de cada dependente relacionado no anexo l, E  caso o CONTRATANTE ou qualquer dependente coloque qualquer tipo de APARELHO ORTODONTICO a colocação é gratuita, ficando obrigado a pagar pelas manutenções no máximo 30% do valor do salário mínimo vigente e ainda com 20% de descontos em acessórios que porventura sejam necessários durante o tratamento; d)  no caso do usuário de aparelho ou seu responsável venha a parar de fazer as MANUTENÇÕES periódicas pôr qualquer motivo que seja, lhe será cobrado a preço de mercado o APARELHO ORTODONTICO utilizado; e) Fica ainda determinado que o aparelho em uso venha a ser danificado pôr  mau uso por parte do usuário, serão cobradas as peças de reposição; f) Qualquer parcelamento de tratamento deverá ser aprovado pelos Profissionais e pela CONTRATADA somente quando a parcela superar o valor de R$ 60,00 (sessenta reais), sendo que o atraso de qualquer parcela de tratamento implicará no cancelamento do horário marcado; DA VIGÊNCIA: O presente contrato terá vigência pôr no mínimo 18 meses da data do pagamento da taxa de adesão; DA RENOVAÇÃO: O presente contrato renovar-se-á automaticamente por igual período e assim sucessivamente, caso não haja manifestação contrária, por escrito, por qualquer das partes até 30 trinta dias antes de seu término ou do término das renovações;  DA RESCISÃO:  a desistência antecipada pôr parte do CONTRATANTE acarretará em multa contratual no valor de 3 (três) parcelas, precisando para isso estar rigorosamente em dia com as parcelas anteriores e acarretará  também a interrupção imediata de tratamentos, e demais direitos e deveres a ele conferidos; DAS CARÊNCIAS: Não será observado nenhum prazo para carência de qualquer procedimento a partir do pagamento da taxa de adesão; DO PAGAMENTO DAS CONTRIBUIÇÕES: a) Obriga-se o CONTRATANTE a pagar à CONTRATADA, pelo período mínimo de 18 meses, os valores descritos no anexo-l, e independente de terem ou não o CONTRATANTE e/ou os beneficiários solicitado algum atendimento, tratamento ou consulta de emergência na rede credenciada; b) O não recebimento do boleto bancário ou outro instrumento de cobrança não desobriga o CONTRATANTE de efetuar o seu pagamento no prazo de vencimento mensal; c) O pagamento da mensalidade referente a um determinado mês não significa estarem pagos ou quitados débitos anteriores; d) O não atendimento por falta de pagamento, ou suspensão de direitos dele decorrentes, não libera o CONTRATANTE da divida contratualmente assumida, que poderá ser cobrada em ação de execução; e) O recebimento pela CONTRATADA de parcelas em atraso constituirá mera tolerância, não implicando em novação contratual ou transação; f) A tabela de procedimentos poderá ser reajustada a cada período de 1 (um) ano, de acordo com a variação dos custos dos procedimentos odontológicos, determinada pela Tabela de preços expedida pela AOB- Associação dos Odontólogos do Brasil; DOS ATRASOS DE PAGAMENTOS:  A inadimplência pôr parte do CONTRATANTE com relação aos valores das taxas, procedimentos e faturas, ocasionará as seguintes sanções, sem prejuízo das anteriormente especificadas: a) Multa de 2% e juros de mora de 1%; b) Correção Monetária     “dia a dia” do vencimento ao efetivo pagamento na forma da lei; c) Mais custas advocatícias e de cobrança se for necessário a utilização dos meios judiciais; d) Encaminhamento ao Cartório de Protestos e/ou SPC após 45 dias de atraso; e) Suspensão da liberação de guias, até o efetivo pagamento, após o primeiro dia de atraso ; DAS DISPOSIÇÕES GERAIS: Fica avençado entre as partes que não haverá ressarcimento de parcelas pagas a qualquer titulo para a CONTRATADA sob qualquer pretexto; DO FORO: Os contratantes elegem o foro da cidade de Araraquara/SP, para dirimir quaisquer dúvidas decorrentes  do presente contrato, renunciando a qualquer outro, por mais privilegiado que seja.
+E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor, juntamente com duas testemunhas.
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="286" y="627" width="25" height="1"/>
+			</line>
+			<line>
+				<reportElement x="337" y="627" width="108" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="454" y="613" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="613" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="32" y="613" width="242" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade}) + " - " + $F{uf}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="476" y="627" width="59" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="359" y="684" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="685" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="753" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="752" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="684" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="359" y="684" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="15" y="752" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="359" y="752" width="181" height="1"/>
+			</line>
+			<componentElement>
+				<reportElement x="211" y="774" width="135" height="16"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{cod_funcionario}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="373" y="51" width="182" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[CUSTO OPERACIONAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="-3" y="787" width="558" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_funcionario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="80" width="315" height="15"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="476" y="613" width="59" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getYearDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="286" y="613" width="25" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[com.marcsoftware.Util.getDayDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="337" y="613" width="106" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getMonthLiteral($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="51"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA["CONTRATO PARTICULAR DE INTERMEDIAÇÃO DE SERVIÇOS"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH}+ "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

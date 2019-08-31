@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database.views">
+ <class name="ViewDebitoOrcamento" table="vw_debito_orcamento">
+  <id name="parcelas">
+   <generator class="native">
+    <param name="sequence">sq_conta</param>
+   </generator>
+  </id>
+  <property column="atraso" generated="never" lazy="false" name="atraso"/>
+  <property column="vencimento" generated="never" lazy="false" name="vencimento"/>
+  <many-to-one class="com.marcsoftware.database.Orcamento"
+   column="cod_orcamento" name="orcamento"/>
+ </class>
+</hibernate-mapping>

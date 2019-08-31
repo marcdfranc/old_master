@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="555" pageHeight="36" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="DATA_INICIAL" class="java.util.Date"/>
+	<parameter name="DATA_FINAL" class="java.util.Date"/>
+	<parameter name="COD_UNIDADE" class="java.lang.Long" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Long("78")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SUM(l.valor_pago) AS total, l.cod_unidade FROM mensalidade m
+INNER JOIN lancamento l ON(m.cod_lancamento = l.codigo)
+WHERE l.cod_unidade = $P{COD_UNIDADE}
+AND (l.data_quitacao BETWEEN $P{DATA_INICIAL} and $P{DATA_FINAL})
+AND l.cod_conta = 63
+GROUP BY l.cod_unidade]]>
+	</queryString>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="royalt" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{total} * 0.07]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="245" y="3" width="261" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["R\$ " + com.marcsoftware.Util.formatCurrency($F{total}.toString()).replace('.', ',')]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="49" y="0" width="456" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="49" y="3" width="196" height="14" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Top">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Adesões Recebidas no Período:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="49" y="22" width="196" height="14" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Top">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Adesões Recebidas no Período:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="245" y="22" width="261" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["R\$ " + com.marcsoftware.Util.formatCurrency($V{royalt}.toString()).replace('.', ',')]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="49" y="19" width="456" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

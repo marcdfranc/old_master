@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="com.marcsoftware.utilities.HibernateUtil">
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<!-- <property name="hibernate.connection.password">yx9cT3rN</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://db2988.pgsql81.laniway.com.br:5432/db2988</property>
+		<property name="hibernate.connection.username">db2988a1</property> -->
+
+		<!--
+		<property name="hibernate.connection.url">jdbc:postgresql://gruponewmed.com.br:5432/gruponew_empresa</property>
+		<property name="hibernate.connection.username">gruponew_emp</property>
+		<property name="hibernate.connection.password">m1st2r</property>
+		-->
+		
+		<!-- 
+		<property name="hibernate.connection.url">jdbc:postgresql://gruponewmed.com.br:5432/gruponew_minas</property>
+		<property name="hibernate.connection.username">gruponew_sos</property>
+		<property name="hibernate.connection.password">m1st2r</property>
+			-->
+
+		<property name="hibernate.connection.password">postgres</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/newmed</property>
+		<property name="hibernate.connection.username">postgres</property>
+		
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.min_size">2</property>
+		<property name="hibernate.c3p0.timeout">5000</property>
+		<property name="hibernate.c3p0.max_statements">10</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.acquire_increment">2</property>
+		<mapping resource="map/Acesso.hbm.xml"/>
+		<!--<property name="show_sql">true</property>
+		<property name="hibernate.generate_statistics">true</property>
+		<property name="hibernate.use_sql_comments">true</property>-->
+		<mapping resource="map/Agenda.hbm.xml"/>
+		<mapping resource="map/Boleto.hbm.xml"/>
+		<mapping resource="map/BoletoMensalidade.hbm.xml"/>
+		<mapping resource="map/Banco.hbm.xml"/>
+		<mapping resource="map/BorderoProfissional.hbm.xml"/>
+		<mapping resource="map/Caixa.hbm.xml"/>
+		<mapping resource="map/CartaoAcesso.hbm.xml"/>
+		<mapping resource="map/Catalogo.hbm.xml"/>
+		<mapping resource="map/Cc.hbm.xml"/>
+		<mapping resource="map/Cep2005.hbm.xml"/>
+		<mapping resource="map/CobrancaCcob.hbm.xml"/>
+		<mapping resource="map/Compra.hbm.xml"/>
+		<mapping resource="map/Concessionaria.hbm.xml"/>
+		<mapping class="com.marcsoftware.database.Conciliacao" resource="map/Conciliacao.hbm.xml"/>
+		<mapping resource="map/Conta.hbm.xml"/>
+		<mapping resource="map/Contato.hbm.xml"/>
+		<mapping resource="map/Contrato.hbm.xml"/>
+		<mapping resource="map/ContratoEmpresa.hbm.xml"/>
+		<mapping resource="map/CreditoPessoa.hbm.xml"/>
+		<mapping resource="map/Dependente.hbm.xml"/>
+		<mapping resource="map/Empresa.hbm.xml"/>
+		<mapping resource="map/EmpresaSaude.hbm.xml"/>
+		<mapping resource="map/Encargo.hbm.xml"/>
+		<mapping resource="map/Endereco.hbm.xml"/>
+		<mapping resource="map/EnderecoCatalogo.hbm.xml"/>
+		<mapping resource="map/Especialidade.hbm.xml"/>
+		<mapping resource="map/FaturaEmpresa.hbm.xml"/>
+		<mapping resource="map/FaturaVendedor.hbm.xml"/>
+		<mapping resource="map/Fisica.hbm.xml"/>
+		<mapping resource="map/FormaPagamento.hbm.xml"/>
+		<mapping resource="map/Folha.hbm.xml"/>
+		<mapping resource="map/Fornecedor.hbm.xml"/>
+		<mapping resource="map/Funcionario.hbm.xml"/>
+		<mapping resource="map/Grupo.hbm.xml"/>
+		<mapping resource="map/Informacao.hbm.xml"/>
+		<mapping resource="map/InformacaoCatalogo.hbm.xml"/>
+		<mapping resource="map/Insumo.hbm.xml"/>
+		<mapping resource="map/ItensBoleto.hbm.xml"/>
+		<mapping resource="map/ItensBordero.hbm.xml"/>
+		<mapping resource="map/ItensCompra.hbm.xml"/>
+		<mapping resource="map/ItensConciliacao.hbm.xml"/>
+		<mapping resource="map/ItensFolha.hbm.xml"/>
+		<mapping resource="map/ItensGrupo.hbm.xml"/>
+		<mapping resource="map/ItensLote.hbm.xml"/>
+		<mapping resource="map/ItensOrcamento.hbm.xml"/>
+		<mapping resource="map/ItensPedido.hbm.xml"/>
+		<mapping resource="map/ItensVendedor.hbm.xml"/>
+		<mapping resource="map/Juridica.hbm.xml"/>
+		<mapping resource="map/Lancamento.hbm.xml"/>
+		<mapping resource="map/LancamentoFaturaEmp.hbm.xml"/>
+		<mapping resource="map/Login.hbm.xml"/>
+		<mapping resource="map/Logradouro.hbm.xml"/>
+		<mapping resource="map/LoteParcelaCompra.hbm.xml"/>
+		<mapping resource="map/Manutencao.hbm.xml"/>
+		<mapping resource="map/Mensalidade.hbm.xml"/>
+		<mapping resource="map/Orcamento.hbm.xml"/>
+		<mapping resource="map/Parametro.hbm.xml"/>
+		<mapping resource="map/ParcelaCompra.hbm.xml"/>
+		<mapping resource="map/ParcelaOrcamento.hbm.xml"/>
+		<mapping resource="map/ParcelaPedido.hbm.xml"/>
+		<mapping resource="map/Pedido.hbm.xml"/>
+		<mapping resource="map/Pessoa.hbm.xml"/>
+		<mapping resource="map/Plano.hbm.xml"/>
+		<mapping resource="map/PlanoServico.hbm.xml"/>
+		<mapping resource="map/Ponto.hbm.xml"/>
+		<mapping resource="map/Posicao.hbm.xml"/>
+		<mapping resource="map/Post.hbm.xml"/>
+		<mapping resource="map/PrestadorServico.hbm.xml"/>
+		<mapping resource="map/Produto.hbm.xml"/>
+		<mapping resource="map/Profissional.hbm.xml"/>
+		<mapping resource="map/Ramo.hbm.xml"/>
+		<mapping resource="map/Relatorio.hbm.xml"/>
+		<mapping resource="map/Requisicao.hbm.xml"/>
+		<mapping resource="map/Score.hbm.xml"/>
+		<mapping resource="map/Servico.hbm.xml"/>
+		<mapping resource="map/Tabela.hbm.xml"/>
+		<mapping resource="map/TipoConta.hbm.xml"/>
+		<mapping resource="map/Token.hbm.xml"/>
+		<mapping resource="map/TrabalhoContato.hbm.xml"/>
+		<mapping resource="map/Unidade.hbm.xml"/>
+		<mapping resource="map/Usuario.hbm.xml"/>
+		<mapping resource="map/Veiculo.hbm.xml"/>
+		<mapping resource="map/ViewClienteCompleto.hbm.xml"/>
+		<mapping resource="map/ViewDebitoMensalidade.hbm.xml"/>
+		<mapping resource="map/ViewTotalOrcamento.hbm.xml"/>
+		<mapping resource="map/Vigencia.hbm.xml"/>
+		<mapping resource="map/TabelaFranchising.hbm.xml"/>
+		<mapping resource="map/ItensTabelaFranchising.hbm.xml"/>
+		<mapping resource="map/FaturaFranchising.hbm.xml"/>
+		<mapping resource="map/LoginUnidade.hbm.xml"/>
+		<mapping resource="map/Funcao.hbm.xml"/>
+		<mapping resource="map/Perfil.hbm.xml"/>
+		<mapping resource="map/Permissao.hbm.xml"/>
+		<mapping resource="map/ItensMenu.hbm.xml"/>
+		<mapping resource="map/Pagina.hbm.xml"/>
+		<mapping resource="map/Menu.hbm.xml"/>
+		<mapping resource="map/HistoricoNavegacao.hbm.xml"/>
+		<mapping resource="map/ItensFaturaFranchising.hbm.xml"/>
+		<mapping resource="map/AcessoNotificacao.hbm.xml"/>
+		<mapping resource="map/Notificacao.hbm.xml"/>
+		<mapping resource="map/ViewDebitoOrcamento.hbm.xml"/>
+		<mapping resource="map/Video.hbm.xml"/>
+		<mapping resource="map/AgendaPessoal.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

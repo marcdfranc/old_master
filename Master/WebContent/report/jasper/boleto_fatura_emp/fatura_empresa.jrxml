@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection">
+		<parameterDescription><![CDATA[Conexão Externa]]></parameterDescription>
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FATURA" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT w.cod_unidade, k.referencia AS unidade, o.fantasia AS fantasia_unid,
+	f.codigo AS fatura, e.codigo AS cod_empresa, f.data_inicio AS vencimento,
+	j.razao_social AS rz_social, j.fantasia, j.cnpj, t.descricao AS ramo,
+	n.rua_av AS rua, n.numero, n.bairro AS bairro, n.complemento, n.cep,
+	i.descricao AS fone, p.descricao, a.codigo AS lancamento, a.documento,
+	a.taxa, a.valor, a.vencimento AS venc_lancamento, z.ctr, z.nome AS cliente,
+	z.cpf, r.cidade AS cidade_unidade,
+	UPPER(r.uf) AS uf_unidade, m.descricao AS fone_unidade
+FROM fatura_empresa as f
+INNER JOIN empresa AS e ON(f.cod_empresa = e.codigo)
+INNER JOIN pessoa AS w ON(e.codigo = w.codigo)
+INNER JOIN juridica AS o ON(o.codigo = w.cod_unidade)
+INNER JOIN pessoa AS k ON(w.cod_unidade = k.codigo)
+INNER JOIN endereco AS r ON(w.cod_unidade = r.cod_pessoa)
+INNER JOIN informacao AS m ON(w.cod_unidade = m.cod_pessoa)
+INNER JOIN juridica AS c ON(c.codigo = w.codigo)
+INNER JOIN ramo AS t ON(e.cod_ramo = t.codigo)
+INNER JOIN lancamento_fatura_empresa as l ON(l.cod_fatura = f.codigo)
+INNER JOIN lancamento AS a ON(l.cod_lancamento = a.codigo)
+INNER JOIN tipo_conta AS p ON(a.cod_conta = p.codigo)
+INNER JOIN (SELECT b.nome, b.cpf, g.ctr, d.cod_lancamento FROM mensalidade AS d
+		INNER JOIN fisica AS b ON(d.cod_usuario = b.codigo)
+		INNER JOIN usuario AS g ON(g.codigo = b.codigo)
+	UNION
+	SELECT h.nome, h.cpf, q.ctr, v.cod_lancamento FROM orcamento AS k
+		INNER JOIN  parcela_orcamento AS v ON(v.cod_orcamento = k.codigo)
+		INNER JOIN fisica AS h ON(k.cod_usuario = h.codigo)
+		INNER JOIN usuario AS q ON(h.codigo = q.codigo)
+	ORDER BY ctr
+	) AS z ON(z.cod_lancamento = a.codigo)
+INNER JOIN informacao AS i ON(i.cod_pessoa = e.codigo)
+INNER JOIN endereco AS n ON(n.cod_pessoa = e.codigo)
+INNER JOIN juridica AS j ON(j.codigo = e.codigo)
+WHERE i.principal = 's'
+	AND m.principal = 's'
+	AND f.codigo = $P{FATURA}
+ORDER BY z.ctr, z.nome, a.descricao]]>
+	</queryString>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fantasia_unid" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fatura" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_empresa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vencimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rz_social" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fantasia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ramo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lancamento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="documento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="taxa" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade_unidade" class="java.lang.String"/>
+	<field name="uf_unidade" class="java.lang.String"/>
+	<field name="fone_unidade" class="java.lang.String"/>
+	<field name="venc_lancamento" class="java.util.Date"/>
+	<variable name="SUB_TOTAL" class="java.math.BigDecimal" resetType="Group" resetGroup="Grp_Usuario" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="FUNCIONARIOS" class="java.lang.Integer" incrementType="Group" incrementGroup="Grp_Usuario" calculation="Count">
+		<variableExpression><![CDATA[$F{ctr}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_ADESAO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{descricao}.equals( "adesão" ) ? $F{valor}: new java.math.BigDecimal(0))]]></variableExpression>
+	</variable>
+	<variable name="MENSALIDADE" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{descricao}.equals( "mensalidade" ) ? $F{valor}: new java.math.BigDecimal(0))]]></variableExpression>
+	</variable>
+	<variable name="TRATAMENTO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{descricao}.equals( "tratamento" ) ? $F{valor}: new java.math.BigDecimal(0))]]></variableExpression>
+	</variable>
+	<variable name="RENOVACAO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{descricao}.equals( "renovação" ) ? $F{valor}: new java.math.BigDecimal(0))]]></variableExpression>
+	</variable>
+	<group name="Grp_Usuario">
+		<groupExpression><![CDATA[$F{ctr}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement x="20" y="14" width="44" height="10"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Lanç.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="64" y="14" width="144" height="10"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Descrição]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="367" y="13" width="90" height="10"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Base]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="457" y="14" width="80" height="10"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<line>
+					<reportElement x="20" y="24" width="517" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="20" y="13" width="517" height="1"/>
+				</line>
+				<textField>
+					<reportElement x="20" y="0" width="493" height="10"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ctr} + " - " + com.marcsoftware.Util.initCap($F{cliente})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="208" y="13" width="159" height="11"/>
+					<textElement>
+						<font size="8" isBold="true" pdfFontName="Helvetica"/>
+					</textElement>
+					<text><![CDATA[Documento]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="11">
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="480" y="0" width="57" height="10"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_TOTAL}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="447" y="0" width="33" height="10"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<line>
+				<reportElement x="20" y="10" width="517" height="1"/>
+			</line>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="457" y="0" width="80" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="0" width="144" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{descricao})]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM-yyyy" isBlankWhenNull="true">
+				<reportElement x="367" y="0" width="90" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{venc_lancamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="0" width="44" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{lancamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="208" y="0" width="159" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="179">
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="128" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total da Fatura:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="312" y="128" width="191" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TOTAL}.add(new java.math.BigDecimal("2"))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="26" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numero de Funcionários:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="43" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Adesões:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="60" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Mensalidades:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="94" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Tratamentos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="312" y="26" width="191" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{FUNCIONARIOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="312" y="43" width="191" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TOTAL_ADESAO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="312" y="60" width="191" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{MENSALIDADE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="312" y="94" width="191" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TRATAMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="77" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total de Renovações:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="312" y="77" width="191" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RENOVACAO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="111" width="453" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Taxa de Boleto e Postagem de Fatura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="111" width="191" height="14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[R$ 2,00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="8" width="100" height="17"/>
+				<textElement>
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Resumo]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

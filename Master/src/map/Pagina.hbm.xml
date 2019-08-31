@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/08/2010 17:52:30 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.Pagina" table="PAGINA">
+  <id name="codigo" type="java.lang.Long">
+   <generator class="native">
+    <param name="sequence">sq_pagina</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="descricao" type="java.lang.String"/>
+  <property generated="never" lazy="false" name="url" type="java.lang.String"/>
+ </class>
+</hibernate-mapping>

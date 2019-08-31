@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relação de clientes" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString language="SQL">
+		<![CDATA[SELECT u.codigo, p.referencia AS ctr, p.cadastro, p.cod_unidade AS unidade_id, 	
+	i.tipo AS tipo_contato, i.descricao AS contato, i.principal AS principal_contato,
+	s.referencia AS unidade_ref, f.nome, f.cpf, f.nascimento, 
+	d.codigo AS dependente_id, d.nome AS dependente, d.referencia AS dependente_seq,
+	d.cpf AS dependente_cpf, d.nascimento AS dependente_nasc, 
+	d.fone AS dependente_fone, d.parentesco, e.rua_av AS rua, e.numero, e.bairro, 
+	e.complemento, e.cidade, e.uf, e.cep
+
+FROM usuario AS u INNER JOIN fisica AS f USING(codigo)
+	INNER JOIN pessoa AS p USING(codigo)
+	INNER JOIN unidade AS n ON (p.cod_unidade = n.codigo)
+	INNER JOIN pessoa AS s ON (n.codigo = s.codigo)
+	INNER JOIN endereco AS e ON(e.cod_pessoa = u.codigo)	
+	LEFT JOIN informacao AS i ON(i.cod_pessoa = u.codigo)
+	LEFT JOIN dependente  AS d ON (d.cod_usuario = u.codigo)
+
+WHERE i.principal = 's'	
+
+GROUP BY u.codigo, p.referencia, p.cadastro, p.cod_unidade, i.tipo, i.descricao, i.principal,
+	s.referencia, f.nome, f.cpf, f.nascimento, d.codigo, d.nome, d.referencia, d.cpf, 
+	d.nascimento, d.fone, d.parentesco, e.rua_av, e.numero, e.bairro, e.complemento, 
+	e.cidade, e.uf, e.cep
+
+ORDER BY u.codigo, d.codigo]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cadastro" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unidade_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_contato" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contato" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="principal_contato" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unidade_ref" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nascimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente_seq" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente_cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente_nasc" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente_fone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parentesco" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="grpCodigo">
+		<groupExpression><![CDATA[$F{codigo}]]></groupExpression>
+		<groupHeader>
+			<band height="95">
+				<textField>
+					<reportElement x="2" y="0" width="247" height="18"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nome} + "-" + $F{ctr}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="249" y="1" width="49" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cadastro:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="298" y="1" width="63" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{cadastro}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="361" y="1" width="89" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo_contato} + ":"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="450" y="1" width="101" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contato}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="231" y="17" width="45" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Endereço:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="41" y="93" width="510" height="1"/>
+				</line>
+				<staticText>
+					<reportElement x="15" y="17" width="28" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CPF:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="117" y="17" width="54" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nascimento:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="43" y="17" width="74" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{cpf}.substring(0, 3) + "." + $F{cpf}.substring(3, 6)+ "." + 
+$F{cpf}.substring(6, 9) + "-" + $F{cpf}.substring(9, $F{cpf}.length())]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="171" y="17" width="60" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{nascimento}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="276" y="17" width="275" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{rua} + ", " + $F{numero}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="51" y="30" width="180" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="298" y="30" width="253" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{complemento}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="53" y="46" width="238" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{cidade} + "-" + $F{uf}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="319" y="45" width="73" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring(0, 5) + "-" + $F{cep}.substring(5, $F{cep}.length())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="231" y="30" width="67" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Complemento:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="46" width="38" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cidade:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="30" width="36" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bairro:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="291" y="46" width="28" height="15"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CEP:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="41" y="61" width="79" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dependentes:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="41" y="81" width="30" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ref.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="71" y="81" width="205" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="276" y="81" width="63" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Parentesco]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="338" y="81" width="65" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nascimento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="403" y="81" width="80" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CPF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="483" y="81" width="68" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Contato]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="7">
+				<line>
+					<reportElement x="2" y="3" width="549" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.5"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="52">
+			<image>
+				<reportElement x="2" y="1" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\Arquivos de programas\\Apache Software Foundation\\Tomcat 6.0\\webapps\\master\\master.com\\WebContent\\report\\image_report\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="146" y="1" width="290" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELAÇÃO DE CLIENTES]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="464" y="24" width="87" height="20"/>
+				<textElement>
+					<font size="11" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["(16) 3333-6122"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="1" width="119" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isItalic="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["ARARAQUARA-SP"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="47" width="549" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<textField>
+				<reportElement x="41" y="0" width="30" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dependente_seq}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="404" y="1" width="80" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dependente_cpf}.substring(0, 3) + "." + 
+$F{dependente_cpf}.substring(3, 6)+ "." + 
+$F{dependente_cpf}.substring(6, 9) + "-" + 
+$F{dependente_cpf}.substring(9, $F{dependente_cpf}.length())]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="339" y="0" width="64" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{dependente_nasc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="1" width="67" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dependente_fone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="63" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{parentesco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="0" width="205" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dependente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="41" y="14" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="45">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="436" y="28" width="115" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="28" width="179" height="16"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[atendimento@sacmaster.com.br]]></text>
+			</staticText>
+			<textField pattern="d&apos; de &apos;MMMM&apos; de &apos;yyyy">
+				<reportElement x="404" y="6" width="147" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="6" width="115" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[SAC (11) 3013-2230]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="2" width="549" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

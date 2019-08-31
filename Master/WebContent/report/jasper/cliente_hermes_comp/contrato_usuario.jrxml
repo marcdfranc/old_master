@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_usuario" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/marcdfranc/Meus documentos/sistemas/master/master.com/WebContent/report/"
+]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_CONTRATO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[640]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_DOCUMENTO" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.ctr, c.cod_funcionario, p.referencia AS ref_unidade, e.cidade,
+	UPPER(e.uf) AS uf, j.cnpj, f.nome, f.cpf
+FROM contrato AS c
+INNER JOIN usuario AS s ON(c.codigo = s.cod_contrato)
+INNER JOIN fisica AS f ON(s.codigo = f.codigo)
+INNER JOIN unidade AS u ON(c.cod_unidade = u.codigo)
+INNER JOIN pessoa AS p ON(c.cod_unidade = p.codigo)
+INNER JOIN juridica AS j ON(c.cod_unidade = j.codigo)
+INNER JOIN endereco AS e ON(c.cod_unidade = e.cod_pessoa)
+WHERE c.codigo = $P{COD_CONTRATO}]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_funcionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="799" splitType="Stretch">
+			<staticText>
+				<reportElement x="161" y="18" width="394" height="17"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[MEDTOP PESSOA FÍSICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="45" width="54" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="45" width="100" height="16" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="286" y="621" width="25" height="1"/>
+			</line>
+			<line>
+				<reportElement x="337" y="621" width="108" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="454" y="607" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="607" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="607" width="271" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade}) + " - " + $F{uf}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="476" y="621" width="59" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="359" y="678" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="679" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="753" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="752" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="678" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="359" y="678" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="15" y="752" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="359" y="752" width="181" height="1"/>
+			</line>
+			<image>
+				<reportElement x="0" y="0" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/logo_piracicaba.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="35" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="211" y="774" width="135" height="16"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{cod_funcionario}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="-3" y="787" width="558" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_funcionario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="176" width="525" height="23"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Segunda: O CONTRATANTE ingressará na condição de participante dos cadastros declinados na Clausula Primeira mediante a aquisição do CARTAO MEDTOP, o qual se fará sob as seguintes condições:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="355" width="525" height="24"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Quinta: A CONTRATADA , se responsabilizará, também, pelo fornecimento de todos os dados referentes aos prestadores de serviços e empresas comerciais.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="204" width="525" height="55"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[a-	Cadastramento pela CONTRATADA do CONTRATANTE em seus bancos de dados, os quais serão revestidos de sigilos legais e disponibilizados, somente, ao CONTRATANTE, ou a quem indicados por este;
+b-	Emissão de uma carteirinha de identificação, denominado MEDTOP pela CONTRATADA em favor do CONTRATANTE ou de quem por ele indicado, o qual, será renovável automaticamente a cada 18 (dezoito) meses, caso não haja manifestação em contrário por uma das partes até 30 (trinta) dias antes do seu término ou do término das renovações.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="265" width="525" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Terceira: O CONTRATANTE, no ato da efetivação do Cadastro, pagará a CONTRATADA à quantia de ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="281" width="35" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="276" width="35" height="15"/>
+				<textElement/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<line>
+				<reportElement x="31" y="291" width="220" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="217" y="276" width="34" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="281" width="157" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[. A Vista, por beneficiário titular ou em ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="293" width="34" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="293" width="35" height="15"/>
+				<textElement/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="297" width="289" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[, sendo neste caso, a titulo de carência, necessário o pagamento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="31" y="307" width="220" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="15" y="297" width="35" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="310" width="525" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[da primeira parcela para o recebimento da carteirinha de identificação.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="281" width="123" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[parcelas mensais no valor de ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="326" width="525" height="25"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Quarta: A CONTRATADA se responsabilizará, integralmente, pela efetivação dos cadastros, o controle sobre os dados e emissão do aludido MEDTOP.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="383" width="525" height="35"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Parágrafo Único: O não cumprimento pelos profissionais liberais e pelas empresas comerciais pelo fornecimento de serviços, mercadorias e bens, além da ausência de tratamento diferenciado aos CONTRATANTES, importará em descredenciamento das citadas empresas e dos prestadores de serviços, isentando-se a CONTRATADA de qualquer responsabilidade.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="422" width="525" height="35"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Sexta: a inclusão no aludido cadastro de “clientes especiais” junto aos prestadores de serviços e empresas comerciais, importará, necessariamente, em benefícios ao CONTRATANTE, a exemplo de descontos, preferências de fornecimento, atendimentos e vendas, conforme anexa relação a ser fornecida pela CONTRATADA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="462" width="525" height="44"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Sétima: Em caso de rescisão unilateral do contrato por parte do CONTRATANTE será devido multa equivalente a 3  (três) parcelas precisando para isso estar rigorosamente em dia com as parcelas anteriores, a exemplo de não pagamento pela aquisição do cartão MEDTOP, perderá todos os possíveis benefícios junto as empresas e prestadores de serviços, sem prejuízo de responder, diretamente, as empresas e prestadores de serviços por danos decorrentes de eventuais ações e omissões.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="510" width="525" height="23"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Oitava: O CONTRATANTE poderá rescindir o presente contrato no prazo de até sete dias contados da data de sua assinatura, conforme o art. 49 da lei 8078/90.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="537" width="525" height="24"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Nona:O CONTRATANTE se declara ciente e de acordo que os serviços oferecidos pelo CARTÃO MEDTOP não se caracterizam como plano de saúde.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="566" width="525" height="24"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula décima: Por estarem certos , acordados as partes elegem o foro da Comarca local, com renuncia expressa de qualquer outro, por mais privilegiado que seja ou venha ser, firmam o presente em duas vias.
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="79" width="430" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[e neste ato representada por (qualificação), ora denominada de CONTRATADA, estabelece com o]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="67" width="525" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Por este instrumento Particular, de um lado Medtop CNPJ " +
+com.marcsoftware.Util.mountCnpj($F{cnpj}) + "."]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="32" y="107" width="345" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="377" y="96" width="42" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[, CPF]]></text>
+			</staticText>
+			<line>
+				<reportElement x="402" y="107" width="138" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="15" y="109" width="525" height="21"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ora denominado CONTRATANTE, o presente Contrato de Participação em Divulgação de Serviços Profissionais liberais e Empresas Comerciais, que se regerá, pelas seguintes cláusulas e condições:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="135" width="525" height="36"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Clausula Primeira: O objeto, ora contratado, se trata da participação do CONTRATANTE, na condição de integrante dos cadastros para fins de atendimentos e fornecimentos como “clientes especiais” junto aos prestadores de serviços e empresas comerciais credenciadas pela CONTRATADA,(clinicas médicas e odontológicas,escolas de informática,hotéis,comércio em geral etc...)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="96" width="35" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sr(a).:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="393" y="291" width="22" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="476" y="607" width="59" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getYearDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="337" y="607" width="106" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getMonthLiteral($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="286" y="607" width="25" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[com.marcsoftware.Util.getDayDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="95" width="334" height="15"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="95" width="133" height="15"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.mountCpf($F{cpf})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

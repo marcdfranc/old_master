@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Orcamento">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_orcamento</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="parcelas"/>
+  <property generated="never" lazy="false" name="data"/>
+  <property generated="never" lazy="false" name="observacao"/>
+  <property generated="never" lazy="false" name="status"/>
+  <many-to-one class="com.marcsoftware.database.Pessoa"
+   column="cod_pessoa" name="pessoa"/>
+  <many-to-one class="Usuario" column="cod_usuario" name="usuario"/>
+  <many-to-one class="Dependente" column="cod_dependente" name="dependente"/>
+  <many-to-one class="com.marcsoftware.database.Login" column="cadastro" name="login"/>
+  <property column="doc_digital" name="docDigital"/>
+  <property column="doc_parcela_digital" name="docParcelaDigital"/>
+ </class>
+ <query name="orcamentoByUser">from Orcamento as o &#xd;
+where o.pessoa.codigo in(select p.codigo from Profissional as p)&#xd;
+and o.usuario.codigo = :codigo</query>
+ <query name="orcamentoProfOf">from Orcamento as o &#xd;
+where o.pessoa.codigo in(select p.codigo from Profissional as p) &#xd;
+and o.pessoa.unidade.codigo = :codigo order by o.usuario.nome</query>
+ <query name="orcamentoEmpresaOf">from Orcamento as o &#xd;
+where o.pessoa.codigo in(select e.codigo from EmpresaSaude as e) &#xd;
+and o.pessoa.unidade.codigo = :codigo order by o.usuario.nome</query>
+ <query name="orcamentoEmpByUser">from Orcamento as o &#xd;
+where o.pessoa.codigo in(select e.codigo from EmpresaSaude as e)&#xd;
+and o.usuario.codigo = :codigo</query>
+ <sql-query name="totalOrcamento">SELECT SUM(i.qtde * t.valor_cliente) FROM 
+	itens_orcamento as i LEFT JOIN tabela as t ON(i.cod_tabela = t.codigo) 
+WHERE t.cod_unidade = :unidade
+	AND i.cod_orcamento = :orcamento</sql-query>
+ <sql-query name="totalDentista">SELECT SUM(i.qtde * t.valor_operacional) FROM 
+				itens_orcamento as i LEFT JOIN tabela as t ON(i.cod_tabela = t.codigo)
+				WHERE t.cod_unidade = :unidade 
+				AND i.cod_orcamento = :orcamento</sql-query>
+</hibernate-mapping>

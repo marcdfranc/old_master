@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Acesso">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_acesso</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="entrada"/>
+  <property generated="never" lazy="false" name="saida"/>
+  <property generated="never" lazy="false" name="ip"/>
+  <many-to-one class="com.marcsoftware.database.Login" column="username" name="login"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" name="unidade"/>
+ </class>
+</hibernate-mapping>

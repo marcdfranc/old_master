@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Tabela">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_tabela</param>
+   </generator>
+  </id>
+  <property column="valor_operacional" generated="never" lazy="false" name="operacional"/>
+  <property column="valor_cliente" generated="never" lazy="false" name="valorCliente"/>
+  <many-to-one class="com.marcsoftware.database.Servico"
+   column="cod_servico" name="servico"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" name="unidade"/>
+  <many-to-one class="com.marcsoftware.database.Vigencia"
+   column="cod_vigencia" name="vigencia"/>
+ </class>
+ <query name="tabelaUnidade">from Tabela as t where t.unidade = :unidade&#xd;
+	and t.vigencia.aprovacao = 's'&#xd;
+order by t.servico.ref</query>
+ <query name="tabelaUnidadeByCode">from Tabela as t where t.unidade.codigo = :codigo order by t.servico.ref</query>
+ <query name="tabelaOdontoByCode">from Tabela as t &#xd;
+where t.unidade.codigo = :codigo &#xd;
+	and t.servico.especialidade.setor = 'o' &#xd;
+order by t.servico.ref</query>
+ <query name="tabelaBySetorUnCode">from Tabela as t &#xd;
+where t.unidade.codigo = :unidade &#xd;
+	and t.servico.especialidade.setor = :setor &#xd;
+order by t.servico.ref</query>
+ <query name="tabelaOrcamento">from Tabela as t &#xd;
+	where t.servico.especialidade.setor = :setor&#xd;
+		and t.unidade.codigo = :unidade&#xd;
+		and t.servico.referencia = :referencia&#xd;
+		and t.vigencia.codigo = :vigencia</query>
+</hibernate-mapping>

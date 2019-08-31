@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Conciliacao">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_conciliacao</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="numero"/>
+  <property generated="never" lazy="false" name="emissao"/>
+  <property generated="never" lazy="false" name="vencimento"/>
+  <property generated="never" lazy="false" name="status"/>
+  <many-to-one class="com.marcsoftware.database.FormaPagamento"
+   column="cod_forma_pagamento" name="formaPagamento"/>
+ </class>
+ <query name="conciliacaoByUnidade">select distinct i.id.conciliacao from ItensConciliacao as i&#xd;
+where i.id.conciliacao.status = 'a'&#xd;
+	and i.id.lancamento.unidade = :unidade&#xd;
+order by i.id.conciliacao.status, i.id.conciliacao.vencimento</query>
+ <sql-query name="totalConcilio">SELECT SUM(l.valor_pago) FROM itens_conciliacao AS i
+INNER JOIN lancamento AS l ON(i.cod_lancamento = l.codigo)
+WHERE i.cod_conciliacao = :conciliacao</sql-query>
+ <sql-query name="debitoAConciliar">SELECT SUM(l.valor_pago) FROM itens_conciliacao AS i
+INNER JOIN lancamento AS l ON(i.cod_lancamento = l.codigo)
+INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+WHERE l.cod_unidade = :unidade
+	AND l.tipo = 'd'
+	AND c.status = 'a'</sql-query>
+ <sql-query name="creditoAConciliar">SELECT SUM(l.valor_pago) FROM itens_conciliacao AS i
+INNER JOIN lancamento AS l ON(i.cod_lancamento = l.codigo)
+INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+WHERE l.cod_unidade = :unidade
+	AND l.tipo = 'c'
+	AND c.status = 'a'</sql-query>
+ <sql-query name="debitoAConciliarHold">SELECT SUM(l.valor_pago) FROM itens_conciliacao AS i
+INNER JOIN lancamento AS l ON(i.cod_lancamento = l.codigo)
+INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+WHERE l.tipo = 'd'
+	AND c.status = 'a'</sql-query>
+ <sql-query name="creditoAConciliarHold">SELECT SUM(l.valor_pago) FROM itens_conciliacao AS i
+INNER JOIN lancamento AS l ON(i.cod_lancamento = l.codigo)
+INNER JOIN conciliacao AS c ON(i.cod_conciliacao = c.codigo)
+WHERE l.tipo = 'c'
+	AND c.status = 'a'</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Pessoa" name="Fisica">
+  <key column="codigo"/>
+  <property generated="never" lazy="false" name="estadoCivil">
+   <column name="estado_civil"/>
+  </property>
+  <property generated="never" lazy="false" name="naturalidadeUf">
+   <column name="naturalidade_Uf"/>
+  </property>
+  <property generated="never" lazy="false" name="nome"/>
+  <property generated="never" lazy="false" name="rg"/>
+  <property generated="never" lazy="false" name="cpf"/>
+  <property generated="never" lazy="false" name="sexo"/>
+  <property generated="never" lazy="false" name="naturalidade"/>
+  <property generated="never" lazy="false" name="nacionalidade"/>
+  <property generated="never" lazy="false" name="nascimento"/>
+  <property column="is_adm" name="isAdm"/>
+ </joined-subclass>
+</hibernate-mapping>

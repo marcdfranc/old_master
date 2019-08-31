@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+
+	<class name="Requisicao">
+		<id name="codigo">
+			<generator class="native">
+  				<param name="sequence">sq_requisicao</param>
+  			</generator>
+		</id>
+		
+		<property name="kmSaida" not-null="true">
+			<column name="km_saida"/>
+		</property>
+		
+		<property name="kmChegada" not-null="true">
+			<column name="km_chegada"/>
+		</property>
+		
+		<property name="dataSaida" not-null="true">
+			<column name="data_saida"/>
+		</property>
+		
+		<property name="dataChegada" not-null="true">
+			<column name="data_chegada"/>
+		</property>
+		
+		<property name="horaSaida" not-null="true">
+			<column name="hora_saida"/>
+		</property>
+		
+		<property name="horaChegada">
+			<column name="hora_chegada"/>
+		</property>		
+		
+		<many-to-one name="veiculo" class="Veiculo"	column="cod_veiculo"/>
+			
+		<many-to-one name="funcionario"
+			class="Funcionario"
+			column="cod_funcionario"/>	
+	</class>
+</hibernate-mapping>

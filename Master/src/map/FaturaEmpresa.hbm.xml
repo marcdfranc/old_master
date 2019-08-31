@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="FaturaEmpresa" table="fatura_empresa">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_fatura_empresa</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="dataInicio">
+   <column name="data_inicio"/>
+  </property>
+  <property generated="never" lazy="false" name="dataFim">
+   <column name="data_fim"/>
+  </property>
+  <many-to-one class="Empresa" column="cod_empresa" name="empresa"/>
+  <property generated="never" lazy="false" name="vencimento"/>
+ </class>
+ <query name="faturaEmpOpen">from FaturaEmpresa as f&#xd;
+			where  &#xd;
+				f.empresa = :empresa&#xd;
+order by f.dataInicio desc</query>
+ <sql-query name="totalFatura">SELECT SUM(l.valor) 
+			FROM lancamento_fatura_empresa AS f INNER JOIN lancamento AS l ON(f.cod_lancamento = l.codigo)
+			WHERE f.cod_fatura = :fatura</sql-query>
+ <sql-query name="totalFaturaAcrescimo">SELECT sum(l.valor * 
+	(1 + (l.taxa/100)) ^ case
+			when ((current_date - f.vencimento)/30 = 0 and (current_date &gt; f.vencimento)) then 1
+			else (current_date - f.vencimento)/30 end
+) as valor
+FROM lancamento_fatura_empresa as i
+	INNER JOIN lancamento as l ON(i.cod_lancamento = l.codigo)
+	INNER JOIN fatura_empresa AS f ON(i.cod_fatura = f.codigo)
+WHERE f.codigo = :fatura</sql-query>
+</hibernate-mapping>

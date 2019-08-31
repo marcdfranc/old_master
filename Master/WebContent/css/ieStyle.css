@@ -1,0 +1,252 @@
+/* azul claro: #DBEFFA*/
+
+/*@CHARSET "ISO-8859-1";*/
+
+body {
+	background-color: white;
+}
+
+#feedback p {
+	margin-top: 0 !important;
+}
+
+.cleanBorder {
+	top: 230px !important;
+	border-color: #DBEFFA;
+	color: #DBEFFA;
+}
+
+.counter {
+	margin-top: 0px;
+	margin-bottom: 5px;
+	float: none;
+}
+
+.adjustTop { top: 80px; }
+
+.gridMenuContent ul li {
+	display: inline;
+}
+
+.gridMenuContent {
+	display: block;
+	height: 25px!important;	
+}
+
+.cpWindowButtonClose {	
+	position: relative;
+	float: right;
+	margin-top: -17px;
+	padding-left: 4px;
+	padding-right: 2px;
+}
+
+.cpWindowButtonClose :HOVER {
+	cursor: pointer;		
+}
+
+#dataGrid TABLE {
+	border-collapse: separate;	
+}
+
+.ieAlign {
+	position: relative;
+	top: 26px;
+	left: 10px;
+}
+
+.dataBank {	padding-bottom: 0; }
+
+.boxMenu {	
+	padding-top: 0px !important;					 
+}
+
+#boxMenuContent blockquote {
+	margin-top: 0 !important;
+	
+}
+
+#imgTopBox {
+	float:left;
+	clear: both;	
+}
+
+#imgBottonBox {
+	float: left;
+	clear: both;
+}
+
+.subMenuContent blockquote { margin-left: 0 !important; }
+
+.subMenuContent ul { margin-left: 15px !important; }
+
+#formStyle{	
+	margin-left: 0px !important;
+	float: left;
+	width: 1000px;
+}
+
+#geralDate {
+	padding-right: 0;
+	position: relative;
+}
+
+.topContent{ 
+	margin-left: 30px;
+	margin-right: 0 !important; 
+}
+
+
+.textBox input{	
+	position: absolute !important;	
+}
+
+.textBox option {	
+	position: absolute !important;				
+}
+
+#header{
+	position: relative;
+	z-index: 0 !important;
+	right: 0px;
+	top: 15px;
+}
+
+#menu {
+	position: absolute;
+	margin-left: 0 !important;
+	float: left;
+	right: 230px;
+	left: 115px;
+	top: 125px;
+	bottom: 350px;
+}
+
+#centerAll {
+	position: relative !important;
+	float: left;	
+	margin-top: 15px !important;
+	bottom: 70px;
+}
+
+.checkRadio input { 
+	position: inherit;
+	margin-left: -15px !important;
+}
+
+.checkRadio label {
+	position: relative;
+	margin-right: 15px;	
+}
+
+.indexTitle { max-width: 100% !important; }
+
+.indexTitle h4 {
+	border-bottom: 2px solid;
+	border-bottom-color:#42929D;	
+}
+
+.alignLine { 
+	visibility: hidden;
+	width: 92% !important; 
+}
+
+#centerAll {
+	position: static;	
+	height:auto;
+}
+
+#bigRoundBox BLOCKQUOTE { padding-bottom: 0 !important; }
+
+.bigBox {  }
+
+.gridButton {
+	width: 100%; 
+	right: 230px!important; 
+}
+
+#geralDate .formGreenButton { margin: 0 0 20px 90px !important; }
+
+#footer {
+	position: relative;
+	margin-bottom: 0;	
+	width: 97%;
+}
+
+#abaMenu {
+	position: relative !important;
+	bottom: 30px;
+}
+
+#lineFooter {
+	position: relative;
+	top: 5px;
+}
+
+.errorMsg { margin-top: 23px; }
+
+#buscar { margin-left: 90px; }
+
+.popUp {
+	top: 0;
+	position: absolute;	
+	display: block;
+	margin-top: 18px;	
+	background: url("../image/back_check.png") center repeat-x;	
+	padding-right : 4%;
+	min-width: 33px;
+	z-index:20;		
+}
+
+.popUp a {	
+	position: static !important;
+	margin-top: 0;
+	background:none;
+	height: 50px;			
+}
+
+#mainContent {
+	float: left !important;
+	position: relative;
+	margin-left: 30px;
+	width: 996px;
+}
+
+#popJuridica { margin-top: 40px !important; }
+
+
+
+.loader div p {
+	margin-top: 30px !important;
+}
+
+.calendario img {
+	position: absolute;
+	left: 77px;	
+}
+
+.calendario input {	
+	top: 1px;	
+}
+
+.gridMenu {
+	
+	height: 10px !important;
+}
+
+.gridMenu a {
+	position: static !important;
+}
+
+.headerGrid {
+	height: 23px;
+}
+
+.headerColum {
+	bottom: 0 !iportant;
+}
+
+
+#clockContent {
+	padding-top: 45px;
+}

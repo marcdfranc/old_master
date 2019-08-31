@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="FaturaVendedor" table="fatura_vendedor">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_fatura_vendedor</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="inicio"/>
+  <property generated="never" lazy="false" name="fim"/>
+  <property generated="never" lazy="false" name="cadastro"/>
+ </class>
+ <sql-query name="totalVenda">select sum(l.valor) 
+from contrato as c inner join  lancamento as l on(c.cod_lancamento = l.codigo)
+Inner join itens_vendedor as i on(i.cod_contrato = c.codigo)
+where i.cod_fatura = :fatura</sql-query>
+</hibernate-mapping>

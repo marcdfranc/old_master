@@ -1,0 +1,821 @@
+/*  azul claro: #DBEFFA
+	roxo escuro: #990066 
+	roxo: #9900FF
+	cinza inativo: #666666;
+	verde: #42929D
+	azul link: #007CC3
+	vermelho: #FF0000
+	verm Erro: #FFCCCC
+	ver msg: #993300
+		
+botões inativos não necessitan de de id btn
+*/
+
+/*@CHARSET "ISO-8859-1";*/
+
+body {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	width: 95%;
+	margin: 0 2% 0 2%;		
+}
+
+#centerAll {
+	background: url("../image/footer_right.jpg") right bottom no-repeat;
+	position: absolute;	
+	float: none;	
+	padding-bottom: 0;
+	z-index: 0;
+	margin-top: 150px;
+	margin-left: 0;	
+	width: 1180px;
+	min-width: 1180px; 
+}
+
+#center {
+	position: absolute;	
+	float: none;	
+	padding-bottom: 0;
+	z-index: 1;	
+	margin-left: 0;
+	margin-top: 0 !important;	
+	width: 600px;
+	
+}
+
+#centerContent {
+	position: relative;		
+}
+
+#centerContent object {
+	margin-left: 29%;	
+} 
+
+#mainContent {	
+	float: none !important;			
+}
+
+.titleCounter {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: italic;
+	font-weight: bold;
+	color: #666666;	
+}
+
+.valueCounter {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: italic;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
+.counter {
+	position: static;	
+	width: 400px;
+	height: 10px;
+	float: left;
+	margin-bottom: 5px;		
+}
+
+#dg {
+	width: 100%;
+	border-bottom: 2px solid #42929D;
+}
+
+.multGrid {
+	margin-right: 70px;
+}
+
+#dataBank tr {
+	height: 10px;
+	position: static;	
+}
+
+.rowMenu {
+	height:2px;
+	position: relative;		
+}
+
+.gridMenuContent {
+	height: 10px;
+	clear: right;
+	position: relative;
+}
+
+.gridMenuContent ul {
+	height: 5px;
+	list-style: none;
+	position: relative;
+	bottom: 10px;
+}
+
+.gridMenu {	
+	display: inline;	
+}
+
+.gridMenu a {
+	list-style: none;
+	text-align: center;
+	font-style: italic;
+	text-decoration: none;
+	float: left;		
+}
+
+
+#dataGrid {
+	margin-right: 20px;
+	max-width: 915px;
+}
+
+#dataGrid a {
+	margin-right: 35px;	 
+	font-weight: bold;
+	color: #007CC3;
+	font-style: italic;
+	text-decoration: none;	
+}
+
+#dataGrid a:hover {
+	color: #990066;
+	text-decoration: underline;	
+}
+
+#dataGrid label {
+	margin-right: 35px;	 
+	font-weight: bold;
+	color: #007CC3;
+	font-style: italic;
+	text-decoration: none;		
+}
+
+#dataGrid label:hover {
+	color: #990066;
+	text-decoration: underline;
+	cursor: pointer;	
+}
+
+.pagerGrid {
+	position: static;
+	float: right;	
+}
+
+.pagerGrid a:hover {
+	cursor: pointer;		
+}
+
+#headerLogin { width: 95%; }
+
+#headerLogin img { float: left; }
+
+#header {
+	width: 1180px;
+	min-width: 1180px;
+	height: 240px;	
+	background: url("../image/header_left.jpg") left no-repeat;	
+	position: absolute;
+	margin-top: 15px;	
+}
+
+#loaderHeader {
+	height:30px;
+	left: 40px;
+	top: 70px;
+	position: absolute;
+	background: url("../image/igm_loader.gif") bottom left no-repeat;
+	z-index: 0;	
+}
+
+.logado {	
+	width: 150px;
+	float: right;
+	margin: 10px 0 0 0;
+	clear: both;
+}
+
+.logado img { 
+	margin: 0 0 0 0;
+	position: absolute; 
+}
+
+.logado label {
+	font-weight: bold;
+	float: left;
+	clear: both;
+	position: absolute;
+}
+
+.logado span {	
+	float: right;
+	clear: left;
+}
+
+.logado a:hover {
+	color: #990066;
+	text-decoration: underline;
+}
+
+.headerCounter {
+	font-weight: normal !important;
+	margin-left: 60px;
+	font-size: 15px;
+}
+
+#menu {	
+	height: 20px;	
+	margin: 0 0 30px 130px;
+	clear: right;
+	padding-bottom: 5px;
+	position: relative;
+	top: 135px;	
+	width: 100%;	
+}
+
+#menu blockquote {	 
+	display: inline;
+	margin: 0 0 0 0 !important;
+}
+
+#menu blockquote a {
+	text-align: center;
+	font-style: italic;
+	text-decoration: none;
+	color: white;
+	float: left;
+}
+
+#menu blockquote a:hover {	
+	color: #000000;
+	background: url(../image/light_blue_button.png) center no-repeat;
+}
+
+#menu blockquote a:active {
+	padding: 2px 0 0 1px;	
+	background-position: top;
+}
+
+#menu blockquote a:visited{	padding: 0 0 0 1px; }
+
+#menu ul  {
+	list-style: none;
+	max-height: 10px;
+}
+
+#menu ul li { display: inline; }
+
+.boxMenu{
+	width: 130px;	
+	left: 55px;
+	top: 19px;	
+	margin: 0 0 5px 40px;
+	background: url("../image/center_box.png") left repeat-y;
+	padding-left: 14px;
+	padding-top: 20px;
+	padding-bottom: 0;
+	clear:both;
+	float:left;		
+}
+
+#imgTopBox {
+	position: absolute;
+	left: 39px;		
+}
+
+#imgBottonBox {
+	position:relative;
+	right: 14px;
+	height: 25px;	
+	background: #ffffff;
+}
+
+#boxMenuContent {
+	margin-top: 10px;		
+}
+
+#boxMenuContent blockquote {
+	height: 24px;
+	text-align: center;
+	margin-top: 10px;			
+}
+
+#boxMenuContent blockquote a {
+	font-style: italic;
+	text-decoration: none;
+	color: white;	
+	margin-top: 2px;		
+}
+
+
+#boxMenuContent blockquote:hover {	
+	padding-top: 2px;		
+	background: url(../image/light_green_button.png) top no-repeat;
+	color: black;
+	cursor: pointer;
+}
+
+#boxMenuContent blockquote:hover a {	
+	color: black;
+}
+
+
+.subMenuContent blockquote a:active {	
+	padding-top: 2px;
+	padding-left: 1px;	
+}
+
+.subMenuContent li {
+	height: 30px;
+	margin-left: 0;	
+	padding-left: 0;
+}
+
+#feedback {	
+	width: 310px;
+	height: 130px;	
+	float: right;	
+	background: url("../image/feedback.png") top no-repeat;
+	z-index: 0;
+}
+
+#feedback p {
+	width: 310px;
+	float: none;
+	font-style: italic;
+	color: white;
+	font-size: 26px;
+	text-align: center;
+	margin-top: 28px;
+}
+
+#formStyle{
+	position: relative;
+	padding-bottom: 0;
+	margin-left: 200px;
+	clear: none;
+}
+
+#formStyle form {
+	width: 100%;
+}
+
+.formStyle label { font-style: normal; }
+
+/* quando o submenu for extenso, os elementos do form deverão ser encapsulados neste id*/
+#geralDate {	
+	z-index: 6;
+}
+
+.topContent {
+	position: relative;		
+	margin-right: 320px;
+}
+
+#geralDate .formGreenButton {
+	float: none; 
+	margin: 0 0 20px 190px; 
+	width: 100px
+}
+
+.indexTitle {
+	width: 100%;
+	float: left;
+	margin-top: 20px;	
+	padding-right: 0;
+	position: static!important;	
+}
+
+.indexTitle h4 {
+	font-size: 18px;	
+	color: #42929D;
+	height: 20px;
+	margin: 0;
+	width: 93%;
+	position: static !important;
+	margin-bottom: 10px;
+	font-style: italic;	
+}
+
+.alignLine {
+	position: relative;
+	margin-bottom: 5px;
+	color: #42929D;
+	background-color: #42929D;
+	border-bottom: none;
+	width: 93%;	
+	height: 2px
+}
+
+
+.alignLine hr {
+	position: relative;
+	bottom: 10px;
+	border: none;
+}
+
+
+.textBox {
+	position: static;
+	float: left;
+	margin-right: 15px;
+	height: 53px;			
+}
+
+.textBoxComponent {
+	position: static;
+	float: left;
+	margin-right: 15px;	
+}
+
+.textBox h4 {
+	font-size: 12px;
+	color: #42929D;
+	font-weight:bolder;	
+}
+
+.dataGrid {
+	float: left;
+	width: 100%;	
+	padding-top: 0;	
+	background: url("../image/back_check.png") top repeat-x;	
+	padding-bottom:20px;		
+}
+
+.dataGrid table {
+	border-collapse: collapse;
+}
+
+.dataGrid table thead {
+	font-style: italic;
+	width: 100%;
+	font-size: 12px;
+	font-weight: bold;
+	/*color: white;*/	
+	text-align: left;
+	clear: both;		
+}
+
+.headerColum {
+	height: 15px;
+	position: relative;
+	font-weight: bold;
+	font-style: italic;
+	top: 3px;
+	float: left;	
+	margin-bottom: 4px;
+	margin-top: 2px;
+	color: white;		
+}
+
+
+.gridRow {
+	font-size: 12px;	
+	border-top: 1px #42929D solid;				 
+}
+
+.menuExpandido {
+	margin: 15px 0 5px 20px;
+}
+
+.headerRow {
+	border-collapse: separate;
+	border-left: 1px #42929D solid;
+	border-bottom: 1px #42929D solid;
+	border-top: solid #ffffff ;
+	margin-top: 5px;
+}
+
+.errorMsg {	
+	background-color: #FFCCCC;
+	border: solid 2px #993300;
+	position: static;
+	height: 10px;		
+	padding-right: 5px;
+	font-size: 9px;
+	font-style: italic;		
+}
+
+.errorMsg p {
+	color: #993300;
+	text-align: center;
+	height: 10px;
+	margin-top: 0;
+	position: relative;
+	bottom: 2px;
+	width: 100%;
+}
+
+.gridButton { 
+	float: right;
+	width: 72%;
+	position: relative;
+	right: 310px;
+	margin-bottom: 20px;
+}
+
+.buttonContent {
+	margin-right: 60px;
+	position: static;
+	width: 800px;
+	float: right;	
+}
+
+.buttonContentLeft {
+	margin-right: 60px;
+	position: static;
+	width: 800px;
+	float: left;	
+}
+
+
+.topButtonContent {
+	margin-right: 330px;
+	position: static;
+	width: 800px;
+	float: right;
+}
+
+.topButtonContent input {
+	position: static;
+	float: right;	
+}
+
+.buttonContent input {	
+	position: static;
+	float: right;	
+}
+
+.buttonContentLeft input {	
+	position: static;
+	float: left;	
+}
+
+.leftButtonContent {
+	/*position:relative;	
+	float: right;
+	top: 20px;
+	max-width: 200px;
+	right: 80px;*/
+}
+
+.rightButtonContent {
+	/*position:relative;	
+	float: right;
+	top: 20px;
+	max-width: 200px;
+	right: 80px;*/
+}
+
+.formGreenButton{
+	/*float: right;
+	position: relative;	
+	clear: both;*/
+}
+
+.formGreenButton input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_green_button.png) no-repeat;
+}
+
+.blueBtn { font-style: italic; }
+
+.blueButtonStyle {
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/blue_button.png) center no-repeat;
+	color: white;
+	font-style: italic;	
+}
+
+.blueBtn input:hover {
+	color: #666666;
+	cursor: pointer;
+	background: url(../image/light_blue_button.png) center no-repeat;
+}
+
+.greenBtn {
+	width: 100px;
+	font-style: italic;
+	margin: 10px 0 0 150px; 
+}
+
+.greenButtonStyle {
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/green_button.png) no-repeat;
+	position: relative;
+	color: white;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+
+li .greenButtonStyle blockquote:hover {
+}
+
+.greenButtonStyle label:hover {
+	color: black;		
+	cursor: pointer;		
+}
+
+.greenBtn input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_green_button.png) no-repeat;
+}
+
+.grayButtonStyle {
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/inactive_button.png) no-repeat;
+	color: white;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+
+.checkRadio {
+	background: url("../image/back_check.png") top repeat-x ;
+	position: relative;
+	height: 22px;		
+}
+
+.checkRadio label {
+	margin-left: 10px;
+}
+
+#maintenance {
+	padding: 10% 0% 5% 10%;
+	position: absolute;
+}
+
+#maintenance H1 {
+	font-size: 40px;
+	width: 100%;
+	position: relative;
+	padding-left: 21%;
+	padding-right: 0
+}
+
+#roundBox {
+	width: 350px;
+	height:180px;
+	margin-left: 35%;
+	background: url("../image/login_box.png") center no-repeat;
+	clear: both;	
+	margin-bottom: 240px;	
+}
+
+#bigRoundBox {
+	width: 600px;
+	height:170px;
+	margin-left: 25%;
+	margin-bottom: 150px;
+	background: url("../image/error_box.png") center no-repeat;
+	clear: both;
+}
+
+#bigRoundBox blockquote {
+	width:510px;
+	padding: 20px 0 30px 0;		
+	text-align: center;
+}
+
+#footer {
+	float: right;
+	border-top: 5px solid #DBEFFA;
+	width:100%;	
+	position: relative;
+	top: 15px;
+}
+
+#lineFooter {
+	float: right;
+}
+
+/*#footer {
+	width: 163%;	
+	clear: none;
+	position: relative;
+	float: right;
+	border-top: 4px solid #DBEFFA;	
+	left: 67%;
+	right: 0;
+}
+
+#footer p {
+	position: relative;
+	float: right;	
+}
+
+*/
+
+.popUp {
+	position:relative;
+	top: 20px;	
+	width: 30px;
+	left: 160px;
+	height: 20px;		
+	border: #ffffff solid;
+	border-width:thin;	
+}
+
+.popUp a {
+	background: url("../image/back_check.png") center repeat-x;
+	min-height: 20px;
+	font-weight: 800;
+	padding: 2px 100% 5px 15px;	
+	color: #1b3c7f;
+	font-style: italic;
+	text-decoration: none;
+}
+
+.popUp a:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.totalizador {
+	float: right; 
+	position: static;
+	margin: 0 220px 30px 0;
+		
+}
+
+.totalizador label {
+	float: right;
+}
+
+.totalizador span {
+	float: right;
+}
+
+.area label {
+	position: static;
+	float: left;
+	width: 665px;
+}
+
+.sair {
+	position: relative !important;	 
+	font-weight: bold;	 
+	color: #007CC3;
+	font-style: italic;
+	text-decoration: none;	
+	margin-left: 115px;
+	bottom: 8px;
+}
+
+.justificaRight {
+	position: relative;
+	float: right;
+	height: 20px;
+	width: 200px;	
+	left: 360px;
+	margin-top: 40px;
+}
+
+.loader div {
+	padding:5px 10px 5px 25px;
+	background: #ffffff url(../image/loader.gif) no-repeat 15px 5px;
+	line-height: 16px;
+	height: 40px;
+	width: 145px;        
+}
+
+.loader div p {
+	margin: 20px 0 0 20px;
+}
+
+
+
+.foca {
+	padding-left: 100px; 
+	height:60px; 
+	width: 200px; 
+	background: #ffffff url(../image/logados.png) no-repeat;
+}
+
+
+#upload {
+	width: 100% !important;
+	height: 30px;
+	background: url("../image/back_upload.gif") top repeat-x;	
+	margin-bottom: 30px;
+}
+
+.carteiraUpload {
+	margin-bottom: 0 !important;
+}
+
+#upload h1 {
+	position: relative;
+	font-size: 20px;
+	color: #666666;
+	font-weight: bolder;
+	font-style: italic;
+	bottom: 3px;
+}
+

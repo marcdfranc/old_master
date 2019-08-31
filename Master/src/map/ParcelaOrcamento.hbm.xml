@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ParcelaOrcamento" table="parcela_orcamento">
+  <composite-id class="ParcelaOrcamentoId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="Lancamento" column="cod_lancamento" name="lancamento"/>
+   <key-many-to-one class="Orcamento" column="cod_orcamento" name="orcamento"/>
+  </composite-id>
+  <property generated="never" lazy="false" name="beneficiario"/>
+  <property name="sequencial"/>
+ </class>
+ <query name="countParcela">select count(p.id.orcamento.codigo) 
+			from ParcelaOrcamento as p where p.id.orcamento= :orcamento</query>
+ <query name="countParcelaAtrasoOf">select count(p.id.lancamento) from ParcelaOrcamento as p 
+					where p.id.orcamento.usuario.codigo = :codigo
+					and p.id.lancamento.status= 'a'
+					and (current_date() - p.id.lancamento.vencimento) &gt; 30</query>
+ <query name="parcelamento">from ParcelaOrcamento as p 
+			where p.id.orcamento = :orcamento
+				and p.id.lancamento.tipo = 'c'
+			order by p.id.lancamento.codigo</query>
+ <query name="parcelamentoByCode">from ParcelaOrcamento as p 
+			where p.id.orcamento.codigo = :codigo
+				and p.id.lancamento.tipo = 'c'
+			order by p.id.lancamento.codigo</query>
+ <query name="parcelamentoByCodeOrcamento">from ParcelaOrcamento as p 
+			where p.id.orcamento.codigo = :codigo
+				and p.id.lancamento.tipo = 'c'
+			order by p.id.orcamento.codigo</query>
+ <query name="parcelaCreditoOrc">from ParcelaOrcamento as p 
+			where 
+				p.id.orcamento.usuario.codigo = :usuario	
+				and p.id.lancamento.tipo= 'c'
+ 				and p.id.lancamento.status = 'a'</query>
+ <query name="parcelaOrcAnterior">from ParcelaOrcamento as p 
+			where 
+				p.id.orcamento.usuario.codigo = :usuario
+				and p.id.lancamento.vencimento &lt; :dataBase
+				and p.id.lancamento.tipo= 'c'
+ 				and p.id.lancamento.status = 'a'</query>
+ <query name="parcelaByUsuario">from ParcelaOrcamento as p
+				where p.id.orcamento.usuario.codigo= :usuario
+			and p.id.lancamento.tipo = 'c'</query>
+ <query name="parcelaByDependente">from ParcelaOrcamento as p
+			where p.id.orcamento.usuario = :usuario
+				and p.id.orcamento.dependente = :dependente
+				and p.id.lancamento.tipo = 'c'</query>
+ <query name="lancamentoOrc">select p.id.lancamento from ParcelaOrcamento as p&#xd;
+				where p.id.lancamento.vencimento between :dataInicio and :dataFim&#xd;
+					and p.id.orcamento.usuario = :usuario&#xd;
+					and p.id.lancamento.tipo = 'c'&#xd;
+					and p.id.lancamento.status in('a', 'n')</query>
+ <sql-query name="totalParcelaFisicoHold">SELECT SUM(l.valor) FROM parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(p.cod_lancamento = l.codigo)
+INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)
+	AND o.cod_usuario NOT IN(
+		SELECT cod_usuario FROM contrato_empresa)</sql-query>
+ <sql-query name="totalParcelaFisico">SELECT SUM(l.valor) FROM parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(p.cod_lancamento = l.codigo)
+INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)
+	AND l.cod_unidade = :unidade
+	AND o.cod_usuario NOT IN(
+		SELECT cod_usuario FROM contrato_empresa)</sql-query>
+ <sql-query name="totalParcelaHold">SELECT SUM(l.valor) FROM parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(p.cod_lancamento = l.codigo)
+INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+INNER JOIN contrato_empresa AS c ON(c.cod_usuario = o.cod_usuario)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)</sql-query>
+ <sql-query name="totalparcela">SELECT SUM(l.valor) FROM parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(p.cod_lancamento = l.codigo)
+INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+INNER JOIN contrato_empresa AS c ON(c.cod_usuario = o.cod_usuario)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)
+	AND l.cod_unidade = :unidade</sql-query>
+</hibernate-mapping>

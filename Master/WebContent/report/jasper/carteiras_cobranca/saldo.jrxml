@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="saldo" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="com.jasperassistant.designer.DataSource" value="master.com"/>
+	<property name="com.jasperassistant.designer.Grid" value="false"/>
+	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
+	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
+	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="USUARIO" class="java.lang.Integer" isForPrompting="false">
+		<parameterDescription><![CDATA[cod. usuario]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SUM(l.valor * POWER(1 + ((l.taxa + 2)/100), (current_date - l.vencimento)/ 30)) AS saldo
+FROM mensalidade AS m INNER JOIN lancamento AS l ON(l.codigo = m.cod_lancamento)
+WHERE l.vencimento < CURRENT_DATE
+	AND l.tipo = 'c'
+	AND l.status IN('a', 'n')
+	AND m.cod_usuario = $P{USUARIO}
+GROUP BY m.cod_usuario]]>
+	</queryString>
+	<field name="saldo" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Saldo:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="40" y="0" width="52" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

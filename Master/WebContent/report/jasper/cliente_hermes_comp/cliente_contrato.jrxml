@@ -1,0 +1,1029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cliente_contrato" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.6500000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="COD_USUARIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[1033]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/marcdfranc/Meus documentos/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CADASTRO DO CLIENTE - ANEXO I"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_DOCUMENTO" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VALOR_ADESAO" class="java.lang.Double" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MENSALIDADE" class="java.lang.Double" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_ADESAO" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VENC_MENSALIDADE" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.ctr, c.cod_funcionario, c.codigo AS contrato, p.cod_unidade,
+	s.referencia AS ref_unidade, f.nome, f.sexo, f.nascimento, f.estado_civil,
+	f.cpf, f.rg, f.naturalidade, f.naturalidade_uf, u.codigo AS cod_usuario,
+	u.profissao, u.pai, u.mae, u.qtde_parcela, e.rua_av, e.numero, e.complemento,
+	e.bairro, e.cidade, e.uf, e.cep, COUNT(d.*) AS dependente, l.descricao AS plano,
+	(SELECT COUNT(*) FROM informacao AS i WHERE i.cod_pessoa = u.codigo) AS rest_info,
+	r.cidade AS cidade_unidade, r.uf AS uf_unidade, n.descricao AS unidade,
+	i.descricao AS fone_unidade
+FROM usuario AS u
+INNER JOIN contrato AS c ON(u.cod_contrato = c.codigo)
+INNER JOIN fisica AS f ON(u.codigo = f.codigo)
+INNER JOIN plano AS l ON(u.cod_plano = l.codigo)
+INNER JOIN endereco AS e ON(u.codigo = e.cod_pessoa)
+LEFT JOIN dependente AS d ON(u.codigo = d.cod_usuario)
+INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+INNER JOIN unidade AS n ON(p.cod_unidade = n.codigo)
+INNER JOIN pessoa AS s ON(p.cod_unidade = s.codigo)
+INNER JOIN endereco AS r ON(p.cod_unidade = r.cod_pessoa)
+INNER JOIN informacao AS i ON(p.cod_unidade = i.cod_pessoa)
+WHERE u.codigo = $P{COD_USUARIO}
+AND i.principal = 's'
+GROUP BY c.ctr, c.cod_funcionario, c.codigo, p.cod_unidade, s.referencia, f.nome, f.sexo,
+	f.nascimento, f.estado_civil, f.cpf, f.rg, f.naturalidade, f.naturalidade_uf,
+	u.codigo, u.profissao, u.pai, u.mae, u.qtde_parcela, e.rua_av, e.numero,
+	e.complemento, e.bairro, e.cidade, e.uf, e.cep, l.descricao, r.cidade, r.uf,
+	n.descricao, i.descricao
+ORDER BY u.codigo]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_funcionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contrato" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sexo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nascimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado_civil" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="naturalidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="naturalidade_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_usuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="profissao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mae" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qtde_parcela" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dependente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="plano" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rest_info" class="java.lang.Integer"/>
+	<field name="unidade" class="java.lang.String"/>
+	<field name="fone_unidade" class="java.lang.String"/>
+	<variable name="RESTO" class="java.lang.Integer">
+		<variableExpression><![CDATA[(10 - $F{dependente} < 0)? 0 : 10 - $F{dependente}]]></variableExpression>
+	</variable>
+	<variable name="RESTO_INFORMACAO" class="java.lang.Integer">
+		<variableExpression><![CDATA[(4 - $F{rest_info} < 0)? 0 : 4 - $F{rest_info}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="799" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="112" width="463" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="313" y="171" width="242" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="200" width="272" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="189" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="230" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<componentElement>
+				<reportElement x="218" y="776" width="118" height="17"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{contrato}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<rectangle>
+				<reportElement x="192" y="141" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="217" y="609" width="18" height="14"/>
+				<textElement/>
+				<text><![CDATA[24]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="609" width="16" height="15">
+					<printWhenExpression><![CDATA[$F{qtde_parcela}.equals(24)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="697" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="298" y="588" width="257" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="148" y="608" width="16" height="15">
+					<printWhenExpression><![CDATA[$F{qtde_parcela}.equals(12)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="768" width="220" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="417" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="769" width="219" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Assinatura (empresa - contratada)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="609" width="23" height="14"/>
+				<textElement/>
+				<text><![CDATA[18]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="108" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="304" y="589" width="250" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{VALOR_ADESAO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="156" y="588" width="88" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATA_ADESAO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="358" y="697" width="106" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getMonthLiteral($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="609" width="27" height="13"/>
+				<textElement/>
+				<text><![CDATA[05]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="591" width="154" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Data para o Pag. da Taxa de Adesão:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="539" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="336" y="697" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="632" width="59" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[A partir de:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="495" y="711" width="59" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="499" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="134" y="609" width="19" height="13"/>
+				<textElement/>
+				<text><![CDATA[12]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="790" width="555" height="4"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA_DOCUMENTO">
+					<subreportParameterExpression><![CDATA[$P{DATA_DOCUMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_CONTRATO">
+					<subreportParameterExpression><![CDATA[$F{contrato}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "/jasper/cliente_hermes_comp/contrato_usuario.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="445" y="609" width="23" height="14"/>
+				<textElement/>
+				<text><![CDATA[15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="609" width="27" height="13"/>
+				<textElement/>
+				<text><![CDATA[06]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="629" width="15" height="16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="609" width="19" height="13"/>
+				<textElement/>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="785" width="555" height="5"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_USUARIO">
+					<subreportParameterExpression><![CDATA[$F{cod_usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA_DOCUMENTO">
+					<subreportParameterExpression><![CDATA[$P{DATA_DOCUMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CIDADE_UNIDADE">
+					<subreportParameterExpression><![CDATA[($F{cidade_unidade} == null)? null :
+com.marcsoftware.Util.initCap($F{cidade_unidade}) + " - " +
+$F{uf_unidade}.toUpperCase()]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "/jasper/cliente_hermes_comp/atorizacao_debito.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement x="155" y="588" width="89" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="96" y="629" width="302" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="519" y="629" width="15" height="16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="377" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="650" width="556" height="47"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[OBSERVAÇÃO: Em caso de desistência do contrato pôr parte do CONTRATANTE antes do término das parcelas, este pagará uma multa contratual no valor equivalente a três parcelas, precisando para isso estar rigorosamente em dia com as parcelas anteriores. A rescisão ou inadimplência acarreta automaticamente a interrupção dos serviços e a perda dos direitos conseqüentes deste instrumento. Após 45 dias de inadimplência este contrato será enviado para cobrança extrajudicial e judicial com a inclusão do nome do titular nos órgãos de proteção ao crédito.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="609" width="18" height="14"/>
+				<textElement/>
+				<text><![CDATA[20]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="608" width="16" height="15">
+					<printWhenExpression><![CDATA[$F{qtde_parcela}.equals(6)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="610" width="95" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Número de Parcelas:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="495" y="697" width="59" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getYearDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="148" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="189" y="609" width="16" height="15">
+					<printWhenExpression><![CDATA[$F{qtde_parcela}.equals(18)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="697" width="296" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade_unidade}) + " - " +
+$F{uf_unidade}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="465" y="629" width="89" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="277" y="609" width="94" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" isStrikeThrough="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dia de Vencimento:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="356" y="711" width="108" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="103" y="629" width="295" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{MENSALIDADE}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="458" y="608" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="244" y="591" width="47" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor: R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="768" width="219" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Assinatura (cliente - contratante)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="632" width="103" height="13"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor das parcelas: R$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="609" width="29" height="14"/>
+				<textElement/>
+				<text><![CDATA[25]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="305" y="697" width="25" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[com.marcsoftware.Util.getDayDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="266" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Complemento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="524" y="112" width="19" height="16"/>
+				<textElement/>
+				<text><![CDATA[F:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="236" width="61" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Número:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="537" y="111" width="18" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="450" y="308" width="104" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="171" width="240" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="192" y="142" width="16" height="15">
+					<printWhenExpression><![CDATA[$F{estado_civil}.equals("s")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="289" y="143" width="133" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.mountCpf($F{cpf})]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="277" width="298" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="479" y="112" width="15" height="16"/>
+				<textElement/>
+				<text><![CDATA[M:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="160" width="50" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[UF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="236" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="297" width="29" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[UF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="145" width="46" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Solteiro]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="248" y="140" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="494" y="111" width="18" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="141" width="89" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="5" y="201" width="267" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{pai})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="308" width="44" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{uf}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="61" width="62" height="14" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="220" width="556" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Endereço Residencial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="190" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Pai:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="251" y="171" width="50" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="433" y="130" width="121" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[RG:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="172" width="235" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{naturalidade})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="247" width="460" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{rua_av})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="172" width="238" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{profissao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="305" y="711" width="25" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="99" y="145" width="47" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Casado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="142" width="16" height="15">
+					<printWhenExpression><![CDATA[!$F{estado_civil}.equals("c") && !$F{estado_civil}.equals("s")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="80" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nome do Titular:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="433" y="141" width="122" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="455" y="308" width="98" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{cep} == null || $F{cep}.isEmpty())? $F{cep} :
+com.marcsoftware.Util.mountCep($F{cep})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="284" y="129" width="56" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="308" y="277" width="247" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="5" y="114" width="458" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="336" y="767" width="219" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="297" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cidade:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="286" y="200" width="270" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="160" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Naturalidade:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="5" y="144" width="84" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{nascimento}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="308" width="378" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="438" y="144" width="115" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="277" width="293" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{complemento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="308" y="266" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Bairro:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="389" y="308" width="49" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="494" y="112" width="18" height="16">
+					<printWhenExpression><![CDATA[$F{sexo}.equals( "m" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="145" width="38" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Outro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="54" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="313" y="277" width="242" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{bairro})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="190" width="47" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mãe:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="255" y="172" width="46" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{naturalidade_uf}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="466" y="629" width="88" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{VENC_MENSALIDADE}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="473" y="247" width="82" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="84" width="556" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Dados Pessoais]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="297" width="77" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CEP:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="284" y="141" width="138" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="100" y="129" width="80" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Estado Cívil:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="247" width="465" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<subreport>
+				<reportElement x="0" y="794" width="555" height="5"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA_DOCUMENTO">
+					<subreportParameterExpression><![CDATA[$P{DATA_DOCUMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_CONTRATO">
+					<subreportParameterExpression><![CDATA[$F{contrato}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "/jasper/cliente_hermes_comp/contrato_usuario.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="476" y="100" width="43" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="328" width="555" height="114"/>
+				<subreportParameter name="COD_USUARIO">
+					<subreportParameterExpression><![CDATA[$F{cod_usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="RESTO">
+					<subreportParameterExpression><![CDATA[$V{RESTO_INFORMACAO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "jasper/cliente_hermes_comp/informacao.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="129" width="81" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nascimento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="160" width="100" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" isStrikeThrough="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Profissão/Atividade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="291" y="201" width="264" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{mae})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="247" width="77" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="308" width="373" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="537" y="112" width="18" height="16">
+					<printWhenExpression><![CDATA[$F{sexo}.equals("f")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="130" y="141" width="16" height="16"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="130" y="142" width="16" height="15">
+					<printWhenExpression><![CDATA[$F{estado_civil}.equals("c")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="442" width="555" height="146"/>
+				<subreportParameter name="COD_USUARIO">
+					<subreportParameterExpression><![CDATA[$F{cod_usuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="RESTO">
+					<subreportParameterExpression><![CDATA[$V{RESTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "jasper/cliente_hermes_comp/dependente.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="762" width="554" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[CTR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="442" y="1" width="114" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{unidade})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="6" width="265" height="37"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="1" y="1" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/logo_piracicaba.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="1" y="45" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="442" y="23" width="114" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fone_unidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

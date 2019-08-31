@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="orcamento_cliente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_ORCAMENTO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[new java.lang.Long(240)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["PLANO DE TRATAMENTO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT j.fantasia AS empresa, p.conselho_responsavel AS conselho,
+	u.descricao AS desc_unidade, e.referencia AS ref_unidade, l.cod_unidade,
+	i.descricao AS fone_unidade,
+	CASE
+		WHEN o.cod_dependente ISNULL THEN s.nome
+		ELSE d.nome
+	END AS cliente, s.nome AS titular,
+	CASE
+		WHEN o.cod_dependente ISNULL THEN s.cpf
+		ELSE d.cpf
+	END AS cpf_cliente, s.cpf AS cpf_titular, z.ctr, o.codigo AS orcamento,
+	o.parcelas AS qtde_parcela, o.data AS cadastro, r.descricao AS procedimento,
+	r.referencia AS cod_servico, v.descricao AS vigencia,
+	CASE
+		WHEN c.setor = 'o' THEN 'Odontológica'
+		WHEN c.setor = 'm' THEN 'Médica'
+		WHEN c.setor = 'l' THEN 'Laboratorial'
+		WHEN c.setor = 'h' THEN 'Hospitalar'
+	END AS atividade, c.descricao AS setor, (l.valor_cliente * t.qtde) AS vlr_cliente,
+	(l.valor_operacional * qtde) AS vlr_operacional, t.qtde,
+	(SELECT valor FROM parcela_orcamento AS l
+		INNER JOIN lancamento AS n ON(l.cod_lancamento = n.codigo)
+	WHERE l.cod_orcamento = o.codigo
+	ORDER BY n.vencimento
+	LIMIT 1 OFFSET 0) AS entrada,
+	(SELECT valor FROM parcela_orcamento AS m
+		INNER JOIN lancamento AS x ON(m.cod_lancamento = x.codigo)
+	WHERE m.cod_orcamento = o.codigo
+	ORDER BY x.vencimento DESC
+	LIMIT 1 OFFSET 0) AS vlr_parcela,
+	(SELECT y.vencimento FROM parcela_orcamento AS w
+		INNER JOIN lancamento AS y ON(w.cod_lancamento = y.codigo)
+	WHERE w.cod_orcamento = o.codigo
+	ORDER BY y.vencimento
+	LIMIT 1 OFFSET 0) AS data_entrada
+FROM orcamento AS o
+	INNER JOIN empresa_saude AS p ON(o.cod_pessoa = p.codigo)
+	INNER JOIN juridica AS j ON(p.codigo = j.codigo)
+	INNER JOIN usuario AS a ON(o.cod_usuario = a.codigo)
+	INNER JOIN contrato AS z ON(a.cod_contrato = z.codigo)
+	LEFT JOIN dependente AS d ON(d.codigo =o.cod_dependente)
+	INNER JOIN fisica AS s ON(a.codigo = s.codigo)
+	INNER JOIN itens_orcamento AS t ON(t.cod_orcamento = o.codigo)
+	INNER JOIN tabela AS l ON(t.cod_tabela = l.codigo)
+	INNER JOIN vigencia AS v ON(l.cod_vigencia = v.codigo)
+	INNER JOIN servico AS r ON(l.cod_servico = r.codigo)
+	INNER JOIN especialidade AS c ON(r.cod_especialidade = c.codigo)
+	INNER JOIN unidade as u ON(l.cod_unidade = u.codigo)
+	INNER JOIN pessoa AS e ON(u.codigo = e.codigo)
+	RIGHT JOIN informacao AS i ON(i.cod_pessoa = u.codigo)
+WHERE i.principal = 's'
+	AND o.codigo = $P{COD_ORCAMENTO}
+ORDER BY r.ref]]>
+	</queryString>
+	<field name="empresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="conselho" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="desc_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="titular" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf_cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf_titular" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="orcamento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qtde_parcela" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cadastro" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="procedimento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_servico" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="atividade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="setor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vlr_cliente" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vlr_operacional" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qtde" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="entrada" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vlr_parcela" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_entrada" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer"/>
+	<field name="vigencia" class="java.lang.String"/>
+	<variable name="total_operacional" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{vlr_operacional}]]></variableExpression>
+	</variable>
+	<variable name="total_cliente" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{vlr_cliente}]]></variableExpression>
+	</variable>
+	<group name="orcamento">
+		<groupExpression><![CDATA[$F{orcamento}]]></groupExpression>
+		<groupHeader>
+			<band height="19">
+				<staticText>
+					<reportElement x="200" y="3" width="42" height="16"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Cod.]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="18" width="554" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.5"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="242" y="3" width="264" height="16"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Procedimento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="505" y="2" width="49" height="16"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Qtde]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="2" width="100" height="16"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Setor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="2" width="100" height="16"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Atividade]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="486" y="3" width="69" height="16"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total_operacional}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="341" y="3" width="145" height="16"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Valor Profissional:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="52"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="127" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Unidade administradora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="15" width="75" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Atendimento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="127" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fantasia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="36" width="71" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Conselho:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="57" width="127" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cliente em tratamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="57" width="71" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato N°:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="78" width="67" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Orçamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="127" y="15" width="272" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ref_unidade} + " " + $F{desc_unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="470" y="15" width="85" height="16" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fone_unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="127" y="36" width="272" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{empresa})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="470" y="36" width="85" height="16" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{conselho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="127" y="57" width="272" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cliente})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="470" y="57" width="85" height="16" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ctr} + "/" + $F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="67" y="78" width="60" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{orcamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="470" y="78" width="84" height="16" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{cadastro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="399" y="78" width="71" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cadastro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="111" width="200" height="21"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Procedimentos]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="127" y="78" width="272" height="16" backcolor="#DBDADA"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{vigencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{atividade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{setor})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="42" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cod_servico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="0" width="264" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{procedimento})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="506" y="0" width="49" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{qtde}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="16" width="553" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44" splitType="Stretch">
+			<subreport>
+				<reportElement x="-1" y="0" width="555" height="44"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="166">
+			<staticText>
+				<reportElement x="2" y="48" width="176" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor Total Empresa de Saúde:]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="¤ #,##0.00">
+				<reportElement mode="Opaque" x="162" y="48" width="189" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total_operacional}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="351" y="48" width="89" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Parelamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="440" y="48" width="115" height="16" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{qtde_parcela} + " vezes."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="69" width="161" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor da Entrada:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement mode="Opaque" x="162" y="69" width="57" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{total_operacional} * ($F{entrada}/$V{total_cliente})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="219" y="69" width="19" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[em]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="238" y="69" width="113" height="16" backcolor="#DBDADA"/>
+				<textElement>
+					<font fontName="Arial" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{data_entrada}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="-1" y="116" width="555" height="50"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="¤ #,##0.00">
+				<reportElement mode="Opaque" x="440" y="69" width="114" height="16" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{qtde_parcela} > 1)? ($V{total_operacional} -
+    ($V{total_operacional} * ($F{entrada}/$V{total_cliente}))) /
+($F{qtde_parcela} - 1) : ($V{total_operacional} -
+    ($V{total_operacional} * ($F{entrada}/$V{total_cliente})))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="351" y="69" width="89" height="16"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Demais Parcelas:]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

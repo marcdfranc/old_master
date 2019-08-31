@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/08/2010 18:02:20 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.ItensMenu" table="ITENSMENU">
+  <composite-id class="com.marcsoftware.database.ItensMenuId"
+   mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="com.marcsoftware.database.Pagina"
+    column="cod_pagina" name="pagina"/>
+   <key-many-to-one class="com.marcsoftware.database.Menu"
+    column="cod_menu" name="menu"/>
+  </composite-id>
+ </class>
+</hibernate-mapping>

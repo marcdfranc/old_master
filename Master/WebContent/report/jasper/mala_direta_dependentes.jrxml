@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mala_direta_dependentes" language="groovy" columnCount="2" pageWidth="598" pageHeight="793" columnWidth="288" columnSpacing="14" leftMargin="4" rightMargin="4" topMargin="36" bottomMargin="20">
+	<queryString language="SQL">
+		<![CDATA[SELECT INITCAP(d.nome) AS nome, INITCAP(u.rua_av) AS rua_av, u.numero, INITCAP(u.bairro) AS bairro,
+	INITCAP(u.cidade) AS cidade, UPPER(u.uf) AS uf, u.complemento, u.cep
+FROM dependente AS d
+INNER JOIN vw_cliente_completo AS u ON(d.cod_usuario = u.usuario)]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<textField pattern="">
+				<reportElement x="8" y="48" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="32" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bairro} + " - " + $F{cidade} +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="16" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{complemento}.equals( null ) 
+    || $F{complemento}.trim().equals( "" ))? $F{rua_av} + ", " + 
+        $F{numero} : $F{rua_av} + ", " + $F{numero} + " - " + 
+            $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

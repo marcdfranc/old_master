@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carta_aniverssario_profissional" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT f.nome, e.rua_av, e.numero, e.bairro, e.cidade, UPPER(e.uf) AS uf,
+	e.complemento, e.cep, i.descricao AS fone_unidade, n.rua_av AS endereco_unidade,
+	n.numero AS numero_unidade, n.bairro AS bairro_unidade,
+	n.complemento AS complemento_unidade, n.cep AS cep_unidade,
+	n.cidade AS cidade_unidade, UPPER(n.uf) AS uf_unidade, j.cnpj,
+	(SELECT o.descricao FROM informacao AS o
+		WHERE o.tipo = 'email'
+		AND o.cod_pessoa = s.cod_unidade) AS email_unidade,
+	(SELECT r.descricao FROM informacao AS r
+		WHERE r.tipo = 'site'
+		AND r.cod_pessoa = s.cod_unidade) AS site_unidade
+FROM profissional AS p
+	INNER JOIN endereco AS e ON(e.cod_pessoa = p.codigo)
+	INNER JOIN fisica AS f ON(p.codigo = f.codigo)
+	INNER JOIN pessoa AS s ON(s.codigo = p.codigo)
+	INNER JOIN juridica AS j ON(s.cod_unidade = j.codigo)
+	INNER JOIN informacao AS i ON(i.cod_pessoa = s.cod_unidade)
+	INNER JOIN endereco AS n ON(n.cod_pessoa = s.cod_unidade)
+WHERE i.principal = 's']]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fone_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="endereco_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="complemento_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="site_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<image>
+				<reportElement x="3" y="1" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/logo.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="37" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="501" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="17" width="555" height="475"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/boas_festas.gif"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="71" y="80" width="484" height="29"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dr(a) " + com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="198" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="162" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="0" y="182" width="390" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade_unidade}) + "/" +
+$F{uf_unidade} + ": " + $F{fone_unidade} +
+" - Demais Localidades: (11) 3013-2230"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="167" width="165" height="15" forecolor="#3333FF"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{email_unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="182" width="165" height="16" forecolor="#3333FF"/>
+				<textElement textAlignment="Right">
+					<font isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{site_unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="167" width="390" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["MASTER - " + com.marcsoftware.Util.initCap($F{endereco_unidade}) +
+", " + $F{numero_unidade} + " - " +
+(($F{complemento_unidade} == null)? " "
+    : $F{complemento_unidade}) +
+", " + com.marcsoftware.Util.initCap($F{bairro_unidade}) +
+" - " + com.marcsoftware.Util.initCap($F{cidade_unidade}) +
+"/" + $F{uf_unidade} + "  "  +
+com.marcsoftware.Util.mountCep($F{cep_unidade})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

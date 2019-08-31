@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="item_caixa" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.6500000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="INICIO" class="java.sql.Timestamp"/>
+	<parameter name="FIM" class="java.sql.Timestamp"/>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_USUARO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["raquel.1901"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHAMENTO_CAIXA" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[-827.36]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT l.codigo, l.documento, c.descricao, l.vencimento, l.data_quitacao, l.cod_conta,
+	CASE
+		WHEN ((l.tipo = 'c' OR l.cod_conta = 65) AND l.cod_conta <> 66) THEN '+'
+		ELSE '-'
+	END AS tipo,
+	CASE
+		WHEN ((l.tipo = 'c' OR l.cod_conta = 65) AND l.cod_conta <> 66) THEN l.valor_pago
+		ELSE l.valor_pago * -1
+	END AS valor_pago,
+	CASE
+		WHEN ((l.tipo = 'c' OR l.cod_conta = 65) AND l.cod_conta <> 66) THEN l.valor_pago
+		ELSE NULL
+	END AS credito,
+	CASE
+		WHEN ((l.tipo = 'd' OR l.cod_conta = 66) AND l.cod_conta <> 65) THEN l.valor_pago
+		ELSE NULL
+	END AS debito
+FROM lancamento AS l
+INNER JOIN tipo_conta  AS c ON(l.cod_conta = c.codigo)
+WHERE l.status IN('q', 'f')
+AND (l.data_quitacao between $P{INICIO} and $P{FIM})
+AND l.recebimento = $P{USUARIO}
+ORDER BY l.data_quitacao, c.descricao]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="documento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vencimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_quitacao" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor_pago" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="credito" class="java.math.BigDecimal"/>
+	<field name="debito" class="java.math.BigDecimal"/>
+	<field name="cod_conta" class="java.lang.Integer"/>
+	<variable name="saldo" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_pago}]]></variableExpression>
+	</variable>
+	<variable name="creditos" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{credito}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="debitos" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{debito}]]></variableExpression>
+	</variable>
+	<variable name="fechamento" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[(!$F{cod_conta}.equals( 66 ))? $V{saldo} : $V{fechamento}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="26" width="38" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Lanç.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="26" width="125" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="26" width="56" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Venc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="26" width="155" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="26" width="44" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dt. Pag.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="26" width="19" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Tp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="26" width="59" height="16"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="26" width="59" height="16"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="42" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="200" height="21"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Movimentações]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="318" y="0" width="56" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{vencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="437" y="0" width="59" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{valor_pago} < 0)? $F{valor_pago} * -1: $F{valor_pago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="38" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="496" y="0" width="59" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{saldo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="0" width="19" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="374" y="0" width="44" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{data_quitacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="0" width="125" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="0" width="155" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="12" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="42">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="9" width="555" height="15" backcolor="#DBDADA"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="181" y="9" width="51" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Saída:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="232" y="9" width="76" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{debitos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="431" y="9" width="46" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="8" width="79" height="16"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Entrada:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="477" y="9" width="78" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{saldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement mode="Opaque" x="79" y="28" width="102" height="14" backcolor="#DBDADA"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{saldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement mode="Opaque" x="232" y="28" width="186" height="14" backcolor="#DBDADA"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{FECHAMENTO_CAIXA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement mode="Opaque" x="483" y="28" width="72" height="14" backcolor="#DBDADA"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{FECHAMENTO_CAIXA} - $V{fechamento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="181" y="28" width="51" height="14" backcolor="#DBDADA"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dinheiro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="28" width="79" height="14" backcolor="#DBDADA"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Saldo do Caixa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="418" y="28" width="65" height="14" backcolor="#DBDADA"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fechamento:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="81" y="8" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{creditos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

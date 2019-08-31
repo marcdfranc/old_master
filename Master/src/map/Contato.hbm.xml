@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Contato">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_contato</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="nome"/>
+  <property generated="never" lazy="false" name="cargo"/>
+  <many-to-one class="Empresa" column="cod_empresa" name="empresa"/>
+ </class>
+</hibernate-mapping>

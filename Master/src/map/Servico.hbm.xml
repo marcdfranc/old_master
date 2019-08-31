@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Servico">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_servico</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="descricao"/>
+  <property generated="never" lazy="false" name="referencia"/>
+  <property generated="never" lazy="false" name="ref"/>
+  <many-to-one class="Especialidade" name="especialidade" not-null="true">
+   <column name="cod_especialidade"/>
+  </many-to-one>
+ </class>
+ <query name="precoUnidade">from Tabela as t &#xd;
+where t.servico = :servico&#xd;
+	and t.unidade.codigo = :unidade</query>
+</hibernate-mapping>

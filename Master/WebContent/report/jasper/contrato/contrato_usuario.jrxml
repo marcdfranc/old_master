@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_usuario" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/marcd/Documents/sistemas/java/master/Master/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_CONTRATO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[5914]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REF_UNIDADE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1601"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIDADE_UNIDADE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Araraquara - SP"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.ctr, c.cod_funcionario, u.codigo AS cod_unidade
+FROM contrato AS c
+INNER JOIN unidade AS u ON(c.cod_unidade = u.codigo)
+WHERE c.codigo = $P{COD_CONTRATO}]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_funcionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="57" width="54" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="57" width="100" height="16" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $P{REF_UNIDADE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="85" width="525" height="682"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CONTRATANTE: ______________________________________________________________ CPF: __________________________ devidamente qualificado no CADASTRO DO CLIENTE – Anexo 1, que integra o presente contrato, e a Empresa MASTER APOIO ADMINISTRATIVO E TECNOLOGIA LTDA, CNPJ 00.959.348/0001-00, Identificada pela marca NEWMED, com endereço Sede na Avenida Duque de Caxias, Nº 364 – sala 51, Centro de Araraquara/SP, aqui denominada como CONTRATADA.
+
+CLÁUSULA 1ª - É oferecido ao CONTRATANTE, através do presente Contrato e seus Anexos, um PLANO DE BENEFÍCIOS, com uma rede credenciada formada por Profissionais Liberais e Empresas de prestação de serviços na área da saúde, com consultas médicas, exames clínicos e tratamentos odontológicos, à preços e condições especiais, Seguro de Vida por Morte Acidental e Seguro Funeral por morte acidental, disponibilizados pela CONTRATADA de acordo com o presente contrato, e, conforme indicação do TITULAR CONTRATANTE em uma das opções abaixo.
+
+
+[     ] NEWMED PLUS INDIVIDUAL:
+Apenas para o Titular do Plano de Benefícios. Taxa de Adesão R$49,90 (quarenta e nove reais e noventa centavos).
+Valor contratado R$538,20 (Quinhentos e trinta e oito reais e vinte centavos), pagos em 18 (dezoito) parcelas mensais no valor de R$29,90 (vinte e nove reais e noventa centavos), para contratação de 18 meses dos Benefícios oferecidos, sendo: Seguro de Vida por Morte Acidental no valor de R$10.000,00 (dez mil reais), Seguro Funeral por Morte Acidental (decesso) no valor de R$5.000,00 (cinco mil reais), e acesso à rede credenciada de Médicos, Dentistas e Laboratórios de Exames Clínicos, tendo as Consultas Médicas, os Exames Clínicos e os Tratamentos Odontológicos com preços diferenciados e condições especiais.
+
+[     ] NEWMED PLUS FAMILIAR:
+Para o Titular do Plano de Benefícios, seu Conjugue e até 3 (três) Filhos com idade máxima de 21 anos completos.
+Taxa de Adesão R$ 49,90 (quarenta e nove reais e noventa centavos). Valor contratado R$808,20 (Oitocentos e oito reais e vinte centavos), pagos em 18 (dezoito) parcelas mensais no valor de R$39,90 (trinta e nove reais e noventa centavos), para contratação de 18 meses dos Benefícios aqui oferecidos, sendo: Seguro de Vida por Morte Acidental no valor de R$10.000,00 (dez mil reais), Seguro Funeral por Morte Acidental (decesso) no valor de R$5.000,00 (cinco mil reais), e acesso à rede credenciada de Médicos, Dentistas e Laboratórios de Exames Clínicos, tendo as Consultas Médicas, os Exames Clínicos e os Tratamentos Odontológicos com preços diferenciados e condições especiais.
+
+[     ] NEWMED ESSENCIAL FAMILIAR:
+Para o Titular do Plano de Benefícios, seu Conjugue e Filhos com idade máxima de 21 anos completos.
+Taxa de Adesão R$ 49,90 (quarenta e nove reais e noventa centavos)
+Valor contratado R$538,20 (Quinhentos e trinta e oito reais e vinte centavos), pagos em 18 (dezoito) parcelas mensais no valor de R$29,90 (trinta e quatro reais e noventa centavos), para contratação de 18 meses dos Benefícios oferecidos, sendo: acesso à rede credenciada de Médicos, Dentistas e Laboratórios de Exames Clínicos, tendo as Consultas Médicas, os Exames Clínicos e os Tratamentos Odontológicos com preços diferenciados e condições especiais.
+
+[     ] NEWMED ODONTO FAMILIAR:
+Para o Titular do Plano de Benefícios, seu Conjugue e Filhos com idade máxima de 21 anos completos.
+Taxa de Adesão R$ 30,00 (trinta reais)
+Valor contratado R$448,20 (Quatrocentos e quarenta e oito reais e vinte centavos), pagos em 18 (dezoito) parcelas mensais no valor de R$24,90 (vinte e quatro reais e noventa centavos), para contratação de 18 meses dos Benefícios oferecidos, sendo: acesso à rede credenciada de Dentistas, tendo os Tratamentos Odontológicos com preços diferenciados e condições especiais.
+
+
+§1°, A qualidade técnica e profissional dos serviços prestados é de inteira responsabilidade dos Profissionais Liberais ou das Empresas credenciadas prestadoras dos serviços. A CONTRATADA também não se responsabiliza pelos produtos ou serviços vendidos pelos estabelecimentos credenciados.
+§2°, O CONTRATANTE declara ter recebido, no momento da celebração do presente contrato, o Guia indicativo contendo todas as Empresas e os Profissionais Liberais credenciados. A CONTRATADA compromete-se a disponibilizar aos associados, uma central de orientação e encaminhamento à sua rede de prestadores de serviços credenciados através do TELEFONE (16) 3472-3939, onde o associado, na forma de livre escolha, dentro dos limites da rede oferecida, terá acesso aos profissionais e instituições participantes da rede credenciada pela CONTRATADA.
+§3°, Terá direito ao acesso à rede credenciada e aos seguros oferecidos, o CONTRATANTE, seu Conjugue e Filhos até 21 anos completos, desde que estejam regularmente inscritos na lista de dependentes inseridos no Cadastro do Cliente – Anexo 1 integrante deste Contrato, sendo observado o prazo de 30 (trinta) dias de carência a partir do pagamento da Taxa de Adesão.
+§4°, Somente o CONTRATANTE que esteja rigorosamente em dia com o pagamento das parcelas mensais e demais obrigações financeiras junto à CONTRATADA, terá direito aos serviços e vantagens intermediados, bem como o recebimento do Seguro de Vida por Morte Acidental e do Seguro Funeral por Morte Acidental (decesso).
+
+CLÁUSULA 2ª, O CONTRATANTE fica obrigado a pagar para a CONTRATADA, por si e por seus dependentes inscritos, o valor da taxa de Adesão e das Parcelas Mensais apontadas na CLAUSULA 1ª deste contrato, e no Cadastro do Cliente - Anexo 1, parte integrante deste contrato.
+§ 1°, Fica a CONTRATADA autorizada e obrigada adotar cobrança do débito das parcelas mensais na conta de Energia Elétrica, indicada pelo CONTRATANTE na Autorização de Débitos deste Contrato (Anexo2), como primeira forma de cobrança, sem, contudo excluir as demais formas de cobranças indicadas, sem a necessidade de novo aviso ou comunicação.
+§ 2°, O valor das parcelas mensais apontadas no presente contrato, serão reajustados em Janeiro de cada ano com base no IGPM integral da FGV do ano anterior (ou outro que venha substitui-lo), independente da data de sua assinatura, sendo o índice de reajuste divulgado e informado aos CONTRATANTES por jornal da cidade ou pela internet através do  web-site  www.portal.fgv.br
+
+CLÁUSULA 3ª - A Autorização de débitos, assim como o presente CONTRATO DE ADESÃO aditado, tem validade pelo prazo de 18 (dezoito) meses, e serão renovados automaticamente por igual período e assim sucessivamente se não houver manifestação contrária por escrito, por uma das partes, com no mínimo 30 (trinta) dias de antecedência do término da vigência ou das renovações.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="51" width="182" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[CUSTO OPERACIONAL]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="51"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA["CONTRATO PARTICULAR DE INTERMEDIAÇÃO DE SERVIÇOS"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="797" width="100" height="1"/>
+			</break>
+			<textField>
+				<reportElement x="-8" y="781" width="555" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_funcionario}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="201" y="765" width="135" height="16"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{cod_funcionario}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+		<band height="802">
+			<line>
+				<reportElement x="285" y="563" width="25" height="1"/>
+			</line>
+			<line>
+				<reportElement x="336" y="563" width="108" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="453" y="549" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="549" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="31" y="551" width="242" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{CIDADE_UNIDADE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="475" y="563" width="59" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="642" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="642" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="721" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="720" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TESTEMUNHA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="641" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="357" y="641" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="13" y="720" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="357" y="720" width="181" height="1"/>
+			</line>
+			<componentElement>
+				<reportElement x="209" y="758" width="135" height="16"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{cod_funcionario}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="15" y="86" width="525" height="499"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[§1°, O CONTRATANTE poderá rescindir o presente contrato dentro do prazo de 7 (sete) dias da data de sua assinatura, conforme dispõe o Artigo 49 da Lei 8078/90 do código de defesa do consumidor, ou, se quitadas as parcelas e demais obrigações financeiras previstas neste CONTRATO.
+§2°, As partes poderão rescindir o presente contrato unilateralmente, sem multa, desde que tenha transcorrido mais de 18 (dezoito) meses do contrato e mediante comunicação prévia de 30 (trinta) dias, sendo realizada por escrito, no escritório da CONTRATADA, localizado na Avenida Duque de Caxias, Nº 364 – sala 51, Centro, CEP 14801-120, Araraquara/SP.
+§3°, No caso de inobservância do período de meses previstos no parágrafo anterior, será cobrada uma multa no valor de 30% sobre o valor total do contrato.
+§4°, A rescisão do presente Contrato só será efetivada, em qualquer hipótese, mediante o pagamento de todas as parcelas mensais que estiverem em atraso e devolução da carteirinha do associado.
+§5°, Fica ressalvado o direito de cobrança extrajudicial e judicial, pela CONTRATADA, da(s) parcela(s) vencida(s) e não quitada(s) pelo CONTRATANTE.
+§6°, Na hipótese de o CONTRATANTE residir em imóvel locado, é de inteira e exclusiva responsabilidade do CONTRATANTE comunicar ao proprietário do imóvel a assinatura deste Contrato, na modalidade de pagamento das parcelas mensais na Conta de Energia Elétrica, ou na ocorrência da hipótese da CLÁUSULA 2ª parágrafo 2.
+§7°, É de inteira responsabilidade do CONTRATANTE manter a CONTRATADA  informada sobre quaisquer alterações em seus dados cadastrais, em especial números de documentos, alteração de endereço, e alterações dos dados do Titular da Conta de Energia Elétrica utilizada como forma de pagamento das parcelas mensais do Plano de Benefícios.
+§8°, A CONTRATADA não se responsabiliza pelas informações prestadas pelo CONTRATANTE no momento da assinatura do presente contrato, reservando-se no direito de regresso em caso de fraude.
+§9°, A Empresa CONTRATADA se responsabiliza em reembolsar integralmente o CONTRATANTE em caso de dupla cobrança deste contrato, a solicitação de devolução do valor pago em duplicidade deve ser feita diretamente à empresa CONTRATADA.
+
+CLÁUSULA 4ª - O CONTRATANTE assume o compromisso de não faltar nas consultas previamente agendadas, ainda que estas tenham sido pagas antecipadamente. Por motivo de força maior, caso não seja possível o comparecimento no dia e horário agendado, O CONTRATANTE deverá desmarcar a consulta com antecedência mínima de 24 horas do horário agendado. Faltas às consultas sem prévia justificativa implicarão em multa de 20% sobre o valor da consulta no ato da remarcação da mesma.
+
+CLÁUSULA 5ª - O CONTRATANTE declara-se de acordo com as cláusulas do presente Contrato, bem como ciente que os serviços oferecidos pela CONTRATADA, não configuram como SEGURADORA ou OPERADORA DE PLANO DE SAÚDE, não estando, portanto, sujeito às regras especificas dos órgãos reguladores de tais entidades ou atividades.
+
+CLÁUSULA 6ª - A prestação do Seguro de Vida por Morte Acidental e do Seguro Funeral por Morte Acidental, são garantidos por seguradora devidamente regulamentada pela SUSEP. Em caso de falecimento do Titular do Plano de Benefícios ou de um de seus dependentes, inscritos neste contrato, somente por morte acidental, o atendimento e informações referente à prestação dos Seguros, deverá ser solicitado pelo TELEFONE (16) 3472-3939.
+
+CLÁUSULA 7ª - O CONTRATANTE autoriza em caráter irretratável e irrevogável, os débitos das contratações descritas neste instrumento, em especial referentes à Taxa de Adesão, Parcelas Mensais e outros relacionados ao Presente Contrato.
+
+CLÁUSULA 8ª - O CONTRATANTE ao mudar de endereço e realizar o desligamento dos serviços de Energia Elétrica deverá comunicar imediatamente a CONTRATADA, pois a cobrança esta vinculada ao endereço antigo e deverá ser atualizada para o novo endereço.
+
+CLÁUSULA 9ª - A CONTRATADA declara para os devidos fins que o presente Contrato está de acordo com a Lei de Defesa do Consumidor, e que o CONTRATANTE recebeu a 1ª Via deste Contrato estando de pleno acordo com seu teor.
+
+CLÁUSULA 10ª - As partes elegem o Foro da Comarca de Araraquara - SP, com renuncia expressa de qualquer outro, por mais privilegiada que seja ou venha a ser.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="58" width="54" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="58" width="100" height="16" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $P{REF_UNIDADE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="357" y="52" width="182" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[CUSTO OPERACIONAL]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="1" width="555" height="51"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA["CONTRATO PARTICULAR DE INTERMEDIAÇÃO DE SERVIÇOS"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="0" y="771" width="555" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_funcionario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04/01/2013 19:46:25 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Video">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_video</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="menu"/>
+  <property generated="never" lazy="false" name="titulo"/>
+  <property generated="never" lazy="false" name="url"/>
+ </class>
+</hibernate-mapping>

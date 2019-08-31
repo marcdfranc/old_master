@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensPedido" table="itens_pedido">
+  <composite-id class="ItensPedidoId" mapped="false" name="id" unsaved-value="undefined">
+   	<key-many-to-one name="produto"	column="cod_produto" class="Produto"/>
+	<key-many-to-one name="pedido" column="cod_pedido" class="Pedido"/>
+  </composite-id>
+  
+  <property generated="never" lazy="false" name="qtde"/>
+ </class>
+</hibernate-mapping>

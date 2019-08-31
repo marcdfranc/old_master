@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Contrato">
+  <id column="codigo" name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_contrato</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="requisicao"/>
+  <property generated="never" lazy="false" name="status"/>
+  <many-to-one class="com.marcsoftware.database.Funcionario"
+   column="cod_funcionario" name="funcionario"/>
+  <many-to-one class="com.marcsoftware.database.Lancamento"
+   column="cod_lancamento" name="lancamento"/>
+  <property generated="never" lazy="false" name="ctr"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" name="unidade"/>
+ </class>
+ <query name="contratoLivre">from Contrato as c &#xd;
+where c not in(select u.contrato from Usuario as u&#xd;
+	where u.unidade.codigo = :unidade)&#xd;
+order by c.codigo</query>
+</hibernate-mapping>

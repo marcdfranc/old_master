@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Mensalidade">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_mensalidade</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="vigencia"/>
+  <many-to-one class="Usuario" column="cod_usuario" name="usuario" not-null="true"/>
+  <many-to-one class="Lancamento" column="cod_lancamento"
+   name="lancamento" not-null="true"/>
+ </class>
+ <query name="countMensalAtrasoOf">select count(m.codigo) from Mensalidade as m 
+			where m.usuario.codigo = :codigo
+			and m.lancamento.status = 'a'
+			and (current_date() - m.lancamento.vencimento) &gt; 30</query>
+ <query name="mensalidadeAnterior">from Mensalidade as m 
+			where 
+				m.lancamento.vencimento &lt; :dataBase 
+				and m.usuario.codigo = :usuario</query>
+ <query name="lancamentoMensalidade">select m.lancamento from Mensalidade as m&#xd;
+				where m.lancamento.vencimento between :dataInicio and :dataFim&#xd;
+					and m.lancamento.status in('a', 'n')&#xd;
+					and m.lancamento.tipo = 'c'&#xd;
+					and m.usuario = :usuario</query>
+ <query name="mensalidadeByUsuario">from Mensalidade as m
+				where m.usuario.codigo= :usuario</query>
+ <sql-query name="mensalidadeFisicaHold">SELECT SUM(l.valor) FROM mensalidade AS m
+INNER JOIN lancamento AS l ON (m.cod_lancamento = l.codigo)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)
+	AND m.cod_usuario NOT IN(
+		SELECT cod_usuario FROM contrato_empresa)</sql-query>
+ <sql-query name="mensalidadeFisica">SELECT SUM(l.valor) FROM mensalidade AS m
+INNER JOIN lancamento AS l ON (m.cod_lancamento = l.codigo)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)
+	AND l.cod_unidade = :unidade
+	AND m.cod_usuario NOT IN(
+		SELECT cod_usuario FROM contrato_empresa)</sql-query>
+ <sql-query name="mensalidadeJuridicaHold">SELECT SUM(l.valor) FROM contrato_empresa AS c
+INNER JOIN mensalidade AS m ON(m.cod_usuario = c.cod_usuario)
+INNER JOIN lancamento AS l ON(m.cod_lancamento = l.codigo)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)</sql-query>
+ <sql-query name="mensalidadeJuridica">SELECT SUM(l.valor) FROM contrato_empresa AS c
+INNER JOIN mensalidade AS m ON(m.cod_usuario = c.cod_usuario)
+INNER JOIN lancamento AS l ON(m.cod_lancamento = l.codigo)
+WHERE l.status = 'a'
+	AND (l.vencimento BETWEEN :inicio AND :fim)
+	AND l.cod_unidade = :unidade</sql-query>
+</hibernate-mapping>

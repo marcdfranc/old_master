@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Vigencia">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_vigencia</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="descricao"/>
+  <property generated="never" lazy="false" name="aprovacao"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" name="unidade"/>
+ </class>
+</hibernate-mapping>

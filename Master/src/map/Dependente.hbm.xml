@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Dependente">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_dependente</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="nome"/>
+  <property generated="never" lazy="false" name="parentesco"/>
+  <property generated="never" lazy="false" name="referencia"/>
+  <property generated="never" lazy="false" name="cpf"/>
+  <property generated="never" lazy="false" name="fone"/>
+  <property column="data_consulta_credito" name="consultaCredito"/>
+  <property name="spc"/>
+  <property column="devolucao_chq" name="devolucaoCheques"/>
+  <property name="protestos"/>
+  <property generated="never" lazy="false" name="nascimento"/>
+  <property generated="never" lazy="false" name="carteirinha"/>
+  <many-to-one class="Usuario" column="cod_usuario" name="usuario"/>
+ </class>
+ <query name="dependenteOf">from Dependente as d where d.usuario = :usuario order by d.referencia</query>
+</hibernate-mapping>

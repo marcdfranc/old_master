@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dependente" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="com.jasperassistant.designer.DataSource" value="master.com"/>
+	<property name="com.jasperassistant.designer.Grid" value="false"/>
+	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
+	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
+	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
+	<parameter name="USUARIO" class="java.lang.Integer">
+		<parameterDescription><![CDATA[cdo. usuario]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT COUNT(codigo) AS dependentes FROM dependente
+WHERE cod_usuario = $P{USUARIO}]]>
+	</queryString>
+	<field name="dependentes" class="java.lang.Long"/>
+	<detail>
+		<band height="12">
+			<staticText>
+				<reportElement x="1" y="0" width="69" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Dependentes:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="0" width="25" height="12"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{dependentes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pagamentos" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="com.jasperassistant.designer.Grid" value="false"/>
+	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
+	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
+	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
+	<property name="com.jasperassistant.designer.DataSource" value="master.com"/>
+	<property name="ireport.zoom" value="2.853116706110003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="USUARIO" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(l.codigo) AS pagas, MAX(l.vencimento) AS ultima
+FROM
+parcela_orcamento AS p
+INNER JOIN lancamento AS l ON(l.codigo = p.cod_lancamento)
+INNER JOIN orcamento AS o ON(p.cod_orcamento = o.codigo)
+WHERE l.vencimento < CURRENT_DATE
+  AND l.status IN ('q', 'f')
+  AND o.cod_usuario = $P{USUARIO}]]>
+	</queryString>
+	<field name="pagas" class="java.lang.Long"/>
+	<field name="ultima" class="java.util.Date"/>
+	<detail>
+		<band height="15">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="89" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ultima paga em:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="89" y="0" width="270" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{ultima}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

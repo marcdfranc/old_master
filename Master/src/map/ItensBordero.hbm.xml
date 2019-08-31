@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensBordero" table="itens_bordero">
+  <composite-id class="ItensBorderoId" mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one
+    class="com.marcsoftware.database.BorderoProfissional"
+    column="cod_bordero" name="borderoProfissional"/>
+   <key-many-to-one class="com.marcsoftware.database.Lancamento"
+    column="cod_lancamento_cliente" name="cliente"/>
+  </composite-id>
+  <many-to-one class="com.marcsoftware.database.Lancamento"
+   column="cod_lancamento_operacional" name="operacional"/>
+ </class>
+ <sql-query name="totalRepasse">select sum(l.valor) from itens_bordero as i inner join lancamento as l on(i.cod_lancamento_operacional = l.codigo)
+where i.cod_bordero = :bordero</sql-query>
+ <sql-query name="totalBordero">select sum(l.valor) from itens_bordero as i inner join lancamento as l on(i.cod_lancamento_cliente = l.codigo)
+where i.cod_bordero = :bordero</sql-query>
+ <sql-query name="operacionalQuit">select count(*) from itens_bordero as i inner join lancamento as l on(i.cod_lancamento_operacional = l.codigo)
+where i.cod_bordero = :bordero
+and l.status = 'q'</sql-query>
+ <sql-query name="operacionalOpen">select count(*) from itens_bordero as i inner join lancamento as l on(i.cod_lancamento_operacional = l.codigo)
+where i.cod_bordero = :bordero
+and l.status = 'a'</sql-query>
+ <sql-query name="clienteQuit">select count(*) from itens_bordero as i inner join lancamento as l on(i.cod_lancamento_cliente = l.codigo)
+where i.cod_bordero = :bordero
+and l.status = 'q'</sql-query>
+</hibernate-mapping>

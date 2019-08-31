@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database.views">
+ <class name="ViewDebitoMensalidade" table="vw_debito_mensalidade">
+  <id name="ctr">
+   <generator class="native">
+    <param name="sequence">sq_conta</param>
+   </generator>
+  </id>
+  <property column="parcelas" name="parcelasAtraso"/>
+  <property column="atraso" name="diasAtraso"/>
+  <many-to-one class="com.marcsoftware.database.Usuario"
+   column="usuario" name="usuario"/>
+  <many-to-one class="com.marcsoftware.database.Empresa"
+   column="empresa" name="empresa"/>
+ </class>
+</hibernate-mapping>

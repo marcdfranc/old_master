@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="texto_vendedor" language="groovy" pageWidth="652" pageHeight="321" columnWidth="612" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT current_date]]>
+	</queryString>
+	<field name="date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="252" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="144" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "image_report/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="209" y="15" width="403" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[TEXTO PADRÃO DE VENDAS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="612" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="46" y="72" width="566" height="144"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[O Plano Master dá descontos em todos os tratamentos odontológicos, por exemplo:
+O tratamento de um canal que custa de R$ ________ a R$ ________ no atendimento particular.
+Com o plano você paga apenas R$ ________.
+Uma Restauração com Resina que custa em média de R$ ________ a R$ ________.
+No plano você paga somente R$ ________.
+A colocação do aparelho é gratuita, e a manutenção que o especialista cobra de R$ ________ a R$ ________.
+Com o plano você paga R$ ________.
+
+Não tem carência, Fazendo o plano e pagando a taxa de adesão já pode usar.
+O custo é de R$ 30.00 pela adesão, e a mensalidade é de R$ 12.00 para toda a família.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="52" width="130" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Bom dia, meu nome é:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="52" width="253" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[, sou representante da Master Odontologia.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="176" y="64" width="179" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="219" width="566" height="20"/>
+				<textElement>
+					<font size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[O Sr (a). TEM INTERESSE EM FAZER UM PLANO DE BENEFÍCIOS PARA SUA FAMILIA?]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="250" y="3" width="362" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="3" width="251" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font isBold="false" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<text><![CDATA[/// MASTER Odontologia & Saúde]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="612" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

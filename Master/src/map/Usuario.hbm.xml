@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Fisica" name="Usuario">
+  <key column="codigo"/>
+  <property generated="never" lazy="false" name="profissao"/>
+  <property generated="never" lazy="false" name="mae"/>
+  <property generated="never" lazy="false" name="pai"/>
+  <property generated="never" lazy="false" name="renovacao" not-null="true"/>
+  <property generated="never" lazy="false" name="status" not-null="true"/>
+  <property generated="never" lazy="false" name="carteirinha"/>
+  <property column="data_consulta_credito" generated="never"
+   lazy="false" name="consultaCredito"/>
+  <property generated="never" lazy="false" name="spc"/>
+  <property generated="never" lazy="false" name="protestos"/>
+  <property column="devolucao_chq" generated="never" lazy="false" name="devolucaoCheques"/>
+  <property generated="never" lazy="false" name="ctr"/>
+  <property generated="never" lazy="false" name="qtdeParcela">
+   <column name="qtde_parcela"/>
+  </property>
+  <many-to-one class="Plano" column="cod_plano" name="plano" not-null="true"/>
+  <many-to-one class="FormaPagamento" column="cod_forma_pagamento"
+   name="pagamento" not-null="true"/>
+  <many-to-one class="com.marcsoftware.database.Contrato"
+   column="cod_contrato" name="contrato"/>
+  <property column="ccob_und_consumidora" generated="never" lazy="false" name="ccobUndConsumidora"/>
+  <property column="ccob_concessionaria" generated="never" lazy="false" name="ccobConcessionaria"/>
+  <property column="ccob_titular" generated="never" lazy="false" name="ccobTitular"/>
+  <property column="ccob_dt_leitura" generated="never" lazy="false" name="ccobDtLeitura"/>
+  <property column="ccob_dt_vencimento" generated="never" lazy="false" name="ccobDtVencimento"/>
+  <property column="ccob_logradouro" generated="never" lazy="false" name="ccobLogradouro"/>
+  <property column="ccob_status" generated="never" lazy="false" name="ccobStatus"/>
+  <property column="ccob_valor" generated="never" lazy="false" name="ccobValor"/>
+  <property column="ccob_tipo" generated="never" lazy="false" name="ccobTipo"/>
+  <property column="ccob_documento" generated="never" lazy="false" name="ccobDocumento"/>
+  <property column="ccob_doc_estadual" generated="never" lazy="false" name="ccobDocEstadual"/>
+  <property column="ccob_adesao" generated="never" lazy="false" name="ccobAdesao"/>
+  <property column="ccob_cobrar" name="ccobCobrar"/>
+ </joined-subclass>
+ <query name="usuarioOf">from Usuario as u where u.unidade in ( &#xd;
+		 from Unidade as u where u.codigo = :codigo)</query>
+ <query name="usuarioByUser">from Usuario as u &#xd;
+where u.unidade.administrador.login.username = :username</query>
+ <query name="adesaoByCtr">select m.lancamento from Mensalidade as m &#xd;
+where m.usuario.contrato.codigo = :codigo&#xd;
+and m.lancamento.conta.descricao like '%adesão%'</query>
+</hibernate-mapping>

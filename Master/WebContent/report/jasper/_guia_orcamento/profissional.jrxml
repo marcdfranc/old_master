@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profissional" language="groovy" pageWidth="555" pageHeight="72" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="COD_PROFISSIONAL" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT f.nome, p.conselho, i.descricao AS info, e.rua_av,
+	e.numero, e.bairro, o.referencia AS cod_unidade,
+	u.descricao AS unidade, n.descricao AS atendimento
+FROM profissional AS p
+	INNER JOIN fisica AS f ON(p.codigo = f.codigo)
+	INNER JOIN pessoa AS s ON(p.codigo = s.codigo)
+	INNER JOIN unidade AS u ON(s.cod_unidade = u.codigo)
+	INNER JOIN pessoa AS o ON(u.codigo = o.codigo)
+	INNER JOIN informacao AS n ON(n.cod_pessoa = u.codigo)
+	INNER JOIN endereco AS e ON(e.cod_pessoa = p.codigo)
+	INNER JOIN informacao AS i ON(i.cod_pessoa = p.codigo)
+WHERE i.principal = 's'
+	AND n.principal = 's'
+	AND p.codigo = $P{COD_PROFISSIONAL}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="conselho" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="info" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua_av" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="atendimento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="72">
+			<printWhenExpression><![CDATA[!$F{nome}.equals( null )]]></printWhenExpression>
+			<staticText>
+				<reportElement x="1" y="38" width="100" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Profissional:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="71" y="38" width="332" height="15" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="38" width="66" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Conselho:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="477" y="38" width="78" height="15" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{conselho}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="57" width="69" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="71" y="57" width="485" height="15" backcolor="#CCCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{rua_av}) + ", " + $F{numero} +
+" - " + com.marcsoftware.Util.initCap($F{bairro})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="71" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Unidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="1" width="94" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Atendimento:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="71" y="1" width="350" height="15" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[!$F{cod_unidade}.equals( null )]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cod_unidade} + ", " + $F{unidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="476" y="1" width="79" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{atendimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="72" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{nome}.equals( null )]]></printWhenExpression>
+			<staticText>
+				<reportElement x="0" y="38" width="70" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Profissional:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="57" width="70" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="38" width="66" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Conselho:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="71" y="38" width="332" height="15" backcolor="#CCCCCC"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="477" y="38" width="78" height="15" backcolor="#CCCCCC"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="71" y="57" width="484" height="15" backcolor="#CCCCCC"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

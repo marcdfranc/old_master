@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <joined-subclass extends="Fisica" name="Funcionario">
+  <key column="codigo"/>
+  <property generated="never" lazy="false" name="ctps"/>
+  <property generated="never" lazy="false" name="cnh"/>
+  <property generated="never" lazy="false" name="pis"/>
+  <property generated="never" lazy="false" name="salario"/>
+  <property generated="never" lazy="false" name="comissao"/>
+  <property generated="never" lazy="false" name="bonus"/>
+  <property generated="never" lazy="false" name="meta"/>
+  <many-to-one class="Posicao" column="cod_cargo" name="posicao"/>
+  <property column="ccob_vendedor" name="ccobVendedor"/>
+ </joined-subclass>
+ <sql-query name="totalComissao">SELECT SUM(l.valor * (f.comissao/100)) FROM usuario AS u
+	INNER JOIN mensalidade AS m ON(m.cod_usuario = u.codigo)
+	INNER JOIN lancamento AS l ON(m.cod_lancamento = l.codigo)
+	INNER JOIN contrato AS c ON(u.ctr = c.codigo)
+	INNER JOIN funcionario AS f ON(c.cod_funcionario = f.codigo)
+WHERE u.ctr NOT IN(
+	SELECT cod_contrato FROM itens_vendedor
+	)
+	AND l.cod_conta = 63
+	AND l.status = 'q'
+	AND l.cod_unidade = :unidade</sql-query>
+ <sql-query name="totalComissaoHold">SELECT SUM(l.valor * (f.comissao/100)) FROM usuario AS u
+	INNER JOIN mensalidade AS m ON(m.cod_usuario = u.codigo)
+	INNER JOIN lancamento AS l ON(m.cod_lancamento = l.codigo)
+	INNER JOIN contrato AS c ON(u.ctr = c.codigo)
+	INNER JOIN funcionario AS f ON(c.cod_funcionario = f.codigo)
+WHERE u.ctr NOT IN(
+	SELECT cod_contrato FROM itens_vendedor
+	)
+	AND l.cod_conta = 63
+	AND l.status = 'q'</sql-query>
+</hibernate-mapping>

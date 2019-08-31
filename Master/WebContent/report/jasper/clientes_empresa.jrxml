@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="centercob_status" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistema/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["LISTAGEM DE CLIENTES POR EMPRESA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select o.ctr, f.nome, f.cpf, p.cadastro, p.ativo, p.cod_unidade,
+  CASE 
+    WHEN p.ativo='a' THEN 'Ativo'
+    WHEN p.ativo='c' THEN 'Cancelado'   
+    ELSE 'Bloqueado'
+  END AS descricao_status, (
+   SELECT descricao FROM informacao AS i 
+   WHERE i.principal = 's' 
+    AND i.cod_pessoa = u.codigo LIMIT 1) AS informacao, e.ativo AS status,
+  CASE 
+    WHEN e.ativo='a' THEN 'Ativo'
+    WHEN e.ativo='c' THEN 'Cancelado'   
+    ELSE 'Bloqueado'
+  END AS status_empresa, j.fantasia, j.cnpj 
+from contrato_empresa AS c
+INNER JOIN usuario AS u ON(c.cod_usuario = u.codigo)
+INNER JOIN contrato AS o ON(u.cod_contrato = o.codigo)
+INNER JOIN fisica AS f ON(u.codigo = f.codigo)
+INNER JOIN pessoa AS p ON(u.codigo = p.codigo)
+INNER JOIN juridica AS j ON(c.cod_empresa = j.codigo)
+INNER JOIN pessoa AS e ON(j.codigo = e.codigo)
+where c.cod_empresa = 2101
+order by p.ativo]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ativo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="informacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cadastro" class="java.sql.Date"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="status_empresa" class="java.lang.String"/>
+	<field name="fantasia" class="java.lang.String"/>
+	<field name="cnpj" class="java.lang.String"/>
+	<variable name="isVisible" class="java.lang.Boolean">
+		<variableExpression><![CDATA[!$V{isVisible}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Integer" resetType="Group" resetGroup="ativo" calculation="Count">
+		<variableExpression><![CDATA[$F{ctr}]]></variableExpression>
+	</variable>
+	<group name="ativo" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{ativo}]]></groupExpression>
+		<groupHeader>
+			<band height="53" splitType="Stretch">
+				<staticText>
+					<reportElement mode="Transparent" x="26" y="16" width="43" height="19" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+					</textElement>
+					<text><![CDATA[Status:]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="69" y="16" width="486" height="19" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="12" isBold="false" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{descricao_status}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="24" y="37" width="503" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="445" y="38" width="83" height="14" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement textAlignment="Center">
+						<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Contato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="358" y="38" width="87" height="14" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Cadastro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="261" y="38" width="97" height="14" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[CPF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="81" y="38" width="180" height="14" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="25" y="38" width="56" height="14" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[CTR]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Stretch">
+				<line direction="BottomUp">
+					<reportElement key="line" x="25" y="2" width="502" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="426" y="3" width="35" height="14" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement>
+						<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="461" y="3" width="66" height="14"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{total}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="77" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="24" y="62" width="503" height="14" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<subreport>
+				<reportElement x="1" y="0" width="555" height="51"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH}+ "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="80" y="62" width="294" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fantasia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="62" width="116" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.mountCnpj($F{cnpj})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="62" width="54" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Empresa: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="62" width="37" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CNPJ:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="26" y="0" width="501" height="15" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[$V{isVisible}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="25" y="0" width="55" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ctr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="181" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="97" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="358" y="0" width="87" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{cadastro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="445" y="0" width="82" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{informacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="44" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="42"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CURRENT_PAGE">
+					<subreportParameterExpression><![CDATA[$V{PAGE_NUMBER}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "comum/footer.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="atorizacao_debito" language="groovy" pageWidth="555" pageHeight="795" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.6105100000000199"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Documents and Settings/Marcelo/Meus documentos/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["AUTORIZAÇÃO DE DÉBITO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_ORCAMENTO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[69]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT o.codigo, e.referencia AS ref_unidade, j.fantasia, j.cnpj, p.cod_unidade,
+	SUM(l.valor) AS valor, COUNT(l.*) AS parcelas, c.ctr, n.cidade, n.uf,
+	CASE
+		WHEN d.codigo ISNULL THEN f.nome
+		ELSE d.nome
+	END AS nome,
+	CASE
+		WHEN d.codigo ISNULL THEN f.cpf
+		ELSE d.cpf
+	END AS cpf
+FROM orcamento AS o
+INNER JOIN pessoa AS p ON(o.cod_pessoa = p.codigo)
+INNER JOIN pessoa AS e ON(p.cod_unidade = e.codigo)
+INNER JOIN juridica AS j ON(p.cod_unidade = j.codigo)
+INNER JOIN endereco AS n ON(p.cod_unidade = n.cod_pessoa)
+INNER JOIN parcela_orcamento AS a ON(o.codigo = a.cod_orcamento)
+INNER JOIN lancamento AS l ON(a.cod_lancamento = l.codigo)
+INNER JOIN fisica AS f ON(o.cod_usuario = f.codigo)
+LEFT JOIN dependente AS d ON(o.cod_dependente = d.codigo)
+INNER JOIN usuario AS u ON(o.cod_usuario = u.codigo)
+INNER JOIN contrato AS c ON(u.cod_contrato = c.codigo)
+WHERE o.codigo = $P{COD_ORCAMENTO}
+GROUP BY o.codigo, o.parcelas, e.referencia, j.fantasia, j.cnpj, c.ctr, p.cod_unidade,
+	d.codigo, f.nome, d.nome, f.cpf, d.cpf, n.cidade, n.uf]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String"/>
+	<field name="fantasia" class="java.lang.String"/>
+	<field name="cnpj" class="java.lang.String"/>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="cod_unidade" class="java.lang.Integer"/>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="uf" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="795" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="187" width="555" height="54" backcolor="#E1E1E1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="357" width="555" height="221" backcolor="#E1E1E1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="122" width="555" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Autorizo em caráter irretratável e irrevogável, os débitos abaixo referente ao pagamento dos serviços relativos a: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="137" width="122" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[na opção por mim indicada.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="217" width="45" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[cada uma.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="82" width="555" height="15" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Orçamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="156" width="35" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Art. 1° - ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="156" width="263" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Em adiantamento ao CONTRATO  classificado como; orçamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="278" y="152" width="78" height="15"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="156" width="170" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[autorizo  o débito para quitação dos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="249" width="40" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Art. 2° - ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="249" width="519" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Esta autorização de débito só pode ser cancelada no prazo legal (art. 49 da lei 8078/90) de até 07 (sete) dias de sua assinatura ou]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="261" width="243" height="11"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ se quitadas as parcelas aqui autorizadas para pagamento dos ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="405" width="49" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Venc. dia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="290" width="40" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Art. 3° - ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="290" width="519" height="11"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Somente os filiados rigorosamente em dia com suas obrigações financeiras junto a CONTRATADA terá direito aos serviços e ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="302" width="555" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[vantagens por ela intermediados. A solicitação de devolução de valor pago em duplicidade deve ser feita diretamente à empresa intermediadora ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="404" width="79" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cod. de seg.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="331" width="555" height="15" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Opções De Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="392" width="96" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cartão de crédito:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="392" width="145" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nome conforme consta no cartão :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="404" width="70" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[N° do cartão :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="404" width="38" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Validade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="416" width="182" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assinatura do titular por extenso e legível:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="192" y="426" width="348" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="38" y="440" width="106" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Débito bancário, Banco :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="440" width="46" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Agência:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="440" width="68" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Conta corrente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="452" width="38" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cod. op. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="452" width="51" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Venc. dia:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="324" y="463" width="216" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="193" y="452" width="157" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ass. do titular por extenso e legível:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="479" width="198" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Débito em folha de pagamento salarial, Empresa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="491" width="267" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assinatura do funcionário por extenso e legível:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="211" y="501" width="329" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="38" y="517" width="170" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Conta de energia elétrica, Concessionária:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="517" width="92" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Unid. consumidora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="529" width="49" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo doc.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="529" width="29" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[N°:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="190" y="562" width="350" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="38" y="552" width="181" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assinatura do titular por extenso e legível:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="105" width="26" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="51"/>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA[$P{TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH} + "/comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="364" y="101" width="149" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.mountCpf($F{cpf})]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="26" y="196" width="12" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="51" y="197" width="89" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[A vista no valor de R$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="195" width="35" height="15"/>
+				<textElement/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="195" width="34" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="26" y="216" width="12" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="140" y="217" width="132" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[parcelas mensais no valor de R$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="213" width="34" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="213" width="37" height="15"/>
+				<textElement/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="21" y="391" width="12" height="12"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="21" y="439" width="12" height="12"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="21" y="478" width="12" height="12"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="21" y="516" width="12" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="58" width="54" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="54" y="58" width="62" height="14" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="305" y="670" width="25" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="495" y="656" width="59" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[com.marcsoftware.Util.getYearDate(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="305" y="656" width="25" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[com.marcsoftware.Util.getDayDate(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="656" width="298" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade}) + " - " +
+$F{uf}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="336" y="656" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="656" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<line>
+				<reportElement x="356" y="670" width="108" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="495" y="670" width="59" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="356" y="656" width="108" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.getMonthLiteral(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="105" width="25" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Eu,]]></text>
+			</staticText>
+			<line>
+				<reportElement x="336" y="765" width="219" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="336" y="765" width="219" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Assinatura cliente (contratante)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="765" width="220" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="765" width="219" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Assinatura empresa(contratada)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="314" width="555" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["de serviços, " + $F{fantasia}.toUpperCase() + " - CNPJ " +
+com.marcsoftware.Util.mountCnpj($F{cnpj}) + " em " +
+com.marcsoftware.Util.initCap($F{cidade}) + " - " +
+$F{uf}.toUpperCase() + "."]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="21" y="115" width="297" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="365" y="115" width="148" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="148" width="412" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="279" y="166" width="77" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="51" y="227" width="79" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="267" y="226" width="225" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="140" y="209" width="262" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="108" y="402" width="85" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="326" y="402" width="214" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="382" y="415" width="32" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="96" y="414" width="120" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="274" y="414" width="56" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="460" y="414" width="80" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="219" y="490" width="321" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="196" y="527" width="138" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="420" y="528" width="120" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="389" y="539" width="36" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="448" y="539" width="92" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="130" y="450" width="130" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="300" y="450" width="80" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="442" y="450" width="98" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="76" y="462" width="32" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="154" y="463" width="32" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="38" y="367" width="515" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Pagamento a vista em dinheiro, cheque e/ou cheques pré datados, mediante emissão de recibo eletrônico (cupom).]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="21" y="367" width="12" height="12"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="504" y="404" width="34" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="404" width="29" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="529" width="29" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="529" width="64" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Data da leitura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="529" width="34" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<line>
+				<reportElement x="97" y="539" width="80" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="284" y="529" width="29" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="529" width="90" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Vencimento da fatura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="529" width="34" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<line>
+				<reportElement x="264" y="539" width="80" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="21" y="101" width="297" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="82" width="121" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="168" width="183" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[procedimentos e serviços  no valor de: R$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="153" y="179" width="261" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="380" y="165" width="34" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="165" width="35" height="15"/>
+				<textElement/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<line>
+				<reportElement x="234" y="270" width="79" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="321" y="261" width="232" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[meses previstos no CONTRATO anexado à mesma.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="541" width="488" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[O valor acima  será somado ao valor do consumo de energia elétrica.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="541" width="40" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[OBS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="271" width="553" height="11"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Caso atrase o pagamento da fatura será cobrado multa de 2% e juros de 1% ao mês, e será acrescido na fatura seguinte.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

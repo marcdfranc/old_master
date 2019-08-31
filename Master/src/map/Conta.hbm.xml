@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Conta">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_conta</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="agencia"/>
+  <property generated="never" lazy="false" name="numero"/>
+  <property generated="never" lazy="false" name="titular"/>
+  <many-to-one class="Banco" column="cod_banco" name="banco"/>
+  <many-to-one class="Pessoa" column="cod_pessoa" name="pessoa"/>
+  <property generated="never" lazy="false" name="carteira"/>
+  <property column="vlr_boleto" name="vlrBoleto"/>
+ </class>
+ <query name="contaOf">from Conta as c where c.pessoa = :pessoa</query>
+ <query name="contaOfByCode">from Conta as c where c.pessoa.codigo = :codigo</query>
+</hibernate-mapping>

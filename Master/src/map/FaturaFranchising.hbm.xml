@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/08/2010 14:22:36 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.FaturaFranchising" table="FATURA_FRANCHISING">
+  <id name="codigo" type="java.lang.Long">
+   <generator class="sequence">
+    <param name="sequence">sq_fatura_franchising</param>
+   </generator>
+  </id>
+  <property column="data_inicio" generated="never" lazy="false"
+   name="dataInicio" type="java.util.Date"/>
+  <property column="data_fim" generated="never" lazy="false"
+   name="dataFim" type="java.util.Date"/>
+  <property generated="never" lazy="false" name="vencimento" type="java.util.Date"/>
+  <property column="observacao" generated="never" lazy="false"
+   name="obs" type="java.lang.String"/>
+  <property name="status"/>
+  <many-to-one class="com.marcsoftware.database.Unidade"
+   column="cod_unidade" fetch="join" name="unidade"/>
+  <many-to-one class="com.marcsoftware.database.FormaPagamento"
+   column="cod_forma_pagamento" fetch="join" name="formaPagamento"/>
+ </class>
+</hibernate-mapping>

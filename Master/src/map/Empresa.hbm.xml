@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+
+	<joined-subclass name="Empresa" extends="Juridica">
+		<key column="codigo"/>
+				
+		<property name="contato"/>
+		
+		<property name="cargoContato">
+			<column name="cargo_contato"/>
+		</property>
+		
+		<property name="saldoAcumulado">
+			<column name="saldo_acumulado"/>
+		</property>
+				
+		<many-to-one name="ramo" class="Ramo" column="cod_ramo"/>
+		
+		<many-to-one name="funcionario" class="Funcionario" column="cod_funcionario"/>
+	</joined-subclass>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 26/10/2010 13:51:02 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.ItensGrupo" table="itens_grupo">
+  <composite-id class="com.marcsoftware.database.ItensGrupoId"
+   mapped="false" name="id" unsaved-value="undefined">
+   <key-many-to-one class="com.marcsoftware.database.Grupo"
+    column="cod_grupo" name="grupo"/>
+   <key-many-to-one class="com.marcsoftware.database.Catalogo"
+    column="cod_catalogo" name="catalogo"/>
+  </composite-id>
+ </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensLote" table="itens_lote">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_iten_lote</param>
+   </generator>
+  </id>
+  <many-to-one class="com.marcsoftware.database.LoteParcelaCompra"
+   column="cod_lote" name="lote"/>
+  <many-to-one class="com.marcsoftware.database.ParcelaCompra" name="parcelaCompra">
+   <column name="cod_lancamento"/>
+   <column name="cod_compra"/>
+  </many-to-one>
+ </class>
+</hibernate-mapping>

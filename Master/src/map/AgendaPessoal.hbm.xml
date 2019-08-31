@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04/11/2010 16:37:05 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+ <class name="com.marcsoftware.database.AgendaPessoal" table="agenda_pessoal">
+  <id name="codigo" type="java.lang.Long">
+   <generator class="native">
+    <param name="sequence">sq_agenda_pessoal</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="titulo" type="java.lang.String"/>
+  <property generated="never" lazy="false" name="inicio" type="java.util.Date"/>
+  <property generated="never" lazy="false" name="fim" type="java.util.Date"/>
+  <property generated="never" lazy="false" name="completo" type="java.lang.String"/>
+  <many-to-one class="com.marcsoftware.database.Login" column="username"
+   fetch="join" name="login"/>
+ </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Agenda">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_agenda</param>
+   </generator>
+  </id>
+  <property column="nome_titulo" name="nomeTitulo"/>
+  <property generated="never" lazy="false" name="inicio"/>
+  <property generated="never" lazy="false" name="fim"/>
+  <property generated="never" lazy="false" name="observacao"/>
+  <many-to-one class="com.marcsoftware.database.Profissional"
+   column="cod_profissional" name="profissional"/>
+ </class>
+</hibernate-mapping>

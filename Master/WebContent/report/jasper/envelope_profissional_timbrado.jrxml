@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="envelope_profissional_timbrado" language="groovy" pageWidth="652" pageHeight="321" columnWidth="612" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d45859d2-acec-40d7-b3a3-ec5312d55480">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/marcelo/Documents/Sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT f.nome, e.rua_av, e.numero, e.bairro, e.cidade, UPPER(e.uf) AS uf, e.complemento, e.cep, u.report_logo
+FROM profissional AS p
+	INNER JOIN endereco AS e ON(e.cod_pessoa = p.codigo)
+	INNER JOIN fisica AS f ON(p.codigo = f.codigo)
+	INNER JOIN pessoa s ON (s.codigo = e.cod_pessoa)
+	INNER JOIN unidade u ON (u.codigo = s.cod_unidade)
+where u.codigo = 1293]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="rua_av" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="uf" class="java.lang.String"/>
+	<field name="complemento" class="java.lang.String"/>
+	<field name="cep" class="java.lang.String"/>
+	<field name="report_logo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="74" splitType="Stretch">
+			<image>
+				<reportElement uuid="86a5e554-ea2b-4e9b-b437-561cf51f84df" x="33" y="13" width="144" height="42"/>
+				<imageExpression><![CDATA[$P{CONTEXT_PATH} + $F{report_logo}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="207" splitType="Stretch">
+			<textField>
+				<reportElement uuid="89abcbf3-2151-452c-a08d-b46ad10b707c" x="37" y="146" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.marcsoftware.Util.initCap($F{bairro}) + " - " +
+com.marcsoftware.Util.initCap($F{cidade}) +  "/" + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="1856c315-fc12-49a1-bde8-e6196779f1f2" x="37" y="162" width="189" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cep}.substring( 0, 5 ) + "-" + $F{cep}.substring( 5, $F{cep}.length() )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7521f9bf-020e-4488-8b96-8b89ab0ccb4d" x="37" y="130" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{complemento}.equals( null ) || $F{complemento}.equals( "" ))?
+    com.marcsoftware.Util.initCap($F{rua_av}) + ", " +
+    $F{numero} : com.marcsoftware.Util.initCap($F{rua_av}) +
+    ", " + $F{numero} + " - " + $F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="98088d6b-3a71-4d5d-8604-b236094512b7" x="37" y="114" width="288" height="16"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.marcsoftware.Util.initCap($F{nome})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

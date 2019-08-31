@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_usuario" language="groovy" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CONTEXT_PATH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/Users/Marcelo/Documents/sistemas/master/master.com/WebContent/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_CONTRATO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[631]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_DOCUMENTO" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONEXAO_EXTERNA" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{REPORT_CONNECTION}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.ctr, c.cod_funcionario, f.nome, p.referencia AS ref_unidade, e.cidade, UPPER(e.uf) AS uf,
+u.codigo as cod_unidade
+FROM contrato AS c
+INNER JOIN usuario AS s ON(c.codigo = s.cod_contrato)
+INNER JOIN fisica AS f ON(s.codigo = f.codigo)
+INNER JOIN unidade AS u ON(c.cod_unidade = u.codigo)
+INNER JOIN pessoa AS p ON(c.cod_unidade = p.codigo)
+INNER JOIN endereco AS e ON(c.cod_unidade = e.cod_pessoa)
+WHERE c.codigo = $P{COD_CONTRATO}]]>
+	</queryString>
+	<field name="ctr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_funcionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ref_unidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_unidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="15" y="530" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="365" y="466" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="365" y="482" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="15" y="466" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="15" y="450" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="190" y="434" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="190" y="450" width="175" height="16"/>
+			</rectangle>
+			<textField>
+				<reportElement x="32" y="668" width="242" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.initCap($F{cidade}) + " - " + $F{uf}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="476" y="682" width="59" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="359" y="750" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="751" width="181" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CONTRATANTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="750" width="181" height="1"/>
+			</line>
+			<line>
+				<reportElement x="359" y="750" width="181" height="1"/>
+			</line>
+			<componentElement>
+				<reportElement x="211" y="774" width="135" height="16"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[com.marcsoftware.Util.zeroToLeft($F{cod_funcionario}, 6)]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="373" y="50" width="182" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[CUSTO OPERACIONAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="-3" y="787" width="558" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cod_funcionario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="476" y="668" width="59" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getYearDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="286" y="668" width="25" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[com.marcsoftware.Util.getDayDate($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="337" y="668" width="106" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($P{DATA_DOCUMENTO} == null)? $P{DATA_DOCUMENTO} : com.marcsoftware.Util.getMonthLiteral($P{DATA_DOCUMENTO})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="67" width="525" height="358"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[O titular contratante é avalista de cada dependente relacionado. E caso o CONTRATANTE ou qualquer dependente coloque qualquer tipo de APARELHO na área ORTODONTICO a colocação é gratuita, ficando obrigado a pagar pelas manutenções no máximo 30% do valor do salário mínimo vigente e ainda com 20% de descontos em acessórios que porventura sejam necessários durante o tratamento e no caso do usuário de aparelho ou seu responsável venha a parar de fazer as MANUTENÇÕES periódicas pôr qualquer motivo, lhe será cobrado a preço de mercado do APARELHO ORTODONTICO utilizado, Fica ainda determinado que o aparelho em uso caso venha a ser danificado pôr mau uso por parte do usuário, serão cobradas as peças de reposição.
+Clausula 6º- do parcelamento do tratamento: Qualquer parcelamento de tratamento deverá ser aprovado pelos Profissionais e pela CONTRATADA e somente haverá parcelamento quando a parcela superar o valor de R$ 60,00 (sessenta reais), sendo que o atraso de qualquer parcela de tratamento implicará no cancelamento do horário marcado.
+Clausula 7º- DA VIGÊNCIA: O presente contrato terá vigência pôr no mínimo 18 meses da data do pagamento da taxa de adesão.
+Cláusula 8º - DA RENOVAÇÃO: O presente contrato renovar-se-á automaticamente por igual período e assim sucessivamente, caso não haja manifestação contrária, por escrito, por qualquer das partes até 30 trinta dias antes de seu término ou do término das renovações.
+Clausula 9º- DA RESCISÃO: a desistência antecipada pôr parte do CONTRATANTE acarretará em multa contratual no valor de 5 (cinco) parcelas, precisando para isso estar rigorosamente em dia com as parcelas anteriores e acarretará também a interrupção imediata dos tratamentos, e dos demais direitos e deveres a ele conferidos;
+Clausula 10º- DAS CARÊNCIAS: terá, observado o prazo de trinta dias de  carência para uso de qualquer profissional ou realização de qualquer procedimento, contados a partir do pagamento da taxa de adesão;
+Clausula 11º- DO PAGAMENTO DAS CONTRIBUIÇÕES: a) Obriga-se o CONTRATANTE a pagar à CONTRATADA, pelo período mínimo de 18 meses, os valores descritos na clausula 5º e independentemente de terem ou não o CONTRATANTE e/ou algum dos dependentes solicitado atendimento, tratamento, exames ou consulta na rede credenciada. b) O não recebimento do boleto bancário ou outro instrumento de cobrança não desobriga o CONTRATANTE de efetuar o seu pagamento no prazo de vencimento mensal; c) O pagamento da mensalidade referente a um determinado mês não significa estarem pagos ou quitados débitos anteriores; d) O não atendimento por falta de pagamento, ou suspensão de direitos dele decorrentes, não libera o CONTRATANTE da divida contratualmente assumida, que poderá ser cobrada em ação de execução; e) O recebimento pela CONTRATADA de parcelas em atraso constituirá mera tolerância, não implicando em novação contratual ou transação; f) A tabela de procedimentos e exames poderá ser reajustada a cada período de 1 (um) ano, de acordo com a variação dos custos médicos e laboratoriais.
+Clausula 12º- DOS ATRASOS DE PAGAMENTOS: Mediante inadimplência pôr parte do CONTRATANTE com relação aos valores especificados ocorrerá: a) Multa de 2% e juros de mora de 1%; b) Correção Monetária “dia a dia” do vencimento ao efetivo pagamento na forma da lei; c) Mais custas advocatícias e de cobrança se for necessário a utilização dos meios judiciais; d) Encaminhamento ao Cartório de Protestos e/ou SPC após 45 dias de atraso; e) Suspensão da liberação de guias, até o efetivo pagamento, após o primeiro dia de atraso.
+Clausula 13º- DO SISTEMA DE INDIQUE E GANHE: o plano de premiação é aplicado unicamente para o contratante, os dependentes não fazem parte do sistema de indicações, portanto, não recebem premiações. O contratante terá a oportunidade de desenvolver o sistema indique e ganhe, que começa a valer sua atividade ao indicar outras 4 pessoas que também contratem o serviço desta forma estará construindo assim sua rede de associados que também farão exatamente a mesma coisa, e fazendo isto receberão prêmios de acordo com o numero de pessoas com a mensalidade em dia na sua rede que é acompanhada no site protegido por senha e login que o contratante cria no ato de preenchimento do cadastro via internet, e a premiação será calculada da seguinte maneira:
+O contratante é qualificado para atingir status na medida em que o volume de pessoas da sua rede vai aumentando com as indicações dos seus indicados (volume de venda da equipe).
+]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="15" y="498" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="190" y="422" width="175" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="190" y="482" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="365" y="498" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="533" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[16.000 pessoas na rede]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="454" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1.4000 pessoas na rede]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="365" y="434" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="422" width="175" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Pessoas indicadas ativas]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="365" y="514" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="190" y="466" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="15" y="514" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="366" y="470" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$ 2.500,00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="470" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente 3 estrelas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="470" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3.000 pessoas na rede]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="365" y="530" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="365" y="450" width="175" height="16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="15" y="482" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="501" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[8.000 pessoas na rede]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="486" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5.500 pessoas na rede]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="486" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$ 5.000,00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="51" width="54" height="15"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Contrato:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="190" y="498" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="190" y="454" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente 2 estrelas]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="190" y="530" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="366" y="437" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$ 622,00]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="15" y="434" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="190" y="437" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente 1 estrela]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="51" width="100" height="16" forecolor="#FF0000"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[com.marcsoftware.Util.zeroToLeft($F{ctr}, 4) + "/" + $F{ref_unidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="518" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[12.000 pessoas na rede]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="190" y="514" width="175" height="16"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="190" y="486" width="176" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente 4 estrelas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="518" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$ 20.000,00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="501" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente 5 estrelas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="454" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$ 1.600,00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="437" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[400 pessoas na rede]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="535" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[% nos Lucros]]></text>
+			</staticText>
+			<line>
+				<reportElement x="286" y="682" width="25" height="1"/>
+			</line>
+			<line>
+				<reportElement x="337" y="682" width="108" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="366" y="501" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[R$ 9.200,00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="535" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Presidente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="422" width="175" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prêmios Mensais]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="668" width="20" height="15"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="518" width="175" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Vice Presidente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="668" width="20" height="16"/>
+				<textElement/>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="51"/>
+				<subreportParameter name="COD_UNIDADE">
+					<subreportParameterExpression><![CDATA[$F{cod_unidade}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CONTEXT_PATH">
+					<subreportParameterExpression><![CDATA[$P{CONTEXT_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TITLE">
+					<subreportParameterExpression><![CDATA["Contrato de Intermediação de Serviços"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{CONEXAO_EXTERNA}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{CONTEXT_PATH}+ "comum/header.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="13" y="556" width="525" height="108"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Para ter o direito de receber o premio no mês seguinte o contratante precisa iniciar o mês já qualificado.
+Se um indicado associado chega ao mesmo status que o contratante, ele não recebe prêmios sobre a equipe deste indicado associado e desta maneira poderá perder o status atual e receber prêmios menores ate que passe ao status superior do seu indicado novamente, e quando chegar ao status de Associado Gold, o contratante terá que assinar um contrato com a empresa contratada a fim de validar o status. A não concordância com o contrato irá impedir a validação do status e o recebimento dos prêmios referidos. .
+DAS DISPOSIÇÕES GERAIS: Fica avençado entre as partes que não haverá ressarcimento de parcelas pagas a qualquer titulo para a CONTRATADA sob qualquer pretexto; DO FORO: Os contratantes elegem o foro da cidade de Jau/SP, para dirimir quaisquer dúvidas decorrentes do presente contrato, renunciando a qualquer outro, por mais privilegiado que seja.
+E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor.
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

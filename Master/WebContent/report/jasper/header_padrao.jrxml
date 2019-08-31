@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="120" pageHeight="40" columnWidth="120" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="UNIDADE_ID" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT INITCAP(e.cidade) AS cidade, UPPER(e.uf) As uf, i.descricao
+FROM unidade AS u
+	INNER JOIN endereco AS e ON(e.cod_pessoa = u.codigo)
+	INNER JOIN informacao AS i ON(i.cod_pessoa = u.codigo)
+WHERE i.principal = 's'
+	AND u.codigo = $P{UNIDADE_ID}]]>
+	</queryString>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="119" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cidade} + " - " + $F{uf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="119" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

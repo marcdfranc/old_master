@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="ItensOrcamento" table="itens_orcamento">
+  <composite-id class="ItensOrcamentoId" mapped="false" name="id" unsaved-value="undefined">
+   <key-property column="sequencial" name="sequencial"/>
+   <key-many-to-one class="Orcamento" column="cod_orcamento" name="orcamento"/>
+  </composite-id>
+  <property generated="never" lazy="false" name="qtde"/>
+  <property name="contabil"/>
+  <many-to-one class="com.marcsoftware.database.Tabela"
+   column="cod_tabela" name="tabela"/>
+ </class>
+ <query name="itensOrcamentoOf">from ItensOrcamento as i where i.tabela.unidade.codigo = :codigo</query>
+ <sql-query name="operacionalOrcamento">SELECT SUM(t.valor_operacional * i.qtde) FROM itens_orcamento as i
+INNER JOIN tabela as t ON(i.cod_tabela = t.codigo)
+WHERE i.cod_orcamento = :orcamento
+AND t.cod_unidade = :unidade</sql-query>
+ <sql-query name="clienteOrcamento">select sum(l.valor) from parcela_orcamento as p
+inner join lancamento as l on(p.cod_lancamento = l.codigo)
+where p.cod_orcamento = :orcamento
+and l.cod_unidade = :unidade</sql-query>
+</hibernate-mapping>

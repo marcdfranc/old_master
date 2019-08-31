@@ -1,0 +1,526 @@
+@CHARSET "ISO-8859-1";
+/*
+ * #D0DEF0= azul claro
+ * #000099= azul titulos;
+ * #ECD9FF = item selecionado
+ * #BB77FF = border selecionado
+ * #EBEBEB = sombra selecionada
+ * #E4761F = laranja warning
+ * #FF6600 = laranja close
+ * #974578 = roxo erro
+ */
+.cpItemSelector {
+	border: solid 3px black;
+	border-color: #42929D;
+	position: relative;
+}
+
+.cpItemSelector div {
+	position: relative !important;
+}
+
+.cpTitleItemSelector {
+	background: url("../image/back_check.png") top repeat-x;
+	height: 22px; 
+}
+
+.cpTitleItemSelector label {
+	margin-left: 10px;
+	color: #666666;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+.cpLeftBoxItemSelector {
+	border: solid 1px #42929D;
+	margin: 10px 0 10px 13px;
+	float: left;
+}
+
+.cpRightBoxItemSelector{
+	border: solid 1px #42929D;			
+	float: left;
+	margin-top: 10px;
+}
+
+.tituloBoxItemSelector {
+	background: url("../image/back_check.png") top repeat-x;	
+	color: #000099;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.selectedItemselector {
+	background-color: #D0DEF0 !important;
+	border-bottom: solid 1px #000099; 
+}
+
+.cpContentItemSelector {
+	overflow: auto;	
+	padding: 0 0 10px 0;
+}
+
+.cpContentItemSelector div:hover {
+	background-color: #EBEBEB;
+}
+
+.cpContentItemSelector label {
+	width: 100%;
+}
+
+.cpContentItemSelector label:hover {
+	cursor: pointer;	 
+}
+
+.cpButtonIttenSelector {
+	float: left;
+	margin: 0 10px 0 10px;
+}
+
+.cpButtonIttenSelector input {
+	height: 20px;
+	width: 25px;
+	font-size: 12px;	
+}
+
+.cpModal {
+	filter: alpha(opacity=50) !important;
+	opacity: 50%;
+	width: 96%;
+	height: 100%;	
+	position: fixed;
+	z-index: 7;
+	padding-top: 50px;
+	margin-right: 15px; 
+	-moz-opacity: 0.5 !important;
+}
+
+.cpDefaultWindow {
+	/*background: url("../image/default_window.png") right 30px no-repeat #ffffff;*/	
+	position: fixed;
+	background: white;
+	top: 50%;
+	left: 50%;
+	z-index: 20;
+	border: #000066 solid 2px;
+}
+
+.parametroWindow {
+	position: static;
+	background: white;
+	top: 50%;
+	left: 50%;
+	z-index: 20;
+	border: #000066 solid 2px;
+}
+
+.cpWarning {
+	background: url("../image/warning.jpg") right 30px no-repeat #ffffff;	
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 20;
+	border: #E4761F solid 2px;
+}
+
+.cpOkWindow {
+	background: url("../image/ok_window.png") right 30px no-repeat #ffffff;	
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 20;
+	border: #42929D solid 2px;
+}
+
+.cpErroWindow {
+	background: url("../image/erro.png") right 30px no-repeat #ffffff;	
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 20;
+	border: #974578 solid 2px;
+}
+
+.cpDefaultWindow .cpWindowContent div  {
+	position: absolute;
+}
+
+.parametroWindow .cpWindowContent div  {
+	position: absolute;
+}
+
+.cpDefaultWindow .cpWindowContent .cpItemSelector {
+	position: relative !important;
+}
+
+.parametroWindow .cpWindowContent .cpItemSelector {
+	position: relative !important;
+}
+
+.cpLabelWindow {
+	float: left;	
+	clear: both;
+	margin-right: 148px !important;	
+}
+
+.cpWarning .cpWindowContent div {
+	position: absolute;
+}
+
+.cpOkWindow .cpWindowContent div {
+	position: absolute;
+}
+
+.cpErroWindow .cpWindowContent div {
+	position: absolute;
+}
+
+.cpDefaulWindowHeader {
+	background: url("../image/back_upload.gif") left top repeat-x;
+	height:22px;
+	color: #666666;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	font-weight: bolder;
+}
+
+
+
+.cpWarningHeader {
+	background: url("../image/back_warning.png") left top repeat-x;
+	height:22px;
+	color: #666666;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	font-weight: bolder;
+}
+
+.cpOkWindowHeader {
+	background: url("../image/back_ok.gif") left top repeat-x;	
+	height:22px;
+	color: #666666;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	font-weight: bolder;
+}
+
+.cpErroWindowHeader {
+	background: url("../image/back_erro.gif") left top repeat-x;	
+	height:22px;
+	color: #666666;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	font-weight: bolder;
+}
+
+.cpWindowLabelHeader {
+	width: 479px;
+	float: left;
+}
+
+.cpWindowButtonClose {
+	background:	url("../image/back_close_bt.gif") no-repeat left top;
+	width: 19px;
+	height: 19px;
+	color: #FFFFFF;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;	
+	font-weight: bolder;
+	border: none;
+	padding-bottom: 3px;
+}
+
+
+.cpWarnigHeader input:hover {
+	background:	url("../image/back_close_hover.gif") no-repeat left top;
+	cursor: pointer;
+}
+
+.cpWindowClose {		
+	float: left;	
+}
+
+.cpWindowContent {
+	font-size: 12px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-style: italic;
+}
+
+.cpMensagem * {
+	position: relative;
+}
+
+.cpOrangeButon {	
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/orange_button.png) no-repeat;
+	position: relative;
+	color: white;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+
+.cpGreenButton {
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/green_button.png) no-repeat;
+	position: relative;
+	color: white;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+
+.cpBlueButton {
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/blue_button.png) no-repeat;
+	position: relative;
+	color: white;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+
+.cpRedButton {
+	width: 100px;
+	height: 19px;
+	border: none;
+	background: url(../image/red_button.png) no-repeat;
+	position: relative;
+	color: white;
+	font-style: italic;
+	padding-bottom: 3px;
+}
+
+.cpOrangeButtonMsg {
+	text-align: center;		
+	margin-bottom: 15px;		
+}
+
+.cpBlueButtonContent {
+	float: left;
+	width: 100px;	
+}
+
+.cpBlueButtonContent  input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_blue_button.png) no-repeat;
+}
+
+.cpGreenButtonContent {
+	float: left;
+	width: 100px;	
+}
+
+.cpGreenButtonContent  input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_green_button.png) no-repeat;
+}
+
+.cpOrangeButtonContent {	
+	float: left;
+	width: 100px;		
+}
+
+.cpOrangeButtonContent  input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_orange_button.png) no-repeat;
+}
+
+.cpRedButtonContent {
+	float: left;
+	width: 100px;	
+}
+
+.cpRedButtonContent  input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_red_button.png) no-repeat;
+}
+
+.cpOrangeButtonMsg input.cpOrangeButon:focus {	
+	outline: #ffffff !important;	
+}
+
+.cpOrangeButtonMsg input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_orange_button.png) no-repeat;
+}
+
+.cpBlueButtonMsg {
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+.cpBlueButtonMsg input.cpOrangeButon:focus {	
+	outline: #ffffff !important;	
+}
+
+.cpBlueButtonMsg input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_blue_button.png) no-repeat;
+}
+
+.cpGreenButtonMsg {
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+.cpGreenButtonMsg input.cpOrangeButon:focus {	
+	outline: #ffffff !important;	
+}
+
+.cpGreenButtonMsg input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_green_button.png) no-repeat;
+}
+
+.cpRedButtonMsg {
+	text-align: center;
+	margin-bottom: 15px;
+	height: 58px !important;
+}
+
+.cpRedButtonMsg input.cpOrangeButon:focus {	
+	outline: #ffffff !important;	
+}
+
+.cpRedButtonMsg input:hover {
+	color: #000000;
+	cursor: pointer;
+	background: url(../image/light_red_button.png) no-repeat;
+}
+
+.cpCombo {
+	float: left;
+	clear: both;
+}
+
+.cpRadio {
+	width: 10px !important;
+	height: 10px !important;
+} 
+
+.cpPrompt {
+	float: inherit;
+	clear: both;
+}
+
+.removeBorda {
+	border: none;
+}
+
+.removeBorda FIELDSET {
+	border: none !important;
+}
+
+.textDialog {
+	width: 100%;
+}
+
+.cpEscondeWithHeight {
+	visibility: hidden;
+	position: absolute;
+}
+
+.buttonContentIte {	
+	width:30px;	
+	margin-top: 15px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.buttonContentIte INPUT {
+	width: 24px;
+	margin: 0 3px 8px 3px;	
+	font-size: 11px;
+}
+
+.itContent {
+	border: 1px solid; 
+	float: left;
+	padding: 0 5px 15px 5px;
+	border: 2px solid #A6C9E2;
+}
+
+.titleBar {
+	background: #9999CC;
+	padding: 0 100% 3px 5px;
+	display: list-item;
+	color: #FFFFFF;
+	font-style: italic;
+	font-weight: bold;	
+	position: relative;
+	top: 9px;
+	list-style: none;
+}
+
+.leftList {
+	font-size: 12px;	
+}
+	
+
+.leftList LI {
+	border: 1px solid #c5dbec; 
+	background: #dfeffc url(../js/jquery/theme/images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x; 
+	font-weight: bold; 
+	color: #2e6e9e; 
+	outline: none;	
+}
+
+.leftList LI:HOVER {
+	border: 1px solid #79b7e7; 
+	background: #d0e5f5 url(../js/jquery/theme/images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x; 
+	font-weight: bold; 
+	color: #1d5987; 
+	outline: none;	
+	cursor: pointer;
+}
+
+.leftList LI.selectedItem {
+	border: 1px solid #fad42e; 
+	background: #fbec88 url(../js/jquery/theme/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x; 
+	color: #363636;
+}
+
+.rightList {
+	font-size: 12px;
+}
+
+.rightList LI {
+	border: 1px solid #fad42e; 
+	background: #fbec88 url(../js/jquery/theme/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x; 
+	color: #363636;
+} 
+
+
+.rightList LI:HOVER {
+	border: 1px solid #79b7e7; 
+	background: #d0e5f5 url(../js/jquery/theme/images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x; 
+	font-weight: bold; 
+	color: #1d5987; 
+	outline: none;	
+	cursor: pointer;
+}
+
+.btContent {
+	float: left; 
+	margin-top: 30px;
+	margin-left: 4px;
+}

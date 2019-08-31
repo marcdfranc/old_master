@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.marcsoftware.database">
+ <class name="Lancamento" table="lancamento">
+  <id name="codigo">
+   <generator class="native">
+    <param name="sequence">sq_lancamento</param>
+   </generator>
+  </id>
+  <property generated="never" lazy="false" name="tipo"/>
+  <property generated="never" lazy="false" name="documento"/>
+  <property generated="never" lazy="false" name="emissao"/>
+  <property generated="never" lazy="false" name="vencimento"/>
+  <property column="valor" generated="never" lazy="false" name="valor"/>
+  <property generated="never" lazy="false" name="status"/>
+  <property column="data_quitacao" generated="never" lazy="false" name="dataQuitacao"/>
+  <property column="taxa" generated="never" lazy="false" name="taxa"/>
+  <property column="juros" generated="never" lazy="false" name="juros"/>
+  <property generated="never" lazy="false" name="multa"/>
+  <property column="valor_pago" generated="never" lazy="false" name="valorPago"/>
+  <property generated="never" lazy="false" name="recebimento"/>
+  <many-to-one class="Unidade" column="cod_unidade" name="unidade"/>
+  <many-to-one class="com.marcsoftware.database.TipoConta"
+   column="cod_conta" name="conta"/>
+ </class>
+ <query name="lancamentoDebito">from ParcelaOrcamento as p 
+			where p.id.lancamento.documento like :parcela</query>
+ <query name="lancamentoByUsuario">from Lancamento as l
+			where (l.codigo in (select p.id.lancamento.codigo from ParcelaOrcamento as p
+				where p.id.orcamento.usuario.codigo = :codigo) or l.codigo in (select m.lancamento.codigo from Mensalidade as m
+				where m.usuario.codigo = :codigo))
+			and l.tipo = 'c'</query>
+ <query name="parcelaQuitada">select count(p.id.lancamento) 
+			from ParcelaOrcamento as p 
+			where p.id.orcamento = :orcamento
+				and p.id.lancamento.tipo = 'c'
+				and p.id.lancamento.status in('q', 'c', 'f')</query>
+ <query name="lancamentoCaixaOpen">from Lancamento as l&#xd;
+				where l.dataQuitacao &gt;= :quitacao&#xd;
+				and l.status in ('q', 'f')&#xd;
+				and l.recebimento = :username&#xd;
+order by l.dataQuitacao, l.conta.descricao</query>
+ <query name="lancamentoCaixaClose">from Lancamento as l&#xd;
+				where l.dataQuitacao between :inicio and :fim&#xd;
+				and l.status in('q', 'f')&#xd;
+				and l.recebimento = :username&#xd;
+order by l.dataQuitacao, l.conta.descricao</query>
+</hibernate-mapping>
